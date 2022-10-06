@@ -20,13 +20,14 @@ public class ReviewVO {
 	private int liked;
 	private Date reg_date;
 	private Date mod_date;
+	private String user_nick;
 	
 	
 	public ReviewVO() {
 
 	}
 
-	public ReviewVO(int review_num, String user_id, int pro_num, String seller_id, String image_fileName, String content, float rating,float rating_percent, float rating_avg,int review_count, int liked,Date reg_date, Date mod_date) {
+	public ReviewVO(int review_num, String user_id, int pro_num, String seller_id, String image_fileName, String content, float rating,float rating_percent, float rating_avg,int review_count, int liked,Date reg_date, Date mod_date,String user_nick) {
 		this.review_num = review_num;
 		this.user_id= user_id;
 		this.pro_num = pro_num;
@@ -40,6 +41,7 @@ public class ReviewVO {
 		this.liked = liked;
 		this.reg_date = reg_date;
 		this.mod_date = mod_date;
+		this.user_nick = user_nick;
 	}
 
 	public int getReview_num() {
@@ -146,6 +148,14 @@ public class ReviewVO {
 
 	public void setMod_date(Date mod_date) {
 		this.mod_date = mod_date;
+	}
+
+	public String getUser_nick() {
+		return user_nick;
+	}
+
+	public void setUser_nick(String user_nick) {
+		this.user_nick = user_nick;
 	}
 
 	

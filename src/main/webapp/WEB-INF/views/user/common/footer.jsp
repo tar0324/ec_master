@@ -11,7 +11,7 @@ request.setCharacterEncoding("utf-8");
 <head>
 <meta charset="UTF-8">
 <style>
-/* body {
+.fufu {
 	line-height: 20px;
 	color: #8F8681;
 	position: relative;
@@ -23,11 +23,10 @@ request.setCharacterEncoding("utf-8");
 	word-break: keep-all;
 	word-wrap: break-word;
 	letter-spacing: 2px;
-} */
+}
 
 #footer {
-/* 	position: absolute;
-	bottom: 0px; */
+	position: absolute;
 	width: 100%;
 	min-height: 200px;
 	background-color: #E1DCD9;
@@ -64,6 +63,7 @@ a:hover {
 <title>푸터 부분</title>
 </head>
 <body>
+<div class="fufu">
 	<div id="space">
 		<ul>
 			<li class="last"><a href="main.do"></a><img src="${contextPath }/image/logo_blue.png"
@@ -82,6 +82,7 @@ a:hover {
 		 호스팅서비스 : 먹고보자<br>
 		 COPYRIGHT © eatsee ALL RIGHTS RESERVED.</li>
 		</ul>
+	</div>
 	</div>
 
 	<!-- 		<div class="container">

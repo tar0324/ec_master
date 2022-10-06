@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
 <meta charset="UTF-8">
@@ -19,52 +19,51 @@
 #container {
 	height: 1500px;
 }
-#neo {
-	margin-top: 100px;
-	float: left;
-	width: 90%;
-	height: 500px;
-}
-#content {
-	margin-left: 230px;
-	width: 80%;
-	margin-top: -670px;
-}
-#aa {
-	width: 90%;
-	height: 70px;
-	margin-top: 100px;
-}
-#bb {
-	width: 100%;
-	margin-top: 100px;
-}
-#header {
+#cc {/* header */
 	height: 100px;
 }
-body {
-
+#neo { /* side */
+	float: left;
+	width: 230px;
+	height: auto;
+	margin-bottom: 100px;
 }
+
+#bb { /* body */
+	width: 800px;
+	height: auto;
+	margin-left: 230px;
+	margin-top: 20px;
+	margin-bottom: 100px;
+}
+#aa { /* footer */
+	position: fixed ;
+    bottom : 0;
+    width: 100%;
+}
+
+
+/* html, body {
+	height: 100%;
+} */
 </style>
 <title><tiles:insertAttribute name="title" /></title>
 </head>
 <body>
 	<div id="container">
-		<div id="header">
+		<div id="cc">
 			<tiles:insertAttribute name="header" />
 		</div>
 		<div id="neo">
 			<tiles:insertAttribute name="side" />
-			<div id="content">
-				<div id="aa">
-				<tiles:insertAttribute name="c_header" />
-				</div>
 				<div id="bb">
 				<tiles:insertAttribute name="body" />
 				</div>
 			</div>
+	</div>
+		<div id="aa">
+				<tiles:insertAttribute name="footer" />
 		</div>
 
-	</div>
 </body>
 </html>

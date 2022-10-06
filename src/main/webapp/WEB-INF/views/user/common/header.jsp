@@ -24,7 +24,10 @@ display: inline-block;
 margin-left: 10px;
 
 }
-ul {list-style: none;}
+ul {
+	list-style: none;
+	margin: 20px;
+	}
 .first {
 	display: flex;
 	flex-direction: row;
@@ -36,7 +39,19 @@ ul {list-style: none;}
 .second {
 	display: inline-block;
 	outline: none;
-	margin: 30px 30px 30px 30px;
+	margin: 50px 30px 30px 30px !important;
+}
+.rr {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	width: 200px;
+}
+#gg {
+	padding: 13px 0 0 0;
+	color: #32435F;
+	font-size: 17px;
+	text-align: center;
 }
 
 #menu01 {
@@ -119,30 +134,6 @@ ul {list-style: none;}
 	scale: 1.1;
 }
 
-#menu05 {
-	background-color: transparent;
-	position: absolute;
-	top: 30px;
-	right: 50px;
-	background-image: url( "${contextPath }/image/menu_05.png" );
-	background-repeat: no-repeat;
-	background-size: contain;
-	width: 100px;
-	height: 36px;
-}
-
-#menu05:hover {
-	background-color: transparent;
-	display: block;
-	background-image: url( "${contextPath }/image/menu_005.png" );
-	background-repeat: no-repeat;
-	background-size: contain;
-	width: 100px;
-	height: 36px;
-	scale: 1.1;
-}
-.fixed-top{
-	position: absolute !important;
 }
 </style>
 
@@ -233,29 +224,15 @@ ul {list-style: none;}
   </symbol>
 
 </svg>
-
-<nav class="navbar navbar-dark fixed-top">
-  <div class="container-fluid">
-    <button class="navbar-toggler togglebtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-   </div>
-   <nav class="navbar navbar-dark fixed-top">
-  <div class="container-fluid">
-    <button class="navbar-toggler togglebtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon1"></span>
-    </button>
-   </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
       	<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
       	<c:choose>
       	<c:when test="${isLogOn == true && member !=null }">
       		<h4>환영합니다 <br>${member.user_nick }님!</h4>
         <a href="${contextPath }/user/logout.do" class="nav-link nav-hover">
-          <img src="${contextPath }/image/menu_06.png">
-          <!-- <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          로그아웃 -->
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+          로그아웃
         </a>
         </c:when>
        <%-- 	<c:otherwise>
@@ -272,7 +249,6 @@ ul {list-style: none;}
       <div class="offcanvas-body">
         <ul class="nav nav-pills flex-column mb-auto">
       <li>
-            
         <a href="${contextPath}/user/memberForm_main.do" class="nav-link nav-hover"> <!-- aria-current="page" -->
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           회원가입
@@ -289,7 +265,7 @@ ul {list-style: none;}
       
       <!-- 로그인시 나타나는 항목 -->
       <li>
-        <a href="#" class="nav-link nav-hover">
+        <a href="${contextPath }/mypage.do" class="nav-link nav-hover">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           내 정보
         </a>
@@ -333,7 +309,7 @@ ul {list-style: none;}
       </li>
 
       <li>
-        <a href="#" class="nav-link link-dark">
+        <a href="${contextPath}/user/recentView.do" class="nav-link link-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           <b>최근 본 즐길거리</b><br><br>
           < 
@@ -348,49 +324,49 @@ ul {list-style: none;}
 <div class="hehe">
 <div class="first">
 	    <a href="${contextPath }/main.do">
-      <img src="${contextPath }/image/logo.png" alt="먹고보자 로고" style="width:100px;height:100px;">
+      <img src="${contextPath }/image/logo_7f78.png" alt="먹고보자 로고" style="width:100px;height:100px;">
       </a></div>
 
 <!-- header 메뉴들 -->
     <div class="first">
     <ul>
     <li class="second">
-    	<button type="button" id="menu01" style="border:none;" onclick="location.href='${contextPath}/category.do'"></button>
+    	<button type="button" id="menu01" style="border:none;"></button>
     </li>
      <li class="second">
-    	<button type="button" id="menu02" style="border:none;" onclick="location.href='${contextPath}/user/u_board'"></button>
+    	<button type="button" id="menu02" style="border:none;"></button>
     </li>
      <li class="second">
-    	<button type="button" id="menu03" style="border:none;" onclick="location.href='${contextPath}/user/notice'"></button>
+    	<button type="button" id="menu03" style="border:none;"></button>
     </li>
      <li class="second">
-    	<button type="button" id="menu04" style="border:none;" onclick="location.href='${contextPath}/user/event'"></button>
+    	<button type="button" id="menu04" style="border:none;"></button>
     </li>
-  <li>
-    	<button type="button" id="menu05" style="border:none;">
+    </ul>
+    </div>
+  <div class="rr">
+    	<nav class="navbar navbar-light">
+    	<svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+    	<p id="gg">${member.user_nick }님!</p>
+    	 <button class="navbar-toggler togglebtn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    </div>
     	<c:choose>
       	<c:when test="${isLogOn == true && member !=null }">
       		<h4>환영합니다 <br>${member.user_nick }님!</h4>
         <a href="${contextPath }/user/logout.do" class="nav-link nav-hover">
-         <img src="${contextPath }/image/menu_06.png">
           <!-- <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           로그아웃 -->
         </a>
         </c:when>
        	<c:otherwise>
        	<a href="${contextPath}/user/loginForm.do " class="nav-link nav-hover">
-       	
        		<!-- <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           로그인 -->
           </a>
        	</c:otherwise>
-       	</c:choose></button>
-    </li>
-  
-    </ul>
-    </div>
-   
+       	</c:choose>
  </div>
-  
 </body>
 </html>

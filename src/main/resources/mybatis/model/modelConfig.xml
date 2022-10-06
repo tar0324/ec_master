@@ -28,5 +28,7 @@
 			alias="noticeVO" />
 		<typeAlias type="com.spring.ec.kakao.vo.KakaoVO"
 			alias="kakaoVO" />	
+		<typeAlias type="com.spring.ec.user.vo.AskVO"
+			alias="askVO" />
 	</typeAliases>
 </configuration>

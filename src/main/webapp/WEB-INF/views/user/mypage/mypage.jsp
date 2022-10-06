@@ -36,7 +36,7 @@ click.addEventListener("click", function() {
 </style>
 <body>
 <div>
-
+<img src="${contextPath }/image/logo_7f78.png">
 </div>
 		  
 		  <!-- 찜한 목록 5개 표시 -->

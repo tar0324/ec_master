@@ -28,7 +28,7 @@ public class SellerVO {
 	private String store_benefit;
 	private int pro_num;
 	private String pro_name;
-	private int pro_price;
+	private String pro_price;
 	private Date reg_date;
 	private Date mod_date;
 	
@@ -37,7 +37,7 @@ public class SellerVO {
 
 	}
 
-	public SellerVO(int seller_num, String category_code, String seller_id, String seller_pw, String seller_tel, String seller_bizReg, String seller_name,String seller_email,String seller_addr,String bizReg_image_name,String area,String keyword,int storeInfo_num, String image_fileName, String store_introduce, String openTime, String closeDay, String store_nic,String store_benefit,	int pro_num, String pro_name, int pro_price, Date reg_date, Date mod_date) {
+	public SellerVO(int seller_num, String category_code, String seller_id, String seller_pw, String seller_tel, String seller_bizReg, String seller_name,String seller_email,String seller_addr,String bizReg_image_name,String area,String keyword,int storeInfo_num, String image_fileName, String store_introduce, String openTime, String closeDay, String store_nic,String store_benefit,	int pro_num, String pro_name, String pro_price, Date reg_date, Date mod_date) {
 		this.seller_num = seller_num;
 		this.category_code = category_code;
 		this.seller_id= seller_id;
@@ -247,13 +247,15 @@ public class SellerVO {
 		this.pro_name = pro_name;
 	}
 
-	public int getPro_price() {
+	public String getPro_price() {
 		return pro_price;
 	}
 
-	public void setPro_price(int pro_price) {
+	public void setPro_price(String pro_price) {
 		this.pro_price = pro_price;
 	}
+
+
 
 	
 

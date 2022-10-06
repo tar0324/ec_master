@@ -52,6 +52,8 @@
 		<result property="commision" column="commision" />
 		<result property="reg_date" column="reg_date" />
 		<result property="mod_date" column="mod_date" />
+		<result property="pro_sum" column="pro_sum" />
+		<result property="pro_img" column="pro_img" />
 	</resultMap>
 
 	<resultMap id="revResult" type="reviewVO">
@@ -67,6 +69,8 @@
 		<result column="liked" property="liked" />
 		<result column="reg_date" property="reg_date" />
 		<result column="mod_date" property="mod_date" />
+		<result column="mod_date" property="mod_date" />
+		<result column="user_nick" property="user_nick" />
 	</resultMap>
 
 	<resultMap id="wishResult" type="wishVO">

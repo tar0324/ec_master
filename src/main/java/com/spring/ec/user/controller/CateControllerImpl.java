@@ -283,6 +283,7 @@ public class CateControllerImpl implements CateController {
 		
 		MemberVO mm = (MemberVO) session.getAttribute("member");
 		review.setUser_id(mm.getUser_id());
+		review.setUser_nick(mm.getUser_nick());
 		int result = cateService.addreview(review);
 		//result = cateService.addreview(review);
 		ModelAndView mav = new ModelAndView("redirect:/category.do");

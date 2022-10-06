@@ -3015,7 +3015,7 @@ geocoder.addressSearch(addr,function(result, status){
 						<c:if test="${not empty member.user_id }">
 						
 						<li _ngcontent-ewg-c33 class="item_navbar">
-						<a _ngcontent-ewg-c33 href="#" class="link_navbar home active"> 
+						<a _ngcontent-ewg-c33 href="${contextPath }/mypage.do" class="link_navbar home active"> 
 							<img alt="마이페이지" src="image/reserve_check.png" width="20" height="20"> 
 							<span _ngcontent-ewg-c33 class="navbar_text">마이페이지</span>
 						</a>
@@ -3095,7 +3095,9 @@ geocoder.addressSearch(addr,function(result, status){
 			<c:forEach var="store" items="${StoreList }" varStatus="storeNum">
 			<%-- <a href="${contextPath }/storeInfo.do?seller_id=${store.seller_id}"> --%>
 					<div class="card" data-bs-toggle="offcanvas" href="#${store.seller_id }"  aria-controls="offcanvasExample" style="margin-top:10px; margin-left: 5px; margin-right: 5px;" id="card${storeNum.index }" OnMouseUp="cardreview('js-load${storeNum.index}');" onClick="setCenter('${store.seller_addr}')">
-	 					<img src="https://ldb-phinf.pstatic.net/20220919_260/16635542007495NypM_JPEG/KakaoTalk_20220919_112238901.jpg" class="card-img-top" alt="..." width="286" height="180" style="object-fit:contain;" onclick="setcenter">
+
+	 					<img src="${contextPath }/image/store_img/${store.image_fileName}" class="card-img-top" alt="..." width="299" height="180" onclick="setcenter">
+
 		  				<div class="card-body">
 		   				<p class="card-text">
 		    				<h1>${store.seller_name }</h1>
@@ -3187,7 +3189,13 @@ geocoder.addressSearch(addr,function(result, status){
 						<div class="place_section OP4V8" data-nclicks-area-code="btp">
 							<div class="zD5Nm f7aZ0">
 								<div id="_title" class="YouOG">
-									<span class="Fc1rA">${store.store_nic}</span><!-- <span class="DJJvD">정육식당</span> -->
+								<c:if test="${store.category_code eq 10 }">
+									<span class="badge bg-primary ">먹거리</span> &nbsp;
+								</c:if>
+								<c:if test="${store.category_code eq 20 }">
+									<span class="badge bg-danger">볼거리</span> &nbsp;
+								</c:if>
+								<span class="Fc1rA">${store.store_nic}</span><!-- <span class="DJJvD">정육식당</span> -->
 								</div>
 								<div class="dAsGb">
 								
@@ -3434,16 +3442,26 @@ geocoder.addressSearch(addr,function(result, status){
 														class="nHf7b" aria-hidden="true">
 														<path
 															d="M2.92 1.15L.15 3.93a.5.5 0 00-.14.45 16.09 16.09 0 0012.6 12.61.5.5 0 00.46-.14l2.78-2.78a.5.5 0 000-.71l-4.18-4.18-.07-.06a.5.5 0 00-.64.06l-1.9 1.9-.28-.18a9.53 9.53 0 01-2.65-2.63L5.96 8 7.88 6.1a.5.5 0 000-.71L4.41 1.93l-.78-.78a.5.5 0 00-.7 0zm5.62 10.79l.37.21.09.04a.5.5 0 00.49-.13l1.82-1.82 3.48 3.47-2.24 2.24-.07-.01A15.1 15.1 0 011.14 4.84l-.1-.4 2.24-2.23 3.54 3.53-1.84 1.84a.5.5 0 00-.08.6 10.54 10.54 0 003.64 3.76z"></path></svg></strong>
-											<div class="x8JmK">
+													<div class="x8JmK">
 													<span class="dry01" id="tel">${store.seller_tel }</span>
-										<span class="mnnPt"><a href="#" target="_self" role="button" class="_vIMk" title="복사" onclick="copyToClipBoard()">
+													<span class="mnnPt"><a href="#" target="_self" role="button" class="_vIMk" title="복사" onclick="copyToClipBoard()">
 													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 13" class="pHtH_" aria-hidden="true">
 													<path d="M9 8v.48l-1.98 1.58L6 11H3v1h4.61L10 9.81V3h-.97L9 8zm0-6h1a1 1 0 011 1v7.25L8 13H3a1 1 0 01-1-1v-1H1a1 1 0 01-1-1V1a1 1 0 011-1h7a1 1 0 011 1v1zm-7 8h3.5l.87-.7L8 7.81V1H1v9h1zm0-7h4v1H2V3zm0 2h4v1H2V5zm0 2h2v1H2V7z"></path></svg>복사</a></span>
 												</div>
 											</li>
-											
-											
-											<!-- 볼거리 일때 보이는 페이지 -->
+
+
+
+													<li class="SF_Mq">
+													<strong class="RmIE4">
+													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 18" class="nHf7b" aria-hidden="true">
+														<path d="M10.05 15.48h4.45V7.86a3.26 3.26 0 01-2.22.86c-.81 0-1.57-.3-2.15-.81a3.24 3.24 0 01-2.15.81 3.24 3.24 0 01-2.13-.79 3.24 3.24 0 01-2.13.8 3.26 3.26 0 01-2.22-.87v7.62h4.44V11.3a.5.5 0 01.5-.5h3.11a.5.5 0 01.5.5v4.17zm-1 0V11.8h-2.1v3.67h2.1zm6.45-9.79a.5.5 0 010 .04v10.25a.5.5 0 01-.5.5H1a.5.5 0 01-.5-.5V5.73 5.7a3.11 3.11 0 010-.1.5.5 0 01.05-.22L2.3 1.78a.5.5 0 01.45-.28h10.5a.5.5 0 01.45.28l1.75 3.59a.5.5 0 01.05.22v.1zM3.06 2.5L1.5 5.7a2.19 2.19 0 002.22 2.02 2.24 2.24 0 001.74-.82.5.5 0 01.78 0 2.24 2.24 0 001.74.82c.7 0 1.33-.31 1.75-.85a.5.5 0 01.79 0 2.24 2.24 0 001.76.85c1.2 0 2.16-.9 2.22-2.02l-1.56-3.2H3.06z"></path></svg>
+														<span class="place_blind">편의</span>
+													</strong>
+													<div class="x8JmK">${store.store_benefit}</div></li>
+
+
+													<!-- 볼거리 일때 보이는 페이지 -->
 											<c:if test="${store.category_code eq 20 }">
 												<li class="SF_Mq RU_uO">
 												<strong class="RmIE4">
@@ -3464,7 +3482,7 @@ geocoder.addressSearch(addr,function(result, status){
 																				</span>
 																			</div>
 																			<div class="kxBJK">
-																			<span> <fmt:formatNumber value="${product.pro_price }" pattern="#,###"/></span> 원</div>
+																			<span> <%-- <fmt:formatNumber value="${product.pro_price }" pattern="#,###"/> --%>${product.pro_price }</span> 원</div>
 																		</div></li>
 																	</c:if>
 																	</c:forEach>
@@ -3511,19 +3529,20 @@ geocoder.addressSearch(addr,function(result, status){
 									</h2>
 									<div class="place_section_content">
 										<ul class="mpoxR">
-								
 										
-										<c:forEach var="product" items="${menuList }" varStatus="proNum">
+										<c:set var="loop_flag" value="false" />		
+											<c:set var="count" value="0" />				
+											<c:forEach var="product" items="${menuList }" varStatus="proNum">
 											<c:if test="${product.seller_id eq store.seller_id}">
-											
-											<li class="yhGu6"><a
-												href="#"
-												 role="button" class="Ozh8q">
+											<c:if test="${not loop_flag }">
+										
+											<li class="yhGu6">
+											<a href="#" role="button" class="Ozh8q">
 												<div class="ZHqBk">
-														<div class="place_thumb">
-															<img src="#" width="100%" height="auto">
-														</div>
-													</div>
+												<div class="place_thumb">
+													<img src="${contextPath}/image/menu/${product.seller_id }/${product.pro_img }" width="100%" height="auto">
+												</div>
+												</div>
 													<div class="MN48z">
 														<div class="erVoL">
 															<div class="MENyI">${product.pro_name }</div>
@@ -3532,8 +3551,18 @@ geocoder.addressSearch(addr,function(result, status){
 															<div class="gl2cc">${product.pro_price } 원</div>
 														</div>
 														<div class="Qh_eq"></div>
-													</div></a></li>
+													</div>
+													</a>
+											</li>
+											</c:if>
+											<c:set var="count" value="${count + 1 }" />	
+												<c:if test="${count eq 4  }" >
+													<c:set var="loop_flag" value="true" />
+													<c:set var="count" value="0" />	
 												</c:if>
+											 
+											
+											</c:if>
 											</c:forEach>
 										</ul>
 									</div>
@@ -3566,7 +3595,7 @@ geocoder.addressSearch(addr,function(result, status){
 									<ul class="i81eZ">
 										<li class="cvLXA"><div class="Zwdge">
 												<div class="F7xaA">
-													<a href="/restaurant/16045148/booking" target="_self"
+													<a href="#" target="_self"
 														role="button" class="y5Vxu"><span
 														class="place_bluelink wpUMQ">${store.store_nic } <br> 예약</span></a>
 												</div>
@@ -3636,7 +3665,7 @@ geocoder.addressSearch(addr,function(result, status){
 																	</div></a>
 																	<a
 																	href="#" role="button" class="iKqnp">
-																	<div class="rg88i">${review.user_id }</div>
+																	<div class="rg88i">${review.user_nick }</div>
 																	<div class="FrWK3">
 																		<span class="ExHfk"><span class="place_blind">작성일</span>
 																		<div class="rg88i">${review.reg_date }</div>
@@ -3721,7 +3750,7 @@ geocoder.addressSearch(addr,function(result, status){
 														class="qpNnn"><div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(&quot;https://search.pstatic.net/common/?autoRotate=true&amp;quality=95&amp;type=f320_320&amp;src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20170321_210%2F1490090806016JftY6_JPEG%2Fb78c8c09-6efb-4232-ac94-f96cc0a7811c.jpeg&quot;);">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id }/${menu.pro_img });">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
@@ -3744,7 +3773,7 @@ geocoder.addressSearch(addr,function(result, status){
 																<div class="TvLl7">
 																	<div class="eCaG_"></div>
 																</div>
-																<div class="SSaNE"><fmt:formatNumber value="${menu.pro_price }" pattern="#,###"/> 원</div>
+																<div class="SSaNE"><%-- <fmt:formatNumber value="${menu.pro_price }" pattern="#,###"/> --%>${menu.pro_price } 원</div>
 															</div></a></li>
 													</c:if>
 													</c:forEach>
@@ -3796,7 +3825,7 @@ geocoder.addressSearch(addr,function(result, status){
 													<div class="r8zp9">
 																<div class="place_thumb vMMzE">
 																	<div class="K0PDV"
-																		style="width: 100px; height: 100px; background-image: url(https://naverbooking-phinf.pstatic.net/20220907_227/1662543775144BxVNU_JPEG/%B3%D7%C0%CC%B9%F6_%BD%E6%B3%D7%C0%CF_%C1%A4%BB%E7%B0%A2%C7%FC_1242x1242_20Mb.jpg);">
+																		style="width: 100px; height: 100px; background-image: url(${contextPath}/image/menu/${menu.seller_id }/${menu.pro_img });">
 																		<span class="place_blind">${menu.pro_name }</span>
 																	</div>
 																</div>
@@ -3819,7 +3848,7 @@ geocoder.addressSearch(addr,function(result, status){
 																<div class="TvLl7">
 																	<div class="eCaG_"></div>
 																</div>
-																<div class="SSaNE"><fmt:formatNumber value="${menu.pro_price }" pattern="#,###"/> 원</div>
+																<div class="SSaNE"><%-- <fmt:formatNumber value="${menu.pro_price }" pattern="#,###"/> --%>${menu.pro_price } 원</div>
 															</div></a></li>
 													</c:if>
 													</c:forEach>
@@ -4103,7 +4132,7 @@ geocoder.addressSearch(addr,function(result, status){
  <!--리뷰 모달  -->
 
 <!-- Modal -->
-<form class="mb-3" name="myform" id="myform" method="post" action="${contextPath }/addreview.do?">
+<form class="mb-3" name="myform" id="myform" method="post" action="${contextPath }/addreview.do">
 <input type="hidden" name="seller_id" id="reviewsellerid" value="">
 <input type="hidden" name="reviewstorenic" id="reviewstorenic" value="">
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

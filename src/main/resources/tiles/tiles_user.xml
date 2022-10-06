@@ -105,54 +105,47 @@
 	</definition>
 	<!-- 마이페이지 타일즈 -->
 	<definition name="mypageLayout" template="/WEB-INF/views/user/common/layout3.jsp">
-		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/WEB-INF/views/user/common/header.jsp" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="side" value="/WEB-INF/views/user/common/sidebar.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/user/common/footer.jsp" />
+		<put-attribute name="title" value=""/>
+		<put-attribute name="header" value="/WEB-INF/views/user/common/header.jsp"/>
+		<put-attribute name="c_header" value=""/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/user/common/footer.jsp"/>
 	</definition>
-
 	<definition name="/mypage" extends="mypageLayout">
-		<put-attribute name="title" value="마이페이지" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/mypage/mypage.jsp" />
+		<put-attribute name="title" value="마이페이지"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/mypage.jsp"/>	
 	</definition>
-
-	<definition name="/board/myplist" extends="mypageLayout">
-		<put-attribute name="title" value="먹플리, 볼플리" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/board/playList.jsp" />
+	<definition name="/mypage/my_pList" extends="mypageLayout">
+		<put-attribute name="title" value="먹플리, 볼플리"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/my_pList.jsp"/>	
 	</definition>
-
 	<definition name="/mypage/uReview" extends="mypageLayout">
-		<put-attribute name="title" value="내가 쓴 리뷰" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/board/u_boardView.jsp" />
+		<put-attribute name="title" value="내가 쓴 리뷰"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/my_Review.jsp"/>	
 	</definition>
-
-	<definition name="/mypage/uBook.do" extends="mypageLayout">
-		<put-attribute name="title" value="예약조회" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uBook.jsp" />
+	<definition name="/mypage/uBook" extends="mypageLayout">
+		<put-attribute name="title" value="예약조회"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uBook.jsp"/>	
 	</definition>
-
-	<definition name="/mypage/uLike.do" extends="mypageLayout">
-		<put-attribute name="title" value="찜 목록" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uLike.jsp" />
+	<definition name="/mypage/uLike" extends="mypageLayout">
+		<put-attribute name="title" value="찜 목록"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uLike.jsp"/>	
 	</definition>
-
-	<definition name="/mypage/uAsk.do" extends="mypageLayout">
-		<put-attribute name="title" value="1:1 문의" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uAsk.jsp" />
+	<definition name="/mypage/uAsk" extends="mypageLayout">
+		<put-attribute name="title" value="1:1 문의"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uAsk.jsp"/>	
 	</definition>
-
 	<definition name="/mypage/myinfo" extends="mypageLayout">
-		<put-attribute name="title" value="내 정보" />
-		<put-attribute name="c_header" value="/WEB-INF/views/user/mypage/ch_mypage.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/user/mypage/uEatnsee.jsp" />
+		<put-attribute name="title" value="내 정보"/>
+		<put-attribute name="side" value="/WEB-INF/views/user/mypage/ch_mypage_side.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/user/mypage/my_info.jsp"/>	
 	</definition>
 	
 	<!-- 공지사항/이벤트 -->
