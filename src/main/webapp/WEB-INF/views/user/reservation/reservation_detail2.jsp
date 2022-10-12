@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="now" value="<%=new java.util.Date()%>" />
 <c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <fmt:parseNumber var="ff" value="${reservInfo.open_time/100}" integerOnly="true" />
 <fmt:parseNumber var="ff2" value="${reservInfo.open_time%100}" integerOnly="true" />
@@ -50,8 +51,6 @@ request.setCharacterEncoding("utf-8");
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <!-- num spinner -->
 <script src="${contextPath}/js/bootstrap-input-spinner.js"></script>
-<!-- 토스페이먼츠 js -->
-<script src="https://js.tosspayments.com/v1"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.datepicker').datepicker({
@@ -67,7 +66,7 @@ $(document).ready(function() {
 		var months = date2.getMonth() + 1;
 		var days = date2.getDate();
 		var weeks = date2.getDay();
-		$('input[name="reserv_date"]').val(date2);
+		$('input[name="reserv_date"]').val(years+ "" +months + "" +days);
 		switch (weeks) {
 			case 0:
 				$('#dateinner').text(years + "." + months + "." + days+ "(일)");
@@ -98,14 +97,15 @@ $(document).ready(function() {
 	});
 	$('.cell').click(function() {
 		var text = $(this).text();
+		
 		var fuck = new Date(Date.prototype.setHours.apply(new Date(), text.split(':')));
 		var hours = fuck.getHours();
-		var minutes = fuck.getMinutes();
-		$('input[name="reserv_time"]').val(hours + ":" + minutes);
+		var minutes = ("00"+fuck.getMinutes()).slice(-2);
+		$('input[name="reserv_time"]').val(text);
 		if (hours > 12) {
-			$('#timeinner').text(hours + ":" + minutes + "(오전)");
-		} else {
 			$('#timeinner').text(hours + ":" + minutes + "(오후)");
+		} else {
+			$('#timeinner').text(hours + ":" + minutes + "(오전)");
 		}
 	});
 	$("input[type='number']").inputSpinner()
@@ -125,29 +125,19 @@ $(document).ready(function() {
 		var countpp = $("input[name='count_pp']").val();
 		$("#fff").append("<span id='people_value'>" + countpp+ "명</span>");
 	});
-	var clientKey = 'test_ck_YZ1aOwX7K8m9OjPd5eP8yQxzvNPG'
-	var tossPayments = TossPayments(clientKey)
-
-	var button = document.getElementById('payment-button') // 결제하기 버튼
-
-	button.addEventListener('click', function () {
-	tossPayments.requestPayment('카드', {
-	amount: 15000,
-	orderId: '3EaMCALXm_u2xLoZ75cCP',
-	orderName: '토스 티셔츠 외 2건',
-	customerName: '박토스',
-	successUrl: 'http://localhost:8080/ec/reservCheck',
-	failUrl: 'http://localhost:8080/ec/reservation.do',
-	        })
-	      })
-	for(var i=${reservInfo.open_time}; i<${reservInfo.close_time}; i+=30){
-		var hour = i/100;
-		var min = i%60;
-		console.log(${reservInfo.open_time});
-		console.log(${reservInfo.close_time});
-		console.log(hour);
-		console.log(min);
-	};
+	function randomString() {
+	    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'
+	    const stringLength = 10
+	    let randomstring = ''
+	    for (let i = 0; i < stringLength; i++) {
+	      const rnum = Math.floor(Math.random() * chars.length)
+	      randomstring += chars.substring(rnum, rnum + 1)
+	    }
+	    return randomstring
+	  }
+	var order_id = randomString();
+	$('input[name="order_id"]').val(order_id);
+	
 });
 </script>
 <style type="text/css">
@@ -265,23 +255,23 @@ td.day:hover {
 <title>Insert title here</title>
 </head>
 <body>
-<form method="post" action="${contextPath}/reservCheck">
+<form id="frm" method="post" action="${contextPath}/reservCheck">
 	<div class="container">
 		<div class="detail_header">
 			<div class="reserv_title">
 				<a href="#" onClick="history.back()" class="btn_back"><i class="bi bi-arrow-left"></i></a>
 				<h2>
-					<a href="#" class="seller_title">임시 상호명</a>
+					<a href="#" class="seller_title">${reservInfo.store_nic}</a>
 				</h2>
-				<a href="#" class="btn_my">
+				<a href="${contextPath}/mypage/uBook.do" class="btn_my">
 				<span title="내 예약 현황">MY</span>
 				</a>
 			</div>
 		</div>
 		<div class="item_name">
-			<span>임시 상호명 예약</span>
+			<span>${reservInfo.store_nic} 예약</span>
 		</div>
-		<div class="seller_detail">임시 예약 상세 내용입니다. 임시 예약 상세 내용입니다. 임시 예약상세 내용입니다.</div>
+		<div class="seller_detail">${reservInfo.store_introduce}</div>
 		<div class="accordion" id="accordionExample">
 			<div class="item">
 				<div class="item-header" id="headingOne">
@@ -291,7 +281,7 @@ td.day:hover {
 							<span id="dateinner">
 							<fmt:formatDate value="${now}" pattern="yyyy.MM.dd(E)" />
 							</span> 
-							<input type="hidden" value="" name="reserv_date" />
+							<input type="hidden" value="" name="reserv_date"/>
 							<i class="fa fa-angle-down"></i>
 						</button>
 					</h2>
@@ -319,136 +309,19 @@ td.day:hover {
 					data-parent="">
 					<div class="t-p">
 						<div class="card-body p-3 p-sm-5">
-						<%-- <c:forEach var="i" begin="${reservInfo.open_time}" end="${reservInfo.open_time}" step="30">
-							<c:if test="${i<1200}">
-							<div width='100%' class="rowHeader">오전</div>
-							<div class="row text-center mx-0">
-								<div class="col-md-2 col-4 my-1 px-2">
+						<div class="row text-center mx-0">
+								
+						<c:forEach var="i" begin="${reservInfo.open_time}" end="${reservInfo.close_time}" step="50">
+							<div class="col-md-2 col-4 my-1 px-2">
 									<div class="cell py-1">
 										<fmt:parseNumber var="stepHour" value="${i/100}" integerOnly="true" />
-										<fmt:parseNumber var="stepminite" value="${(i%100)%60}" integerOnly="true" />
-										<fmt:parseDate var="stepTime" value="${stepHour}${stepminite}"  pattern="HH:mm"/>
-										<fmt:formatDate value="${stepTime}" pattern="hh:mm" />
+										<fmt:parseNumber var="stepminite" value="${(i%100)*6/10}" />
+										<fmt:parseDate var="stepTime" value="${stepHour}${stepminite}"  pattern="HHmm"/>
+										<fmt:formatDate value="${stepTime}" pattern="HH:mm" />
 									</div>
 								</div>
-							</div>
-							</c:if>
-						</c:forEach> --%>
-							<div width='100%' class="rowHeader">오전</div>
-							<div class="row text-center mx-0">
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="HH:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-							</div>
-							<div width='100%' class="rowHeader">오후</div>
-							<div class="row text-center mx-0">
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
-								<div class="col-md-2 col-4 my-1 px-2">
-									<div class="cell py-1">
-										<fmt:formatDate value="${dateString}" pattern="hh:mm" />
-									</div>
-								</div>
+						</c:forEach>
+						
 							</div>
 						</div>
 					</div>
@@ -477,15 +350,14 @@ td.day:hover {
 								<strong>예약인원을 선택해주세요</strong>
 							</div>
 							<div class="count_people">
-								<input name="count_pp" type="number" value="1" min="1" max="10"
-									step="1" />
+								<input name="count_pp" type="number" value="1" min="${reservInfo.min_People}" max="${reservInfo.max_People}" step="1" />
 								<!-- min/max 숫자 나중에 DB형으로 처리할것 -->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="item">
+<!-- 			<div class="item">
 				<div class="item-header" id="headingFive">
 					<h2 class="mb-0">
 						<button class="btn btn-link collapsed" type="button"
@@ -502,7 +374,7 @@ td.day:hover {
 						<img src="">
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="item">
 				<div class="item-header" id="headingFour">
 					<h2 class="mb-0">
@@ -519,7 +391,9 @@ td.day:hover {
 						<table>
 							<tr>
 								<td class="sellerMenu">상호 :</td>
-								<td class="sellerInfo">임시상호</td>
+								<td class="sellerInfo">${reservInfo.seller_name}</td>
+								<input type="hidden" name="seller_id" value="${reservInfo.seller_id}" >
+								<input type="hidden" name="seller_name" value="${reservInfo.seller_name}">
 							</tr>
 							<tr>
 								<td class="sellerMenu">대표자명 :</td>
@@ -527,15 +401,17 @@ td.day:hover {
 							</tr>
 							<tr>
 								<td class="sellerMenu">사업자번호 :</td>
-								<td class="sellerInfo">임시사업자번호</td>
+								<td class="sellerInfo">${reservInfo.seller_bizReg}</td>	
 							</tr>
 							<tr>
 								<td class="sellerMenu">소재지 :</td>
-								<td class="sellerInfo">임시주소 ㅁㅁ시 ㅁㅁ구 ㅁㅁ동 123-12</td>
+								<td class="sellerInfo">${reservInfo.seller_addr}</td>
+								<input type="hidden" name="seller_addr" value="${reservInfo.seller_addr}">
 							</tr>
 							<tr>
 								<td class="sellerMenu">연락처 :</td>
-								<td class="sellerInfo">임시 연락처</td>
+								<td class="sellerInfo">${reservInfo.seller_tel}</td>
+								<input type="hidden" name="seller_tel" value="${reservInfo.seller_tel}">
 							</tr>
 						</table>
 					</div>
@@ -553,38 +429,49 @@ td.day:hover {
 						<div class="innerForm">
 							<label for="user_name">예약자</label>
 							<div class="inlineInput">
-								<span>필수</span> <input type="text" name="user_name" value="유저이름"
-									maxlength="40">
+								<span>필수</span> <input type="text" id="user_name" name="user_name" value="${member.user_name}" maxlength="40">
 							</div>
 						</div>
 						<div class="innerForm">
 							<label for="user_tel">연락처</label>
 							<div class="inlineInput">
-								<span>필수</span> <input type="text" name="user_tel"
-									value="01012345678" maxlength="40">
+								<span>필수</span> <input type="text" name="user_tel" id="user_tel" 
+									value="${member.tel}" maxlength="40">
 							</div>
 						</div>
 						<div class="innerForm">
 							<label for="user_tel">이메일</label>
 							<div class="inlineInput">
-								<input type="email" name="user_email" value="text1@naver.com"
+								<input type="email" name="user_email" id="user_eamil" value="${member.user_email}"
 									maxlength="40">
 							</div>
 						</div>
 						<div class="innerForm">
-							<label for="user_tel">요청사항</label>
+							<label for="user_hope">요청사항</label>
 							<div class="inlineInput">
-								<textarea name="user_email" rows="2" cols="30" maxlength="500" placeholder="업체에 요청할 내용을 적으세요" ></textarea>
+								<textarea name="user_hope" id="user_hope" rows="2" cols="30" maxlength="500" placeholder="업체에 요청할 내용을 적으세요" ></textarea>
+								<input type="hidden" name="reserv_pay" value="${reservInfo.reserv_pay}" />
+								<input type="hidden" name="order_id" value="" />
 							</div>
 						</div>
-					</div>
+					</div>	
 			</div>
+<%-- 			<c:if test="${reservInfo.reserv_pay == 0 }">
 			<div class="reserv_btn">
-				<button type="button" class="reserv_submit" id="payment-button" onclick="fuck()" >
+				<button type="submit" class="reserv_submit" id="payment-button" >
 				<i class="bi bi-cart-check">
 				</i><span>예약 신청</span>
 				</button>
 			</div>
+			</c:if>
+			<c:if test="${reservInfo.reserv_pay != 0 }"> --%>
+			<div class="reserv_btn">
+				<button type="submit" class="reserv_submit">
+				<i class="bi bi-cart-check">
+				</i><span>예약 신청</span>
+				</button>
+			</div>
+<%-- 			</c:if> --%>
 		</div>
 	</div>
 	</form>

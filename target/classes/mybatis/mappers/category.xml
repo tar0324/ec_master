@@ -93,6 +93,7 @@
 		<result property="min_People" column="min_People" />
 		<result property="max_People" column="max_People" />
 		<result property="store_introduce" column="store_introduce" />
+		<result property="reserv_pay" column="reserv_pay" />
 	</resultMap>
 	
 	<!--카테고리-가게select  -->
@@ -234,9 +235,31 @@
 		<![CDATA[ 
 		select sel.seller_id,sto.store_nic ,sel.seller_tel, sel.seller_name, 
 		sel.seller_addr,sel.seller_bizReg, sto.open_time, sto.close_time,
-		sto.min_People, sto.max_People, sto.store_introduce
+		sto.min_People, sto.max_People, sto.store_introduce,sto.reserv_pay
 		from seller_tbl as sel , storeInfo_tbl as sto
 		where sel.seller_id = sto.seller_id and sel.seller_id = #{seller_id} 
+		 ]]>
+	</select>
+	<insert id="insertUserBooking" parameterType="java.util.Map">
+	<![CDATA[
+			insert into book_tbl (book_num,seller_id,user_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id)
+			values(#{book_num},#{seller_id},#{user_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id})
+		]]>
+	</insert>
+	<select id="selectNewUserBook_num" resultType="int">
+		<![CDATA[
+			select max(bad_num)+1 from book_tbl 			
+		 ]]>
+	</select>
+	<insert id="insertNoUserBooking" parameterType="java.util.Map">
+	<![CDATA[
+			insert into nouser_book_tbl (book_num,seller_id, user_name, reserv_date, reserv_time, user_tel, user_email, count_pp, reserv_pay, reg_date, order_id)
+			values(#{book_num},#{seller_id}, #{user_name}, #{reserv_date}, #{reserv_time}, #{user_tel}, #{user_email}, #{count_pp}, #{reserv_pay}, now(), #{order_id})
+		]]>
+	</insert>
+	<select id="selectNewNoUserBook_num" resultType="int">
+		<![CDATA[
+			select max(book_num)+1 from nouser_book_tbl 			
 		 ]]>
 	</select>
 </mapper>

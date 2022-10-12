@@ -25,7 +25,9 @@ public interface CateController {
 	
 	public ModelAndView addreview(@ModelAttribute("review") ReviewVO review, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView reservation(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public ModelAndView reservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView unreservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public ModelAndView reservCheck(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

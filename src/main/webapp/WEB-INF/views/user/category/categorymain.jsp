@@ -4230,11 +4230,11 @@ geocoder.addressSearch(addr,function(result, status){
 
 								<textarea id="text" name="content"
 									class="TextReview_input_text__2zr6e"  placeholder="업주와 다른 사용자들이 상처받지 않도록 좋은 표현을 사용해주세요.  유용한 Tip도 남겨주세요!"></textarea>
-								<div class="TextReview_count__WBdBt">
+<!-- 								<div class="TextReview_count__WBdBt">
 									<em>0</em>&nbsp;/&nbsp;
 									
 									400
-								</div>
+								</div> -->
 							</div>
 						</div>
 

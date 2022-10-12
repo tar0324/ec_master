@@ -26,13 +26,13 @@ public class KakaoControllerImpl implements KakaoController {
 	private HttpSession session;
 
 	@Override
-	@RequestMapping(value="/kakaoLogin", method = RequestMethod.GET) //localhost:8080/ec/kakao 로 호출해야된다.
-	//직접호출하면 카카오로그인api에서 정보 못받아오기때문에 무의미하다.
+	@RequestMapping(value="/kakaoLogin", method = RequestMethod.GET) //localhost:8080/ec/kakao 濡� �샇異쒗빐�빞�맂�떎.
+	//吏곸젒�샇異쒗븯硫� 移댁뭅�삤濡쒓렇�씤api�뿉�꽌 �젙蹂� 紐삳컺�븘�삤湲곕븣臾몄뿉 臾댁쓽誘명븯�떎.
     public String kakaoLogin(@RequestParam(value = "code", required = false) String code, Model model) throws Exception{
 		 System.out.println("#########" + code);
 		 String access_Token = kakaoService.getAccessToken(code);
 		 
-		 //userInfo의 타입을 kakaoVO로 변경 및 import
+		 //userInfo�쓽 ���엯�쓣 kakaoVO濡� 蹂�寃� 諛� import
 		 KakaoVO userInfo = kakaoService.getUserInfo(access_Token);
 //		 KakaoVO number = kakaoService.kakaoNumber(userInfo);
 		 System.out.println("userInfo :"+userInfo.getK_name() );
@@ -48,7 +48,7 @@ public class KakaoControllerImpl implements KakaoController {
 	
 	      model.addAttribute("k_name",userInfo.getK_name());  
 	      model.addAttribute("k_email",userInfo.getK_email()); 
-	        return "/main"; /* "/main"으로 해야함 */
+	        return "/main"; /* "/main"�쑝濡� �빐�빞�븿 */
     }
 	
 	@Override

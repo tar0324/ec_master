@@ -46,4 +46,8 @@ public interface CateService {
 	public List selectprosum() throws Exception;
 	
 	public String selectsellerwishsum(String seller_id) throws DataAccessException;
+	
+	public int addBooking(Map booking) throws Exception;
+	
+	public int addNoUserBooking(Map booking) throws Exception;
 }

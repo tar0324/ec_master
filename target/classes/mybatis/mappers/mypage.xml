@@ -70,12 +70,12 @@
 	
 	<!--로그인 된 회원의 찜목록 select  -->
 	<select id="selectwish" resultMap="wishResult" parameterType="String">
-		<![CDATA[ SELECT * FROM wish_tbl WHERE user_id = #{user_id} ]]>
+		<![CDATA[ SELECT  * FROM wish_tbl WHERE user_id = #{user_id} ]]>
 	</select>
 	
 		<!--로그인 된 회원의 리뷰목록 select  -->
 	<select id="selectReview" resultMap="revResult" parameterType="String">
-		<![CDATA[ SELECT * FROM review_tbl WHERE user_id = #{user_id} ]]>
+		<![CDATA[ SELECT count(*) as review_count, a.* , b.seller_name from review_tbl a, seller_tbl b WHERE a.seller_id = b.seller_id and user_id = #{user_id}; ]]>
 	</select>
 	
 	<!--로그인 된 회원의 먹플리 볼플리 목록 select  -->

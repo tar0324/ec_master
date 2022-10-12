@@ -46,6 +46,10 @@ public interface CateDAO {
 
 	public String selectsellerwishsum(String seller_id) throws DataAccessException;
 
-	// ¿¹¾à
+	// ï¿½ï¿½ï¿½ï¿½
 	public ReservVO selectStoreInfo2(String seller_id) throws DataAccessException;
+	
+	public int insertBooking(Map reserv) throws DataAccessException;
+	
+	public int insertNoUserBooking(Map reserv) throws DataAccessException;
 }

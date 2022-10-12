@@ -15,6 +15,7 @@ public class ReservVO {
 	private int min_People;
 	private int max_People;
 	private String store_introduce;
+	private int reserv_pay;
 	
 	public ReservVO() {
 		
@@ -23,8 +24,16 @@ public class ReservVO {
 	public ReservVO(String seller_id,String store_nic,String seller_tel,
 			String seller_name,String seller_addr,String seller_bizReg,
 			String open_time,String close_time,int min_People,int max_People,
-			String store_introduce) {
+			String store_introduce,int reserv_pay) {
 		
+	}
+
+	public int getReserv_pay() {
+		return reserv_pay;
+	}
+
+	public void setReserv_pay(int reserv_pay) {
+		this.reserv_pay = reserv_pay;
 	}
 
 	public String getSeller_id() {

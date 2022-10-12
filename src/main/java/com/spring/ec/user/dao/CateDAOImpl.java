@@ -130,4 +130,17 @@ public class CateDAOImpl implements CateDAO {
 	public ReservVO selectStoreInfo2(String seller_id) throws DataAccessException {
 		return sqlSession.selectOne("mapper.category.selectStoreInfo", seller_id);
 	}
+	@Override
+	public int insertBooking(Map reserv) throws DataAccessException {
+		int book_num = sqlSession.selectOne("mapper.category.selectNewUserBook_num");
+		reserv.put("book_num", book_num);
+		return sqlSession.insert("mapper.category.insertUserBooking", reserv);
+	}
+	
+	@Override
+	public int insertNoUserBooking(Map reserv) throws DataAccessException {
+		int book_num = sqlSession.selectOne("mapper.category.selectNewNoUserBook_num");
+		reserv.put("book_num", book_num);
+		return sqlSession.insert("mapper.category.insertNoUserBooking", reserv);
+	}
 }

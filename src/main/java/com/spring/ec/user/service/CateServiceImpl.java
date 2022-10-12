@@ -112,4 +112,13 @@ public class CateServiceImpl implements CateService {
 	public String selectsellerwishsum(String seller_id) throws DataAccessException {
 		return cateDAO.selectsellerwishsum(seller_id);
 	}
+	
+	@Override
+	public int addBooking(Map booking) throws Exception{
+		return cateDAO.insertBooking(booking);
+	}
+	@Override
+	public int addNoUserBooking(Map booking) throws Exception{
+		return cateDAO.insertNoUserBooking(booking);
+	}
 }

@@ -1,6 +1,7 @@
 package com.spring.ec.user.controller;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ec.seller.vo.StoreVO;
@@ -41,7 +43,7 @@ public class CateControllerImpl implements CateController {
 	@Autowired
 	ReviewVO reviewVO;
 	
-	// 카테고리
+	// ī�װ���
 	@Override
 	@RequestMapping(value = "/category.do", method = RequestMethod.GET)
 	public ModelAndView category(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -74,7 +76,7 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 
-	/* 검색 */
+	/* �˻� */
 	@Override
 	@RequestMapping(value = "/searchcategory.do", method = RequestMethod.GET)
 	public ModelAndView searchcategory(@RequestParam(value = "search") String search,
@@ -92,17 +94,17 @@ public class CateControllerImpl implements CateController {
 		System.out.println("listMap::::" + listMap);
 		System.out.println("Type is: " + listMap.getClass());
 
-		if (area == null || area.equals("null") || area.equals("지역")) {
+		if (area == null || area.equals("null") || area.equals("����")) {
 			listMap.put("area", "null");
 		} else {
 			listMap.put("area", area);
 		}
 		
-		if (kind == null || kind.equals("null")|| kind.equals("업종")) {
+		if (kind == null || kind.equals("null")|| kind.equals("����")) {
 			listMap.put("kind", "null");
-		} else if (kind.equals("먹거리")) {
+		} else if (kind.equals("�԰Ÿ�")) {
 			listMap.put("kind", "10");
-		} else if (kind.equals("볼거리")) {
+		} else if (kind.equals("���Ÿ�")) {
 			listMap.put("kind", "20");
 		} else {
 			listMap.put("kind", kind);
@@ -140,7 +142,7 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 
-	/* 상세조회 */
+	/* ����ȸ */
 	@Override
 	@RequestMapping(value = "/storeInfo.do", method = RequestMethod.GET)
 	public ModelAndView storeInfo(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request,
@@ -156,7 +158,7 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 
-	/* 리뷰 좋아요 up */
+	/* ���� ���ƿ� up */
 	@Override
 	@RequestMapping(value = "/reviewlike.do", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody String reviewlike(@RequestParam(value = "review_num") int reviewnum,
@@ -170,7 +172,7 @@ public class CateControllerImpl implements CateController {
 
 	
 	//221005
-	// 찜하기
+	// ���ϱ�
 	@Override
 	@RequestMapping(value = "/addwish.do", method = RequestMethod.POST)
 	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id,
@@ -181,7 +183,7 @@ public class CateControllerImpl implements CateController {
 		listMap.put("seller_id", seller_id);
 		listMap.put("user_id", user_id);
 		int result = cateService.addwish(listMap);
-		// 찜개수 가져오기
+		// �򰳼� ��������
 		String wishsellsum = cateService.selectsellerwishsum(seller_id);
 
 
@@ -196,7 +198,7 @@ public class CateControllerImpl implements CateController {
 
 	
 	//221005
-	// 찜삭제
+	// �����
 	@Override
 	@RequestMapping(value = "/delwish.do", method = RequestMethod.POST)
 	public @ResponseBody String delwish(@RequestParam(value = "seller_id") String seller_id,
@@ -217,7 +219,7 @@ public class CateControllerImpl implements CateController {
 		return wishsellsum;
 	}
 
-	// 다중 이미지 글 추가하기
+	// ���� �̹��� �� �߰��ϱ�
 	/*
 	 * @Override
 	 * 
@@ -233,7 +235,7 @@ public class CateControllerImpl implements CateController {
 	 * name = (String)enu.nextElement(); String value =
 	 * multipartRequest.getParameter(name); reviewMap.put(name, value); }
 	 * 
-	 * //로그인 시 세션에 저장된 회원 정보에서 글쓴이 아이디를 얻어와서 Map에 저장합니다. HttpSession session =
+	 * //�α��� �� ���ǿ� ����� ȸ�� �������� �۾��� ���̵� ���ͼ� Map�� �����մϴ�. HttpSession session =
 	 * multipartRequest.getSession(); MemberVO memberVO =
 	 * (MemberVO)session.getAttribute("member"); String id = memberVO.getUser_id();
 	 * reviewMap.put("user_id", id); reviewMap.put("seller_id", seller_id);
@@ -253,7 +255,7 @@ public class CateControllerImpl implements CateController {
 	 * = new File(REVIEW_IMAGE_REPO + "\\" + review_num); //destDir.mkdirs();
 	 * FileUtils.moveFileToDirectory(srcFile, destDir, true); } }
 	 * 
-	 * message = "<script>"; message += " alert('리뷰를 추가했습니다.');";
+	 * message = "<script>"; message += " alert('���並 �߰��߽��ϴ�.');";
 	 * 
 	 * message += " location.href='" + multipartRequest.getContextPath() +
 	 * "/board/listArticles.do'; ";
@@ -265,7 +267,7 @@ public class CateControllerImpl implements CateController {
 	 * File(REVIEW_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
 	 * srcFile.delete(); } }
 	 * 
-	 * message = "<script>"; message += " alert('오류가 발생했습니다. 다시 시도해 주세요');"; message
+	 * message = "<script>"; message += " alert('������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');"; message
 	 * += " location.href='" + multipartRequest.getContextPath() +
 	 * "/board/articleForm.do'; "; message += " </script>"; resEnt = new
 	 * ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -274,7 +276,7 @@ public class CateControllerImpl implements CateController {
 	
 	
 	
-	//리뷰 등록
+	//���� ���
 	@Override
 	@RequestMapping(value="/addreview.do", method = RequestMethod.POST)
 	public ModelAndView addreview(@ModelAttribute("review") ReviewVO review, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -290,19 +292,13 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 	
-	
-	
-	
-	
-	
-
-	// 예약페이지
 	@Override
 	@RequestMapping(value = "/reservation.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView reservation(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-		String seller_id = "stest002";
 		ReservVO reservInfo = cateService.selectStoreInfo(seller_id);
+		HttpSession session = request.getSession();
+		session.setAttribute("reservInfo", reservInfo);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
 		mav.addObject("reservInfo", reservInfo);
@@ -310,10 +306,62 @@ public class CateControllerImpl implements CateController {
 	}
 
 	@Override
-	@RequestMapping(value = "/reservCheck", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView reservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/reservCheck/nonpay", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView reservCheck(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
+		HttpSession session = request.getSession();
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		String user_name = request.getParameter("user_name");
+		int user_tel = Integer.parseInt(request.getParameter("user_tel"));
+		String user_email = request.getParameter("user_email");
+		String user_id = memberVO.getUser_id();
+		ReservVO reservInfo = cateService.selectStoreInfo(seller_id);
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@Override
+	@RequestMapping(value = "/reservCheck", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView unreservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		Map booking = new HashMap();
+		HttpSession session = request.getSession();
+		ReservVO reservInfo = (ReservVO)session.getAttribute("reservInfo");
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		String user_id = null;
+		if(member != null) {
+			user_id = member.getUser_id();
+			booking.put("user_id", user_id);
+		}
+		String user_name = request.getParameter("user_name");
+		String user_tel = request.getParameter("user_tel");
+		String user_email = request.getParameter("user_email");
+		String user_hope = request.getParameter("user_hope");
+		String reserv_date = request.getParameter("reserv_date");
+		String reserv_time2 = request.getParameter("reserv_time");
+		String reserv_time = reserv_time2.trim();
+		String count_pp = request.getParameter("count_pp");
+		String order_id = request.getParameter("order_id");
+		String seller_id = request.getParameter("seller_id");
+		int reserv_pay = reservInfo.getReserv_pay();
+		booking.put("user_name", user_name);
+		booking.put("user_tel", user_tel);
+		booking.put("user_email", user_email);
+		booking.put("user_hope", user_hope);
+		booking.put("reserv_date", reserv_date);
+		booking.put("reserv_time", reserv_time);
+		booking.put("count_pp", count_pp);
+		booking.put("order_id", order_id);
+		booking.put("seller_id", seller_id);
+		booking.put("reserv_pay", reserv_pay);
+		if(member != null) {
+		cateService.addBooking(booking);
+		}else {
+		cateService.addNoUserBooking(booking);	
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("booking", booking);
 		mav.setViewName(viewName);
 		return mav;
 	}
