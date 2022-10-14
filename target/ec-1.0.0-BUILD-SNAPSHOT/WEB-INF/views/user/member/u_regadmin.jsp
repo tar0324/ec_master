@@ -23,13 +23,13 @@ if(!($('#req').is(':checked'))){
 
 function nochk(){
  alert("동의하지 않으면 가입하실 수 없습니다");
-location.href="${contextPath}/main.do";}
+location.href="${contextPath}/user/u_regadmin.do";}
 </script>
 
 
 <meta charset="UTF-8">
 <title>약관동의</title>
-  <link rel="stylesheet" href="${contextPath }/css/regadmin.css">
+
 </head>
 
 <body>
@@ -38,7 +38,7 @@ location.href="${contextPath}/main.do";}
    <td width="100%" height="50%" align="center">
    
    <p align="center" style="margin-top:80px">
-   <span><a href="${contextPath }/main.do"><img src="${contextPath }/image/logo.png" alt="로고사진"></a>
+   <span><a href="${contextPath }/main.do"><img src="${contextPath }/image/logo.png" width="250" height="250" alt="로고사진"></a>
    </span>
    </p>
    <br>

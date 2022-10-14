@@ -1,51 +1,63 @@
 package com.spring.ec.user.controller;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.ec.user.vo.MemberVO;
 
 public interface MemberController {
-	//»ç¿ëÀÚ ¸ÞÀÎÆäÀÌÁö ¿¬°á ¸Þ¼Òµå
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception;
-		
-	//È¸¿ø±â´É
-	//·Î±×ÀÎ Ã¢ Á÷Àü(À¯Àú/¼¿·¯ ±¸ºÐ)
-	public ModelAndView loginform( HttpServletRequest request,HttpServletResponse response) throws Exception;
-	//À¯Àú ·Î±×ÀÎÃ¢
-	public ModelAndView memberform_main(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//À¯Àú È¸¿ø°¡ÀÔ Æû
-	public ModelAndView memberform_udetail(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//À¯Àú ·Î±×ÀÎ
-	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//È¸¿ø°¡ÀÔ ¾à°ü
-	public ModelAndView regadmin(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//·Î±×¾Æ¿ô
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//È¸¿ø°¡ÀÔ ½ÇÇà
-	public ModelAndView addMember(@ModelAttribute("member") MemberVO member, HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//¾ÆÀÌµð Ã£±â
-	public ModelAndView find_id(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	// ¾ÆÀÌµð Ã£±â °á°úÃ¢
-	public ModelAndView find_id_Result(@ModelAttribute("member") MemberVO member, HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//ºñ¹Ð¹øÈ£ Ã£±â
-	public ModelAndView find_pwd(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//ºñ¹Ð¹øÈ£ Ã£±â °á°ú Ã¢
-	public ModelAndView find_pwd_Result(@ModelAttribute("member") MemberVO member, HttpServletRequest request,HttpServletResponse response) throws Exception;
-	
 
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½Î±ï¿½ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+	public ModelAndView loginform(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½Ã¢
+	public ModelAndView memberform_main(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+	public ModelAndView memberform_udetail(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
+	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
+			HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	public ModelAndView regadmin(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// ï¿½Î±×¾Æ¿ï¿½
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public ModelAndView addMember(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
+//	public String idCheck(@RequestBody String filterJSON, HttpServletResponse response, ModelMap model) throws Exception;
+	public String idCheck(HttpServletRequest request) throws Exception;
+
+	public String nickCheck(HttpServletRequest request) throws Exception;
 	
-	
-	
+	 public String mobileCheck(HttpServletRequest request) throws Exception;
+
+	public ModelAndView find_id(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¢
+	public ModelAndView find_id_Result(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+	public ModelAndView find_pwd(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	// ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢
+	public ModelAndView find_pwd_Result(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
+
 }

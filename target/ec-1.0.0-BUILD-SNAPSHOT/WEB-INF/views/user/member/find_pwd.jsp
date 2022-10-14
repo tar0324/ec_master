@@ -12,12 +12,37 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
+    <script>
+   function pwd_search(f) {
+    	
+    	
+    	if(f.user_id.value.length < 1) {
+    	alert("아이디를 입력해주세요");
+    	
+    	}else if(f.user_name.value.length < 1){
+    			alert("이름을 입력해주세요");
+    			
+    }else if(f.user_email.value.length < 1){
+    			alert("이메일을 입력해주세요");
+    			
+    }else if(f.prove_ck.value.length < 1){
+    			alert("인증번호를 입력해주세요");
+    			
+    }
+    	else {
+    	f.action="${contextPath}/user/find_pwd_Result.do"
+    	f.submit();
+    }
+  
+    }
+    </script>
         <meta charset="UTF-8">                                                                       
         <title>아이디찾기</title>
         <link rel="stylesheet" href="${contextPath }/css/find_pwd.css">
 
     </head>
     <body>
+    <form  method="post">
     	<div id="body-wrapper">
         <div id="top">
         <ul>
@@ -32,19 +57,19 @@
         <img src="https://static.nid.naver.com/images/web/user/h_find_pw2.gif" width="70" height="22" alt="비밀번호 찾기">
         </h2>
         
-        <p style="font-size:12px;">회원정보에 저장된 성명과 휴대전화번호를 이용하여 아이디를 찾을 수 있습니다.
+        <p style="font-size:12px;">회원정보에 저장된 아이디, 성명, 이메일인증을 이용하여 비밀번호를 찾을 수 있습니다.
         <table style="margin:auto">
         <tr>
         <td>아이디 </td> 
-        <td><input type="text" id="user_id"></td>
+        <td><input type="text" id="user_id" name="user_id"></td>
         </tr>
         <tr>
         <td>성명 </td> 
-        <td><input type="text" id="user_name"></td>
+        <td><input type="text" id="user_name" name="user_name"></td>
         </tr>
         <tr>
-        <td>이메일</td>
-        <td><input type="text" id="email"></td>
+        <td>본인확인 이메일</td>
+        <td><input type="text" id="user_email" name="user_email" placeholder="abc@google.com"></td>
         </tr>
         <tr>
         <td>
@@ -52,12 +77,12 @@
         </tr>
         <tr>
         <td>인증번호 확인</td>
-        <td><input type="text" id="prove_ck"></td>
+        <td><input type="text" id="prove_ck" name="prove_ck"></td>
         </tr>
         </table>
         </div>
         <div style="text-align:center" class="ok">
-        <input type="button" id="ok2"value="확인">
+        <input type="button" id="ok2" name="ok" onclick="pwd_search(this.form)" value="확인">
         </div>
         
         
@@ -67,7 +92,8 @@
    
 	
      
-    <script src="${contextPath }/js/memberForm_udetail.js"></script>
+   
 	</div>
+	</form>
     </body>
 </html>

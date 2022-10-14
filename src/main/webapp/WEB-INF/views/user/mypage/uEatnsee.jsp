@@ -7,104 +7,99 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>먹플리 & 볼플리</title>
+<title>예약 조회</title>
 </head>
 <style type="text/css">
-.tg  {border-collapse:collapse;border-color:#ccc;border-spacing:0;}
-.tg td{background-color:#fff;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
-  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg th{background-color:#f0f0f0;border-color:#ccc;border-style:solid;border-width:1px;color:#333;
-  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-jpx8{font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif !important;font-size:10px;text-align:center;
-  vertical-align:top}
-.tg .tg-i4e2{font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif !important;font-size:12px;text-align:center;
-  vertical-align:top}
-.tg .tg-qvqu{font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif !important;font-size:10px;text-align:left;
-  vertical-align:top}
+.tg {
+	border-collapse: collapse;
+	border-color: #ccc;
+	border-spacing: 0;
+	width: 900px;
+}
+
+.tg td {
+	background-color: #fff;
+	border-color: #ccc;
+	border-style: solid;
+	border-width: 1px;
+	color: #333;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+	height: 25px;
+}
+
+.tg th {
+	background-color: #f0f0f0;
+	border-color: #ccc;
+	border-style: solid;
+	border-width: 1px;
+	color: #333;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+	height: 30px;
+}
+
+.tg .tg-jpx8 {
+	font-family: "Lucida Sans Unicode", "Lucida Grande",
+		sans-serif !important;
+	font-size: 16px;
+	text-align: center;
+	vertical-align: top;
+	width: 10%;
+}
+
+.tg .tg-i4e2 {
+	font-family: "Lucida Sans Unicode", "Lucida Grande",
+		sans-serif !important;
+	font-size: 18px;
+	text-align: center;
+	vertical-align: top;
+	width: 400px;
+}
+
+.tg .tg-qvqu {
+	font-family: "Lucida Sans Unicode", "Lucida Grande",
+		sans-serif !important;
+	font-size: 14px;
+	text-align: center;
+	vertical-align: top
+}
 </style>
 <body>
 <section>
 <table class="tg">
 <thead>
-  <tr>
+ <tr>
     <th class="tg-i4e2">NO.</th>
+    <th class="tg-i4e2">분류</th>
     <th class="tg-i4e2">가게명</th>
     <th class="tg-i4e2">내용</th>
-    <th class="tg-i4e2">일자</th>
-    <th class="tg-i4e2">비고</th>
+    <th class="tg-i4e2">조회수</th>
+    <th class="tg-i4e2">좋아요</th>
+    <th class="tg-i4e2">싫어요</th>
+    <th class="tg-i4e2">등록일</th>
   </tr>
 </thead>
 <tbody>
-<tr>
-    <td class="tg-jpx8">10</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
+	<c:forEach var="board" items="${boardList}" varStatus="boardNum">
+	<tr>
+    <td class="tg-jpx8">${boardNum.count }</td>
+    <td class="tg-jpx8">분류</td>
+    <td class="tg-qvqu">가게명</td>
+    <td class="tg-qvqu">${board.u_content }</td>
+    <td class="tg-qvqu">${board.hits }</td>
+    <td class="tg-qvqu">${board.liked }</td>
+    <td class="tg-qvqu">${board.bad }</td>
+    <td class="tg-qvqu">${board.reg_date}</td>
   </tr>
-  <tr>
-    <td class="tg-jpx8">9</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">8</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">7</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">6</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">5</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">4</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">3</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">2</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">1</td>
-    <td class="tg-qvqu">먹고보자</td>
-    <td class="tg-qvqu">외식하기 좋은 곳</td>
-    <td class="tg-qvqu">2022.09.10</td>
-    <td class="tg-qvqu">애견 동반 가능 카페</td>
-  </tr>
+	</c:forEach>
 </tbody>
 </table>
 </section>

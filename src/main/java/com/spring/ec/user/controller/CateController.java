@@ -30,4 +30,7 @@ public interface CateController {
 	public ModelAndView unreservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ModelAndView reservCheck(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public @ResponseBody String reviewdel(@RequestParam(value = "seller_id") String seller_id, @RequestParam(value = "user_id") String user_id, @RequestParam(value = "review_num") String review_num, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView reviewList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public @ResponseBody String reviewmod(@RequestParam(value = "seller_id") String seller_id, @RequestParam(value = "user_id") String user_id, @RequestParam(value = "review_num") String review_num, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

@@ -16,6 +16,8 @@
 	border-color: #ccc;
 	border-spacing: 0;
 	width: 900px;
+	align:center;
+	valign:middle;
 }
 
 .tg td {
@@ -30,6 +32,8 @@
 	padding: 10px 5px;
 	word-break: normal;
 	height: 25px;
+	align:center;
+	valign:middle;
 }
 
 .tg th {
@@ -45,6 +49,8 @@
 	padding: 10px 5px;
 	word-break: normal;
 	height: 30px;
+	align:center;
+	valign:middle;
 }
 
 .tg .tg-jpx8 {
@@ -52,25 +58,29 @@
 		sans-serif !important;
 	font-size: 16px;
 	text-align: center;
-	vertical-align: top
+	vertical-align: top;
 	width: 10%;
+	align:center;
+	valign:middle;
 }
 
 .tg .tg-i4e2 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande",
 		sans-serif !important;
+		width: 400px;
 	font-size: 18px;
 	text-align: center;
-	vertical-align: top
-	width: 400px;
+	vertical-align: top;
+	align:center;
+	valign:middle;
 }
 
 .tg .tg-qvqu {
 	font-family: "Lucida Sans Unicode", "Lucida Grande",
 		sans-serif !important;
 	font-size: 14px;
-	text-align: left;
-	vertical-align: top
+	text-align: center;
+	vertical-align: top;
 }
 </style>
 <body>

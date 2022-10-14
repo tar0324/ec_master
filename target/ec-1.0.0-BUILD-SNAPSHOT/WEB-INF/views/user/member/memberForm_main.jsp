@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script>
+<!-- <script>
 $(document).ready(function() {
 	$('button').click(function() {
 		var value = $("input[type=raid][name=select]:checked").val();
@@ -24,15 +24,14 @@ $(document).ready(function() {
 	})
 });
 
-</script>
+</script> -->
 <style>
 
 #wrapper{
 	width:1000px;
-	margin: 200px auto;
+	margin: 100px auto;
 }
 section{
-	float:left;
 	text-align:center;
 	border:1px solid #ccc;
 	border-radius : 50px;
@@ -54,7 +53,7 @@ border: 1px solid #ccc;
 .at1{
 float:left;
 width:400px;
-height:400px;
+height:200px;
 margin:0px;
 padding:15px;
 margin-top:50px;
@@ -62,7 +61,7 @@ margin-top:50px;
 .at2{
 float:right;
 width:400px;
-height:400px;
+height:200px;
 margin:0px;
 padding:15px;
 margin-top:50px;
@@ -74,8 +73,7 @@ margin-top:50px;
 img{
 dispaly:block;
 margin:auto;
-width:250px;
-height:250px;
+
 }
 #info{
 font-size:4px;
@@ -131,7 +129,7 @@ color:white;
 <div id ="wrapper">
 <section>
 <div id="logo">
-<a href="${contextPath}/main.do"><img src="${contextPath }/image/logo.png" alt="로고사진"></a>
+<a href="${contextPath}/main.do"><img src="${contextPath }/image/logo.png" width="250px" height="250px" alt="로고사진"></a>
 <br><br>
 <h2 align="center">회원가입</h2>
 </div>

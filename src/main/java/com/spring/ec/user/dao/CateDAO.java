@@ -52,4 +52,7 @@ public interface CateDAO {
 	public int insertBooking(Map reserv) throws DataAccessException;
 	
 	public int insertNoUserBooking(Map reserv) throws DataAccessException;
+	public int reviewdel(Map<String, String> listMap) throws DataAccessException;
+	public String selectoneReviewsum(String seller_id) throws DataAccessException;
+	public String reviewmod(Map<String, String> listMap) throws DataAccessException;
 }

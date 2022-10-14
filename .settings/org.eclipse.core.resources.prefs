@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/spring/ec/seller/dao/InfoDAOImpl.java=UTF-8
 encoding//src/main/java/com/spring/ec/user/controller/MemberControllerImpl.java=UTF-8
 encoding//src/main/java/com/spring/ec/user/dao/CateDAOImpl.java=UTF-8
 encoding//src/main/java/com/spring/ec/user/dao/MemberDAOImpl.java=UTF-8

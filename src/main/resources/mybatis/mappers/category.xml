@@ -212,10 +212,30 @@
 	<!-- 리뷰 작성 -->
 	<insert id="addreview" parameterType="reviewVO">
 		<![CDATA[
-			insert into review_tbl(review_num, user_id, seller_id, image_fileName,content,reg_date,mod_date,rating)
-			values((SELECT IFNULL(MAX(review_num)+1,1) FROM review_tbl b), #{user_id}, #{seller_id}, #{image_fileName},#{content},now(),now(),#{rating})			
+			insert into review_tbl(review_num, user_id, seller_id, image_fileName,content,reg_date,mod_date,rating, user_nick)
+			values((SELECT IFNULL(MAX(review_num)+1,1) FROM review_tbl b), #{user_id}, #{seller_id}, #{image_fileName},#{content},now(),now(),#{rating}, #{user_nick})			
 		 ]]>
 	</insert>  
+	
+	<!--리뷰  delete  -->
+	<delete id="reviewdel"  parameterType="String">
+		<![CDATA[ delete FROM review_tbl WHERE user_id = #{user_id} and seller_id = #{seller_id} and review_num = #{review_num} ]]>
+	</delete>
+	
+	<!-- 리뷰 삭제 시 해당 가게의 리뷰 개수 -->
+	<select id="selectoneReviewsum" resultType="String">
+		<![CDATA[
+			SELECT COUNT(*) AS review_count FROM review_tbl WHERE seller_id= #{seller_id}
+		 ]]>
+	</select>
+	
+	<update id="reviewmod" parameterType="reviewVO">
+		<![CDATA[
+			update review_tbl set image_fileName=#{image_fileName}, content=#{content}, mod_date = now(), rating=#{rating} WHERE user_id = #{user_id} and seller_id = #{seller_id} and review_num = #{review_num}
+		 ]]>
+	</update>
+	
+	
 	
 	<!--리뷰 num 가져오기  -->
 	<select id="selectNewList_num" resultType="int">
@@ -248,7 +268,7 @@
 	</insert>
 	<select id="selectNewUserBook_num" resultType="int">
 		<![CDATA[
-			select max(bad_num)+1 from book_tbl 			
+			select max(book_num)+1 from book_tbl 			
 		 ]]>
 	</select>
 	<insert id="insertNoUserBooking" parameterType="java.util.Map">
@@ -262,4 +282,7 @@
 			select max(book_num)+1 from nouser_book_tbl 			
 		 ]]>
 	</select>
+	
+	
+	
 </mapper>

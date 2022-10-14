@@ -19,7 +19,7 @@ String viewName = (String)request.getAttribute("viewName");
 	crossorigin="anonymous">
 <style>
 #board {
-	margin: 0% 20% 10% 20%;
+	margin: 5% 25%;
 }
 #non-hover {
 	pointer-events: none;

@@ -38,6 +38,20 @@
 		<result property="mod_date" column="mod_date" />
 	</resultMap>
 	
+	<resultMap id="likedResult" type="likedVO">
+		<result property="liked_num" column="liked_num" />
+		<result property="user_id" column="user_id" />
+		<result property="list_num" column="list_num" />
+		<result property="liked" column="liked" />
+	</resultMap>
+	
+	<resultMap id="badResult" type="badVO">
+		<result property="bad_num" column="bad_num" />
+		<result property="user_id" column="user_id" />
+		<result property="list_num" column="list_num" />
+		<result property="bad" column="bad" />
+	</resultMap>
+	
 	<select id="selectAllBoardsList" resultMap="boardsResult" parameterType="int">
 		<![CDATA[ 
 		SELECT * FROM u_board_tbl ORDER BY list_num DESC limit #{page},10		
@@ -56,11 +70,9 @@
 		 ]]>
 	</select>
 	
-	<select id="selectAllCommentsList" resultMap="commResult">
-		<![CDATA[ SELECT uct.comment_num, uct.parent_num, uct.list_num, fnc.level, uct.comments, uct.reg_date,uct.mod_date,uct.comment_id
-				FROM(SELECT FUNCTION_hierarchical_comment() AS comment_num, parent_num, list_num, @level AS LEVEL, comments, reg_date, mod_date, comment_id 
-				FROM(SELECT @start_with:=0,@comment_num:=@start_with, @level:=0) tbl JOIN u_comments_tbl WHERE list_num= #{list_num}) fnc
-				left outer join u_comments_tbl uct ON uct.comment_num = fnc.comment_num			
+	<select id="selectAllCommentsList" resultMap="commResult" parameterType="int" >
+		<![CDATA[
+			SELECT * FROM u_comments_tbl WHERE list_num = #{list_num} ORDER BY comment_num			
 		 ]]>
 	</select>
   
@@ -137,6 +149,80 @@
 	<select id="selectNewImage_num" resultType="int">
 		<![CDATA[
 			select max(image_num)+1 from u_image_tbl 			
+		 ]]>
+	</select>
+	<update id="likeUp" parameterType="int">
+		<![CDATA[
+			update u_board_tbl liked SET liked= liked+1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<update id="likeDown" parameterType="int">
+		<![CDATA[
+			update u_board_tbl liked SET liked= liked-1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<select id="selectNewLiked_num" resultType="int">
+		<![CDATA[
+			select max(liked_num)+1 from u_board_liked_tbl 			
+		 ]]>
+	</select>
+	<select id="selectLiked" resultType="String" parameterType="java.util.Map">
+		<![CDATA[
+			select liked from u_board_liked_tbl where user_id = #{user_id} and list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<insert id="insertNewLiked" parameterType="likedVO">
+	<![CDATA[
+			insert into u_board_liked_tbl (liked_num, user_id, list_num, liked)
+			values(#{liked_num}, #{user_id}, #{list_num}, #{liked})
+		]]>
+	</insert>
+	<update id="modLiked" parameterType="java.util.Map">
+	<![CDATA[
+			update u_board_liked_tbl liked set liked = #{liked}
+			where user_id = #{user_id} and list_num = #{list_num}
+		]]>
+	</update>
+	<select id="selectBoardLiked" resultType="int" parameterType="int">
+		<![CDATA[
+			select liked from u_board_tbl where list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<update id="badUp" parameterType="int">
+		<![CDATA[
+			update u_board_tbl bad SET bad= bad+1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<update id="badDown" parameterType="int">
+		<![CDATA[
+			update u_board_tbl bad SET bad= bad-1 WHERE list_num = #{list_num} 			
+		 ]]>
+	</update>
+	<select id="selectNewBad_num" resultType="int">
+		<![CDATA[
+			select max(bad_num)+1 from u_board_bad_tbl 			
+		 ]]>
+	</select>
+	<select id="selectBad" resultType="String" parameterType="java.util.Map">
+		<![CDATA[
+			select bad from u_board_bad_tbl where user_id = #{user_id} and list_num = #{list_num} 			
+		 ]]>
+	</select>
+	<insert id="insertNewBad" parameterType="badVO">
+	<![CDATA[
+			insert into u_board_bad_tbl (bad_num, user_id, list_num, bad)
+			values(#{bad_num}, #{user_id}, #{list_num}, #{bad})
+		]]>
+	</insert>
+	<update id="modBad" parameterType="java.util.Map">
+	<![CDATA[
+			update u_board_bad_tbl bad set bad = #{bad}
+			where user_id = #{user_id} and list_num = #{list_num}
+		]]>
+	</update>
+	<select id="selectBoardBad" resultType="int" parameterType="int">
+		<![CDATA[
+			select bad from u_board_tbl where list_num = #{list_num} 			
 		 ]]>
 	</select>
 </mapper>

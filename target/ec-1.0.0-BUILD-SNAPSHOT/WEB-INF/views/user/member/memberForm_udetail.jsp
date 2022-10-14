@@ -11,12 +11,41 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
 
     <style>
 #container2{
-	height:1400px;
+	height:1500px;
 	width:100%;
 	
+}
+.mobile_ok{
+color:#008000;
+display: none;
+}
+
+.mobile_already{
+color:#6A82FB; 
+display: none;
+}
+.id_ok{
+color:#008000;
+display: none;
+}
+
+.id_already{
+color:#6A82FB; 
+display: none;
+}
+.nick_ok{
+color:#008000;
+display: none;
+}
+
+.nick_already{
+color:#6A82FB; 
+display: none;
 }
 </style>
 
@@ -40,7 +69,7 @@
             <!-- content-->
             <div id="content2">
             
-              <form action="${contextPath}/user/addMember.do" method="post" onsubmit="checkNull()">
+              <form method="post">
 
                 <!-- ID -->
                 <div>
@@ -49,9 +78,12 @@
                         <label for="id">아이디</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="id" name="user_id" class="int" maxlength="20">
-                       
+                        <input type="text" id="id" name="user_id" oninput = "idCheck()" class="int" maxlength="20">
+                      
                  	</span>
+              
+                 	<span class="id_ok">중복되지않는 아이디입니다.</span>
+                 	<span class="id_already">이미 사용중인 아이디입니다.</span> 
                     <span class="error_next_box"></span>
                 </div>
                 <!-- Nickname -->
@@ -61,9 +93,11 @@
                         <label for="nick">닉네임</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="nick" name="user_nick" class="int" maxlength="20">
+                        <input type="text" id="nick" name="user_nick" oninput = "nickCheck()" class="int" maxlength="20">
                        
                  	</span>
+                 		<span class="nick_ok">중복되지않는 닉네임입니다.</span>
+                 	<span class="nick_already">이미 사용중인 닉네임입니다.</span> 
                     <span class="error_next_box"></span>
                 </div>
                 
@@ -74,7 +108,7 @@
                 <div>
                     <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
                     <span class="box int_pass">
-                        <input type="text" id="pswd1" name="user_pwd" class="int" maxlength="20">
+                        <input type="password" id="pswd1" name="user_pwd" class="int" maxlength="20">
                         <span id="alertTxt">사용불가</span>
                         <img src="${contextPath }/image/m_icon_pass.png" id="pswd1_img1" class="pswdImg">
                     </span>
@@ -85,7 +119,7 @@
                 <div>
                     <h3 class="join_title"><label for="pswd2">비밀번호 재확인</label></h3>
                     <span class="box int_pass_check">
-                        <input type="text" id="pswd2" name="pwd_ck" class="int" maxlength="20">
+                        <input type="password" id="pswd2" name="pwd_ck" class="int" maxlength="20">
                         <img src="${contextPath }/image/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
                     </span>
                     <span class="error_next_box"></span>
@@ -115,8 +149,8 @@
                         <!-- BIRTH_MM -->
                         <div id="bir_mm">
                             <span class="box">
-                                <select id="mm" name ="birth_mm" class="sel">
-                                    <option>월</option>
+                                <select id="mm" name ="birth_mm" class="sel" style="width:100%;">
+                                    <option>월</option> <!-- 자동으로 value에 텍스트 월 들어감 -->
                                     <option value="01">1</option>
                                     <option value="02">2</option>
                                     <option value="03">3</option>
@@ -141,15 +175,15 @@
                         </div>
 
                     </div>
-                    <span class="error_next_box"></span>    
+                    <span class="error_next_box" id="error"></span>    
                 </div>
 
                 <!-- GENDER -->
                 <div>
                     <h3 class="join_title"><label for="gender">성별</label></h3>
                     <span class="box gender_code">
-                        <select id="gender" name="gender" class="sel">
-                            <option value="A">성별</option>
+                        <select id="gender" name="gender" class="sel" style="width:100%;">
+                            <option>성별</option>
                             <option value="M">남자</option>
                             <option value="F">여자</option>
                         </select>                            
@@ -159,26 +193,28 @@
 
                 <!-- EMAIL -->
                 <div>
-                    <h3 class="join_title"><label for="email">본인확인 이메일<span class="optional">(선택)</span></label></h3>
+                    <h3 class="join_title"><label for="email">본인확인 이메일</label></h3>
                     <span class="box int_email">
-                        <input type="text" id="email" name="user_email" class="int" maxlength="100" placeholder="선택입력">
+                        <input type="text" id="email" name="user_email" class="int" maxlength="100" placeholder="예)id@google.com">
                     </span>
-                    <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>    
+                    <span class="error_next_box">이메일형식을 확인해주세요.</span>    
                 </div>
 
                 <!-- MOBILE -->
                 <div>
                     <h3 class="join_title"><label for="mobile">휴대전화</label></h3>
                     <span class="box int_mobile">
-                        <input type="tel" id="mobile" name="tel" class="int" maxlength="16" placeholder="하이폰(-)제외 번호만입력">
+                        <input type="tel" id="mobile" name="tel" class="int" oninput = "mobileCheck()" maxlength="16" placeholder="하이폰(-)제외 번호만입력">
                     </span>
+                    	<span class="mobile_ok">중복되지않는 전화번호입니다.</span>
+                 	<span class="mobile_already">이미 사용중인 전화번호입니다.</span> 
                     <span class="error_next_box"></span>    
                 </div>
 
 	
                 <!-- JOIN BTN-->
                 <div class="btn_area">
-                    <input type="submit" id="btnJoin" value="가입하기" />
+                    <input type="button" id="btnJoin" onclick="checkNull(this.form)" value="가입하기" />
                 </div>
 		
                 
@@ -188,8 +224,155 @@
 	
         </div> 
         <!-- wrapper -->
-    <script src="${contextPath }/js/memberForm_udetail.js"></script>
+   <script src="${contextPath }/js/memberForm_udetail.js"></script>
 	</div>
+<script>
+ 	function idCheck(){
+		var user_id = $('#id').val(); 
+		//id=id인값을 user_id에 넣고 아래 url에  data를 보내준다.
+		  $.ajax({ //비동기 방식 (페이지가 넘어가지 않고 그 페이지에서 바로 자료가 변경됨)
+			    type : "post",
+			    url : "${contextPath}/user/idCheck.do",
+			    dataType:"JSON",
+				 data : 'id=' + user_id,
+			    success : function(responseObject) {
+					if(responseObject.result == 'YES') {
+						$('.id_ok').css("display","inline-block");
+						$('.id_already').css("display","none");
+					}else {
+						$('.id_already').css("display","inline-block");
+						$('.id_ok').css("display","none");
+					}
+					
+			    },
+				error: function() {
+		        	alert("에러입니다.");
+		        }
+		});
+	}; 
+	</script>
+	<script>
+ 	function nickCheck(){
+		var user_nick = $('#nick').val(); 
+		//id=id인값을 user_id에 넣고 아래 url에  data를 보내준다.
+		  $.ajax({ //비동기 방식 (페이지가 넘어가지 않고 그 페이지에서 바로 자료가 변경됨)
+			    type : "post",
+			    url : "${contextPath}/user/nickCheck.do",
+			    dataType:"JSON",
+				 data : 'nick=' + user_nick,
+			    success : function(responseObject) {
+					if(responseObject.result == 'YES') {
+						$('.nick_ok').css("display","inline-block");
+						$('.nick_already').css("display","none");
+					}else{
+						$('.nick_already').css("display","inline-block");
+						$('.nick_ok').css("display","none");
+					}
+					
+			    },
+				error: function() {
+		        	alert("에러입니다.");
+		        }
+		});
+	}; 
+	</script>
+		<script>
+ 	function mobileCheck(){
+		var mobile = $('#mobile').val(); 
+		//id=id인값을 user_id에 넣고 아래 url에  data를 보내준다.
+		  $.ajax({ //비동기 방식 (페이지가 넘어가지 않고 그 페이지에서 바로 자료가 변경됨)
+			    type : "post",
+			    url : "${contextPath}/user/mobileCheck.do",
+			    dataType:"JSON",
+				 data : 'mobile=' + mobile,
+			    success : function(responseObject) {
+					if(responseObject.result == 'YES') {
+						$('.mobile_ok').css("display","inline-block");
+						$('.mobile_already').css("display","none");
+					}else{
+						$('.mobile_already').css("display","inline-block");
+						$('.mobile_ok').css("display","none");
+					}
+					
+			    },
+				error: function() {
+		        	alert("에러입니다.");
+		        }
+		});
+	}; 
+	</script>
 	
+	<script>
+        // 전송 버튼 클릭시
+        function checkNull(f){
+            // 입력값 중에 비어있으면 안되는 것들이 있음.
+            // id칸이 비어 있는가?
+            if(f.id.value.length < 1){
+                alert("아이디를 입력하세요.");
+                f.id.value.focus
+                //커서(포커스)를 아이디 인풋요소로 이동
+                
+                
+            } // 닉네임이 비어 있는가?
+            else if(f.nick.value.length < 1){
+                alert("닉네임을 입력하세요.");
+              
+                
+            }
+            // 비밀번호 비어 있는가?
+            else if(f.pswd1.value.length < 1){
+                alert("비밀번호를 입력하세요.");
+              
+                
+            }
+             // 비밀번호 확인 비어 있는가?
+             else if(f.pswd2.value.length < 1){
+                alert("비밀번호 확인을 입력하세요.");
+               
+            }
+             // 이름 비어 있는가?
+             else if(f.name.value.length < 1){
+                alert("이름을 입력하세요.");
+               
+                
+            } 
+             else if(f.yy.value.length < 1){
+                alert("년을 입력하세요.");
+             
+              
+            }
+              else if(f.mm.value == "월"){
+                alert("월을 입력하세요.");
+            }  
+            
+             else if(f.dd.value.length < 1){
+                 alert("일을 입력하세요.");
+             
+               
+             }
+             else if(f.gender.value == "성별"){
+                 alert("성별을 골라주세요.");
+                 document.form.mobile.focus();
+              
+               
+             } 
+             else if(f.email.value.length < 1){
+                 alert("이메일을 입력하세요.");
+             	
+                 
+             }
+            
+             else if(f.mobile.value.length < 1){
+                 alert("전화번호를 입력하세요.");
+              
+               
+             }
+             else{
+            	 f.action="${contextPath}/user/addMember.do"
+            	 f.submit();
+             }
+         }
+     
+    </script>
     </body>
 </html>

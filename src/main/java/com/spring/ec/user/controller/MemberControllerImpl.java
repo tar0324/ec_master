@@ -1,15 +1,13 @@
 package com.spring.ec.user.controller;
 
 import java.io.File;
-
 import java.util.Iterator;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,9 +27,6 @@ import com.spring.ec.user.vo.MemberVO;
 @Controller("memberController")
 public class MemberControllerImpl implements MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberControllerImpl.class);
-	private static final String U_IMAGE_REPO = "C:\\board\\u_board_imagefile";
-	public static final int pagePerList = 10;
-	public static final int pagingCount = 10;
 	@Autowired
 	private MemberService memService;
 	@Autowired
@@ -43,26 +39,12 @@ public class MemberControllerImpl implements MemberController {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
-		return mav;
-	}
-
-	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
-		String image_fileName = null;
-		Iterator<String> fileNames = multipartRequest.getFileNames();
-		while (fileNames.hasNext()) {
-			String fileName = fileNames.next();
-			MultipartFile mFile = multipartRequest.getFile(fileName);
-			image_fileName = mFile.getOriginalFilename();
-			System.out.println("upload=" + image_fileName);
-			File file = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
-			if (mFile.getSize() != 0) {
-				if (!file.exists()) {
-					file.getParentFile().mkdirs();
-					mFile.transferTo(new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + image_fileName));
-				}
-			}
-		}
-		return image_fileName;
+		return mav; 
+		/* interceptor의 getviewName()메서드로 인해서 viewName이 /main으로 잘리고 setAttribute한다.
+		 * request.getAttribute로 받아온뒤 mav에 viewName저장하고 return mav(/main)하여서
+		 * tiles_user.xml의 definition name과 동일해져서 template main_layout.jsp로 이동하고
+		 * <tiles:inserAttribute name="body"에 main.jsp를 열어준다.
+		 */
 	}
 
 	// 로그인
@@ -149,6 +131,70 @@ public class MemberControllerImpl implements MemberController {
 		ModelAndView mav = new ModelAndView("redirect:/main.do");
 		return mav;
 	}
+	
+	@Override
+	@RequestMapping(value = "/user/idCheck.do",  method = RequestMethod.POST )
+	@ResponseBody
+	public String idCheck(HttpServletRequest request) throws Exception {
+		//param은 request.getParameter와 동일하고 jsp에 있는 매개변수를 받기위해 사용
+		//RequestMapping을 통해 .do를 호출하고 호출한 곳에서 a키가 있을 경우
+		//그 값은 자동으로 String user_id에 담기게 된다.
+		String user_id= request.getParameter("id");
+		System.out.println("user_id"+user_id);
+		JSONObject obj = new JSONObject();
+		  int cnt = memService.idCheck(user_id);
+		  if(cnt == 0) {
+			  obj.put("result", "YES");
+		  }else {
+			  obj.put("result", "NO");
+		  }
+		  System.out.println("cnt =" + cnt);
+		  return obj.toJSONString();
+	}
+		  
+		  @Override
+		  @RequestMapping(value="/user/nickCheck.do", method = RequestMethod.POST)
+		  @ResponseBody
+		  public String nickCheck(HttpServletRequest request) throws Exception {
+				//param은 request.getParameter와 동일하고 jsp에 있는 매개변수를 받기위해 사용
+				//RequestMapping을 통해 .do를 호출하고 호출한 곳에서 a키가 있을 경우
+				//그 값은 자동으로 String user_id에 담기게 된다.
+			
+				String user_nick= request.getParameter("nick");
+				System.out.println("user_nick"+user_nick);
+				JSONObject obj = new JSONObject();
+				  int cnt = memService.nickCheck(user_nick);
+				  if(cnt == 0) {
+					  obj.put("result", "YES");
+				  }else {
+					  obj.put("result", "NO");
+				  }
+				  System.out.println("cnt =" + cnt);
+				  return obj.toJSONString();
+
+	}
+		  
+		 @Override
+		 @RequestMapping(value="user/mobileCheck.do", method = RequestMethod.POST)
+		 @ResponseBody
+		  public String mobileCheck(HttpServletRequest request) throws Exception {
+				//param은 request.getParameter와 동일하고 jsp에 있는 매개변수를 받기위해 사용
+				//RequestMapping을 통해 .do를 호출하고 호출한 곳에서 a키가 있을 경우
+				//그 값은 자동으로 String user_id에 담기게 된다.
+			 System.out.println("모바일");
+				String mobile= request.getParameter("mobile");
+				System.out.println("mobile"+ mobile);
+				JSONObject obj = new JSONObject();
+				  int cnt = memService.mobileCheck(mobile);
+				  if(cnt == 0) {
+					  obj.put("result", "YES");
+				  }else {
+					  obj.put("result", "NO");
+				  }
+				  System.out.println("cnt =" + cnt);
+				  return obj.toJSONString();
+
+	}
 
 	@Override
 	@RequestMapping(value = "/user/find_id.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -168,13 +214,17 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView find_id_Result(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-
-		String user_id = memService.find_id_Result(member);
-
 		ModelAndView mav = new ModelAndView();
+		String user_id = memService.find_id_Result(member);
+		if(user_id == null) {
+			mav.addObject("check",1);
+			mav.setViewName(viewName);
+		}else {
+		mav.addObject("check",0);
 		mav.addObject("user_id", user_id);
 		mav.setViewName(viewName);
-		return mav;
+	}
+	return mav;
 	}
 
 	@Override

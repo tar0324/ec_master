@@ -19,10 +19,7 @@ String viewName = (String)request.getAttribute("viewName");
 	crossorigin="anonymous">
 <style>
 #board {
-	margin-top: 5%;
-	margin-left: 24.5%;
-	margin-bottom: 10%;
-	width: 60%;
+	margin: 5% 25%;
 }
 #non-hover {
 	pointer-events: none;
@@ -60,8 +57,17 @@ String viewName = (String)request.getAttribute("viewName");
 	width: 100%;
 	vertical-align: center;
 }
-.paging {
-	padding-left: 0 auto;
+.btn-group{
+	width: 100%;
+	height: 70px;
+	margin-bottom: 5%;
+}
+#title_img{
+	margin: 0 18% 5% 18%;
+}
+.btn{
+	font-size: 20px;
+	font-weight: bold;
 }
 </style>
 <script>
@@ -69,6 +75,7 @@ String viewName = (String)request.getAttribute("viewName");
 		if (isLogOn != '' && isLogOn != 'false') {
 			location.href = boardForm;
 		} else {
+			$('#writeBoard').attr("disabled", true);
 			alert("로그인 후 글쓰기가 가능합니다.(임시 작업중)")
 			location.href = boardForm;
 		}
@@ -83,10 +90,17 @@ String viewName = (String)request.getAttribute("viewName");
 </head>
 <body>
 	<section id="board">
-		
+		<div id="title_img">
+			<img src="${contextPath}/image/playList.png">
+		</div>
+		<div class="btn-group" role="group" aria-label="Horizontal Button Group">
+			<button type="button" class="btn btn-primary" onClick="location.href='${contextPath}/user/u_board'">플레이 리스트</button>
+			<button type="button" class="btn btn-warning" onClick="location.href='${contextPath}/user/u_board/eatpl'">먹 . 플 . 리</button>
+			<button type="button" class="btn btn-danger" onClick="location.href='${contextPath}/user/u_board/seepl'">볼 . 플 . 리</button>
+		</div>
 		<table align="center" width="80%" class="table table-hover" >
 			<thead height="10" align="center" id="non-hover">
-				<td></td>
+				<td>분류</td>
 				<td>글번호</td>
 				<td>작성자</td>
 				<td>제목</td>
@@ -96,7 +110,7 @@ String viewName = (String)request.getAttribute("viewName");
 			<c:choose>
 				<c:when test="${empty boardsList}">
 					<tr height="10" class="table-primary">
-						<td colspan="4">
+						<td colspan="6">
 							<p align="center">
 								<b><span style="font-size: 9pt;">등록된 글이 없습니다.</span></b>
 							</p>
@@ -104,9 +118,8 @@ String viewName = (String)request.getAttribute("viewName");
 					</tr>
 				</c:when>
 				<c:when test="${!empty boardsList}">
-					<c:forEach var="board" items="${boardsList}" varStatus="boardNum">
-					<a class="cls1" href="${contextPath}/user/u_boardView.do?list_num=${board.list_num}">
-						<tr align="center" class="table-primary" onClick="location.href='${contextPath}/user/u_board/u_boardView.do?list_num=${board.list_num}'">
+					<c:forEach var="board" items="${boardsList}" varStatus="boardNum">				
+						<tr align="center" class="table-primary" onClick="location.href='${contextPath}/user/u_board/u_boardView?list_num=${board.list_num}'">
 							<c:choose>
 								<c:when test="${board.category_code==1}">
 								<td width="10%">
@@ -132,7 +145,6 @@ String viewName = (String)request.getAttribute("viewName");
 							<td width="15%"><fmt:formatDate value="${board.reg_date}" /></td>
 							<td width="10%">${board.hits}</td>
 						</tr>
-						</a>
 					</c:forEach>
 				</c:when>
 			</c:choose>
@@ -149,7 +161,7 @@ String viewName = (String)request.getAttribute("viewName");
     		</c:if>
     		<c:if test="${paging.prev == 'true'}">
     			<li class="page-item">
-      				<a class="page-link" aria-label="Previous" href="${contextPath}/<%=viewName%>?page=${paging.startPage -1}">
+      				<a class="page-link" aria-label="Previous" href="${contextPath}<%=viewName%>?page=${paging.startPage -1}">
         				<span aria-hidden="true">&laquo;</span>
         				<span class="sr-only">Previous</span>
       				</a>
@@ -157,7 +169,7 @@ String viewName = (String)request.getAttribute("viewName");
     		</c:if>
     		<c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
     			<li <c:out value="${paging.nowPage == i ? 'class= page-item active' : 'class=page-item'}"/>>
-    			<a class="page-link" href="${contextPath}/<%=viewName%>?page=${i}">${i}</a>
+    			<a class="page-link" href="${contextPath}<%=viewName%>?page=${i}">${i}</a>
     			</li>
     		</c:forEach>
     		<c:if test="${paging.next == 'false'}">
@@ -170,7 +182,7 @@ String viewName = (String)request.getAttribute("viewName");
     		</c:if>
     		<c:if test="${paging.next == 'true'}">
     			<li class="page-item">
-      				<a class="page-link" aria-label="Next"  href="${contextPath}/<%=viewName%>?page=${paging.endPage + 1}">
+      				<a class="page-link" aria-label="Next"  href="${contextPath}<%=viewName%>?page=${paging.endPage + 1}">
         				<span aria-hidden="true">&raquo;</span>
         				<span class="sr-only">Next</span>
       				</a>

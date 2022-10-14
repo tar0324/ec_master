@@ -1,33 +1,28 @@
 package com.spring.ec.user.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.dao.DataAccessException;
 
-import com.spring.ec.seller.vo.ProductVO;
-import com.spring.ec.seller.vo.SellerVO;
-import com.spring.ec.seller.vo.StoreVO;
-import com.spring.ec.user.vo.BoardVO;
 import com.spring.ec.user.vo.MemberVO;
-import com.spring.ec.user.vo.NoticeVO;
-import com.spring.ec.user.vo.ReservVO;
-import com.spring.ec.user.vo.ReviewVO;
-import com.spring.ec.user.vo.WishVO;
 
 public interface MemberDAO {
 
-	// »ç¿ëÀÚ ·Î±×ÀÎ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
 	public MemberVO loginById(MemberVO memberVO) throws DataAccessException;
 
-	// È¸¿ø°¡ÀÔ
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int insertMember(MemberVO memberVO) throws DataAccessException;
-
-	// ºñ¹Ð¹øÈ£ Ã£±â
+	
+	public int idCheck(String user_id)throws Exception ;
+	// ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+	
+	public int nickCheck(String user_nick)throws Exception ;
+	
+	public int mobileCheck(String mobile)throws Exception ;
+	
 	public String find_pwd_Result(MemberVO memberVO) throws DataAccessException;
 
-	// ¾ÆÀÌµð Ã£±â
+	// ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
 	public String find_id_Result(MemberVO memberVO) throws DataAccessException;
-	// °øÁö»çÇ×/ÀÌº¥Æ®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½Ìºï¿½Æ®
 
 }

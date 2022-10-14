@@ -26,19 +26,15 @@
 	float: left;
 	width: 230px;
 	height: auto;
-	margin-bottom: 100px;
+	margin-top: 200px;
 }
 
 #bb { /* body */
 	width: 800px;
-	height: auto;
-	margin-left: 230px;
-	margin-top: 20px;
-	margin-bottom: 100px;
+	height: 800px;
+	margin: 100px auto;
 }
 #aa { /* footer */
-	position: fixed ;
-    bottom : 0;
     width: 100%;
 }
 
@@ -55,15 +51,16 @@
 			<tiles:insertAttribute name="header" />
 		</div>
 		<div id="neo">
-			<tiles:insertAttribute name="side" />
-				<div id="bb">
-				<tiles:insertAttribute name="body" />
-				</div>
-			</div>
-	</div>
+			<tiles:insertAttribute name="side" />		
+		</div>
+		<div id="bb">
+			<tiles:insertAttribute name="body" />
+		</div>
+	
 		<div id="aa">
 				<tiles:insertAttribute name="footer" />
 		</div>
+	</div>
 
 </body>
 </html>

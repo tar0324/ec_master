@@ -1,8 +1,5 @@
 package com.spring.ec.user.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,6 +25,23 @@ public class MemberDAOImpl implements MemberDAO {
 		int result = sqlSession.insert("mapper.member.insertMember", memberVO);
 		return result;
 	}
+	
+	// 아이디중복체크(아이디개수세기)
+	@Override
+	public int idCheck(String user_id)throws Exception  {
+		return sqlSession.selectOne("mapper.member.idCheck", user_id);
+	}
+	
+	@Override
+	public int nickCheck(String user_nick)throws Exception{
+		return sqlSession.selectOne("mapper.member.nickCheck", user_nick);
+	}
+	
+	@Override
+	public int mobileCheck(String mobile)throws Exception{
+		return sqlSession.selectOne("mapper.member.mobileCheck", mobile);
+	}
+	
 
 	// 비밀번호 찾기
 	@Override

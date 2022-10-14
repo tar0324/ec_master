@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script>
+<!-- <script>
 $(document).ready(function() {
 	$('button').click(function() {
 		var value = $("input[type=raid][name=select]:checked").val();
@@ -24,7 +24,7 @@ $(document).ready(function() {
 	})
 });
 
-</script>
+</script> -->
 <style>
 
 #wrapper{

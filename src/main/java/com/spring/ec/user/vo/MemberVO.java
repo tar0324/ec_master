@@ -1,7 +1,5 @@
 package com.spring.ec.user.vo;
 
-import java.sql.Date;
-
 import org.springframework.stereotype.Component;
 
 @Component("userMemberVO")
@@ -19,6 +17,7 @@ public class MemberVO {
 	private String birth_mm;
 	private String birth_dd;
 	private char gender;
+
 
 	public MemberVO() {
 
@@ -135,5 +134,7 @@ public MemberVO(int user_no, String user_id, String user_nick, String user_pwd, 
 	public void setUser_nick(String user_nick) {
 		this.user_nick = user_nick;
 	}
+
+
 
 }

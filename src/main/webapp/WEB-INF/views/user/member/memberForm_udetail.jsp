@@ -16,9 +16,36 @@
 
     <style>
 #container2{
-	height:1400px;
+	height:1500px;
 	width:100%;
 	
+}
+.mobile_ok{
+color:#008000;
+display: none;
+}
+
+.mobile_already{
+color:#6A82FB; 
+display: none;
+}
+.id_ok{
+color:#008000;
+display: none;
+}
+
+.id_already{
+color:#6A82FB; 
+display: none;
+}
+.nick_ok{
+color:#008000;
+display: none;
+}
+
+.nick_already{
+color:#6A82FB; 
+display: none;
 }
 </style>
 
@@ -51,9 +78,12 @@
                         <label for="id">아이디</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="id" name="user_id" class="int" maxlength="20">
-                       
+                        <input type="text" id="id" name="user_id" oninput = "idCheck()" class="int" maxlength="20">
+                      
                  	</span>
+              
+                 	<span class="id_ok">중복되지않는 아이디입니다.</span>
+                 	<span class="id_already">이미 사용중인 아이디입니다.</span> 
                     <span class="error_next_box"></span>
                 </div>
                 <!-- Nickname -->
@@ -63,9 +93,11 @@
                         <label for="nick">닉네임</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="nick" name="user_nick" class="int" maxlength="20">
+                        <input type="text" id="nick" name="user_nick" oninput = "nickCheck()" class="int" maxlength="20">
                        
                  	</span>
+                 		<span class="nick_ok">중복되지않는 닉네임입니다.</span>
+                 	<span class="nick_already">이미 사용중인 닉네임입니다.</span> 
                     <span class="error_next_box"></span>
                 </div>
                 
@@ -117,7 +149,7 @@
                         <!-- BIRTH_MM -->
                         <div id="bir_mm">
                             <span class="box">
-                                <select id="mm" name ="birth_mm" class="sel">
+                                <select id="mm" name ="birth_mm" class="sel" style="width:100%;">
                                     <option>월</option> <!-- 자동으로 value에 텍스트 월 들어감 -->
                                     <option value="01">1</option>
                                     <option value="02">2</option>
@@ -143,14 +175,14 @@
                         </div>
 
                     </div>
-                    <span class="error_next_box"></span>    
+                    <span class="error_next_box" id="error"></span>    
                 </div>
 
                 <!-- GENDER -->
                 <div>
                     <h3 class="join_title"><label for="gender">성별</label></h3>
                     <span class="box gender_code">
-                        <select id="gender" name="gender" class="sel">
+                        <select id="gender" name="gender" class="sel" style="width:100%;">
                             <option>성별</option>
                             <option value="M">남자</option>
                             <option value="F">여자</option>
@@ -172,8 +204,10 @@
                 <div>
                     <h3 class="join_title"><label for="mobile">휴대전화</label></h3>
                     <span class="box int_mobile">
-                        <input type="tel" id="mobile" name="tel" class="int" maxlength="16" placeholder="하이폰(-)제외 번호만입력">
+                        <input type="tel" id="mobile" name="tel" class="int" oninput = "mobileCheck()" maxlength="16" placeholder="하이폰(-)제외 번호만입력">
                     </span>
+                    	<span class="mobile_ok">중복되지않는 전화번호입니다.</span>
+                 	<span class="mobile_already">이미 사용중인 전화번호입니다.</span> 
                     <span class="error_next_box"></span>    
                 </div>
 
@@ -190,8 +224,84 @@
 	
         </div> 
         <!-- wrapper -->
-    <script src="${contextPath }/js/memberForm_udetail.js"></script>
+   <script src="${contextPath }/js/memberForm_udetail.js"></script>
 	</div>
+<script>
+ 	function idCheck(){
+		var user_id = $('#id').val(); 
+		//id=id인값을 user_id에 넣고 아래 url에  data를 보내준다.
+		  $.ajax({ //비동기 방식 (페이지가 넘어가지 않고 그 페이지에서 바로 자료가 변경됨)
+			    type : "post",
+			    url : "${contextPath}/user/idCheck.do",
+			    dataType:"JSON",
+				 data : 'id=' + user_id,
+			    success : function(responseObject) {
+					if(responseObject.result == 'YES') {
+						$('.id_ok').css("display","inline-block");
+						$('.id_already').css("display","none");
+					}else {
+						$('.id_already').css("display","inline-block");
+						$('.id_ok').css("display","none");
+					}
+					
+			    },
+				error: function() {
+		        	alert("에러입니다.");
+		        }
+		});
+	}; 
+	</script>
+	<script>
+ 	function nickCheck(){
+		var user_nick = $('#nick').val(); 
+		//id=id인값을 user_id에 넣고 아래 url에  data를 보내준다.
+		  $.ajax({ //비동기 방식 (페이지가 넘어가지 않고 그 페이지에서 바로 자료가 변경됨)
+			    type : "post",
+			    url : "${contextPath}/user/nickCheck.do",
+			    dataType:"JSON",
+				 data : 'nick=' + user_nick,
+			    success : function(responseObject) {
+					if(responseObject.result == 'YES') {
+						$('.nick_ok').css("display","inline-block");
+						$('.nick_already').css("display","none");
+					}else{
+						$('.nick_already').css("display","inline-block");
+						$('.nick_ok').css("display","none");
+					}
+					
+			    },
+				error: function() {
+		        	alert("에러입니다.");
+		        }
+		});
+	}; 
+	</script>
+		<script>
+ 	function mobileCheck(){
+		var mobile = $('#mobile').val(); 
+		//id=id인값을 user_id에 넣고 아래 url에  data를 보내준다.
+		  $.ajax({ //비동기 방식 (페이지가 넘어가지 않고 그 페이지에서 바로 자료가 변경됨)
+			    type : "post",
+			    url : "${contextPath}/user/mobileCheck.do",
+			    dataType:"JSON",
+				 data : 'mobile=' + mobile,
+			    success : function(responseObject) {
+					if(responseObject.result == 'YES') {
+						$('.mobile_ok').css("display","inline-block");
+						$('.mobile_already').css("display","none");
+					}else{
+						$('.mobile_already').css("display","inline-block");
+						$('.mobile_ok').css("display","none");
+					}
+					
+			    },
+				error: function() {
+		        	alert("에러입니다.");
+		        }
+		});
+	}; 
+	</script>
+	
 	<script>
         // 전송 버튼 클릭시
         function checkNull(f){

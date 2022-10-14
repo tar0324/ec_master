@@ -10,8 +10,6 @@
 <title>찜 목록</title>
 </head>
 <style type="text/css">
-
-
 .tg {
 	border-collapse: collapse;
 	border-color: #ccc;
@@ -30,6 +28,7 @@
 	overflow: hidden;
 	padding: 10px 5px;
 	word-break: normal;
+	height: 25px;
 }
 
 .tg th {
@@ -39,26 +38,27 @@
 	border-width: 1px;
 	color: #333;
 	font-family: Arial, sans-serif;
-	font-size: 14px;
+	font-size: 20px;
 	font-weight: normal;
 	overflow: hidden;
 	padding: 10px 5px;
 	word-break: normal;
+	height: 30px;
 }
 
 .tg .tg-jpx8 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande",
 		sans-serif !important;
-	font-size: 10px;
+	font-size: 16px;
 	text-align: center;
 	vertical-align: top;
-	width: 10%;
+	width: 8%;
 }
 
 .tg .tg-i4e2 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande",
 		sans-serif !important;
-	font-size: 12px;
+	font-size: 18px;
 	text-align: center;
 	vertical-align: top;
 	width: 400px;
@@ -67,7 +67,7 @@
 .tg .tg-qvqu {
 	font-family: "Lucida Sans Unicode", "Lucida Grande",
 		sans-serif !important;
-	font-size: 10px;
+	font-size: 14px;
 	text-align: left;
 	vertical-align: top;
 }

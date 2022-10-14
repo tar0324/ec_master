@@ -14,11 +14,11 @@ request.setCharacterEncoding("utf-8");
 <style>
 #write{
 	margin-top: 5%;
-	margin-left: 30%;
+	margin-left: 33%;
 	margin-bottom: 10%;
-	width: 40%;
 	border: 1px solid ;
-	border-color: white; 
+	border-color: white;
+	width: 750px; 
 }
 #tr_btn_modify {
 	display: none;
@@ -59,24 +59,13 @@ request.setCharacterEncoding("utf-8");
 		obj.action="${contextPath}/user/u_board";
 		obj.submit();
 	}
-	var cnt = 1;
-	function fn_addFile() {
-		if(cnt == 1){
-		$("#d_file").append(
-			"<input type='file' name='image_fileName" + cnt + " onchange='readURL(this);'/>");
-		cnt++;
-		} else {
-		$("#d_file").append(
-			"<br>" + "<input type='file' name='image_fileName" + cnt + " onchange='readURL(this);'/>");
-		}
-	}
 </script>
 </head>
 <body>
 	<div id="write">
 	<h1 style="text-align: center">플레이 리스트 글 작성</h1>
-	<form name="articleForm" method="post"
-		action="${contextPath}/board/addNewboard.do"
+	<form name="boardForm" method="post"
+		action="${contextPath}/board/addNewboard"
 		enctype="multipart/form-data">
 		<table align="center" class="table table-condensed">
 			<tr>
@@ -86,8 +75,8 @@ request.setCharacterEncoding("utf-8");
 			<tr>
 				<td align="right">카테고리:</td>
 				<td>
-				<select id="category-select" class="form-select" aria-label="category_code">
-					<option selected>플레이 리스트</option>
+				<select id="category-select" class="form-select" aria-label="category_code" name="category_code">
+					<option selected disabled hidden>플레이 리스트</option>
 					<option value="1">먹.플.리</option>
 					<option value="2">볼.플.리</option>
 				</select>
@@ -107,12 +96,7 @@ request.setCharacterEncoding("utf-8");
 				<td align="right">이미지파일:</td>
 				<td>
 				<input type="file" name="image_fileName" onchange="readURL(this);" />
-				<input type="button" value="파일 추가" onClick="fn_addFile()" />
 				</td>
-			</tr>
-			<tr>
-				<td align="right">이미지파일:</td>
-				<td id="d_file"></td>	
 			</tr>
 			<tr>
 				<td align="right">이미지 미리보기:</td>

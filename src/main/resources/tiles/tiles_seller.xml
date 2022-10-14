@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Configuration 2.0//EN" 
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="baseLayout" template="/WEB-INF/views/seller/common/main_layout.jsp">
+		<put-attribute name="title" value=""/>
+		<put-attribute name="header" value="/WEB-INF/views/seller/common/header.jsp"/>
+		<put-attribute name="side" value="/WEB-INF/views/seller/common/left_side.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/seller/common/footer.jsp"/>
+	</definition>
+	
+	<!-- 에러페이지 -->
+	<definition name="/error" extends="baseLayout">
+		<put-attribute name="title" value="먹고보자 :: 에러"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/infomgt/error.jsp"/>
+	</definition>
+	
+	<!-- 메인페이지 -->
+	<definition name="/sellerMain" extends="baseLayout">
+		<put-attribute name="title" value="먹고보자 :: 사장님 광장"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/seller_main.jsp"/>
+	</definition>
+	
+	<!-- 메뉴 관리 -->
+	<definition name="/menumanage" extends="baseLayout">
+		<put-attribute name="title" value="먹고보자 :: 메뉴 관리"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/infomgt/menu.jsp"/>
+	</definition>
+	
+	<!-- 메뉴 관리 - 검색 -->
+	<definition name="/searchmenu" extends="baseLayout">
+		<put-attribute name="title" value="먹고보자 :: 메뉴 관리"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/infomgt/menu.jsp"/>
+	</definition>
+	
+	<!-- 메뉴 관리 - 상세 -->
+	<definition name="/menudetail" extends="baseLayout">
+		<put-attribute name="title" value="먹고보자 :: 메뉴 상세"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/infomgt/menu.jsp"/>
+	</definition>
+</tiles-definitions>

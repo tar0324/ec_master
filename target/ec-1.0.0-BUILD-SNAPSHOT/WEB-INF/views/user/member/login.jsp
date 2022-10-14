@@ -11,17 +11,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:choose>
-	<c:when test="${result=='loginFailed' }">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+	
 	<script>
-	window.onload=function(){
-		alert("아이디나 비밀번호가 틀립니다. 다시로그인하세요!")
-	}
-	</script>
-	</c:when>
-	</c:choose>
+	<!-- controller login.do참고 -->
+/* 	$(document).ready(function() {
+		if(${isLogOn} == false){
+			alert("로그인 실패");
+		}
+	});	 */
+	
+	$(document).ready(function() {
+		if(${result =="loginFailed"}){
+			alert("아이디와 비밀번호를 확인해주세요.");
+		}
+	});
+	
 
-<script>
+	</script>
+	
+	<script>
+	$(document).ready(function(){
+    $('.main i').on('click',function(){
+        $('input').toggleClass('active');
+        if($('input').hasClass('active')){
+            $(this).attr('class',"fa fa-eye-slash fa-lg")
+            .prev('input').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa fa-eye fa-lg")
+            .prev('input').attr('type','password');
+        }
+    });
+});
+	</script>
+	
+
+
+ <script>
 function select_ck(f){
 	if($("input[name='select']:checked").val()=='사용자'){
 		alert('사용자로 로그인합니다.');
@@ -34,21 +60,23 @@ function select_ck(f){
 		
 		}
 }
-</script>
+</script> 
 
 <style>
 #wrapper{
 	width:1000px;
-	margin: 200px auto;
+	margin: 100px auto;
 }
-section{
-	float:left;
+#logo{
 	text-align:center;
+}
+#gg{
+	/* text-align:center;  */
 	border:1px solid #ccc;
 	border-radius : 50px;
-	margin-bottom:200px;
-	height:550px;
-	
+	height:600px;
+	width: 802px;
+	margin: 0px 10%;	
 }
 table{
 font-size:12px;
@@ -79,12 +107,7 @@ height:300px;
 
 }
 
-img{
-display:block;
-margin:auto;
-width:200px;
-height:200px;
-}
+
 #kakao{
 display:block;
 margin:auto;
@@ -94,12 +117,13 @@ height:30px;
 }
 #info{
 font-size:4px;
-align:center;
+text-align:center;
 }
 #wide{
 width:100%;
 
 }
+
 #center{
 border:1px solid;
 width:380px;
@@ -120,11 +144,14 @@ padding-left:30px;
 #signup1{
 text-decoration:none;
 color:black;
+
 }
 
 #signup2{
+
 text-decoration:none;
 color:black;
+
 }
 #find_id{
 text-decoration:none;
@@ -134,13 +161,6 @@ color:black;
 text-decoration:none;
 color:black;
 }
-<!-- alert창 꾸미기 -->
-swal({
-    title: "참고",
-    text: "World!",
-    icon: "info" /*"info,success,warning,error" 중 택1 */
-});
-
 
 </style>
 
@@ -152,9 +172,9 @@ swal({
 <body>
 
 <div id ="wrapper">
-<section>
+<section id="gg" >
 <div id="logo">
-<a href="${contextPath }/main.do"><img src="${contextPath }/image/logo.png" alt="로고사진"></a>
+<a href="${contextPath }/main.do"><img src="${contextPath }/image/logo.png" width=200px height=200px  alt="로고사진"></a>
 <hr>
 </div>
 
@@ -173,15 +193,20 @@ swal({
 		<td colspan="3"><input type="text" id="wide" name="user_id" size="20" placeholder="아이디"><br><br></td>
 		</tr>      
         <tr height="2">
-        <td colspan="3"> <input type="password" id="wide" name="user_pwd" size="20" placeholder="비밀번호"><br></td>
+       
+        <td class="main" colspan="3"> <input type="password" id="wide" name="user_pwd" size="20" placeholder="비밀번호" >
+   			<i class="fa-solid fa-eye"></i>	<label>비밀번호 표시</label> 
+   		</td>
+   		
+       
         </tr>
         
         <tr>
-        <td align="left"><label><input type="checkbox" id="save">ID 저장<br><br></label></td>
+        <td><br><br></td>
         <td></td>
         
      
-        <td><a href="https://kauth.kakao.com/oauth/authorize?client_id=9a4ded69fa035326c4f5e9e4ff45d735&redirect_uri=http://localhost:8080/ec/kakao&response_type=code"><img src="${contextPath }/image/kakao_login_small.png" id="kakao" alt="카카오로그인"></a></td>
+        <td><a href="https://kauth.kakao.com/oauth/authorize?client_id=9a4ded69fa035326c4f5e9e4ff45d735&redirect_uri=http://localhost:8080/ec/kakaoLogin&response_type=code"><img src="${contextPath }/image/kakao_login_small.png" id="kakao" alt="카카오로그인"></a></td>
       
        
         </tr>
@@ -237,9 +262,11 @@ swal({
         
 
             <tr>
-            <td><br><a href="${contextPath}/user/memberForm_main.do" id="signup2">회원가입</a></td>
+            <td style=text-align:center><br><a href="${contextPath}/user/memberForm_main.do" id="signup2">회원가입</a></td>
         	</tr>
       </table>
+      
+    
        </form>
       </article>
      

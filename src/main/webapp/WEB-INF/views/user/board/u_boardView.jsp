@@ -83,6 +83,23 @@ request.setCharacterEncoding("utf-8");
 	display: block;
 	margin: 0 auto;
 }
+.lNb{
+	display: inline-block;
+}
+.likebtn{
+	float: left;
+	border: none;
+	background-color: white;
+}
+.badbtn{
+	float: right;
+	border: none;
+	background-color: white;
+}
+.likeNbad{
+	width: 330px;
+	margin: 20px auto;
+}
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script
@@ -96,7 +113,7 @@ request.setCharacterEncoding("utf-8");
 		obj.submit();
 	}	
 	function fn_modify_article(obj){
-		obj.action="${contextPath}/user/modBoard.do";
+		obj.action="${contextPath}/user/u_board/mod_board";
 		obj.submit();
 	}
 	
@@ -113,14 +130,113 @@ request.setCharacterEncoding("utf-8");
 		document.body.appendChild(form);
 		form.submit();
 	}
-	function readURL(input){
-		if(input.files && input.files[0]){
-			var reader = new FileReader();
-			reader.onload = function(e){
-				$('#preview').attr('src', e.target.result);
+	function likeValidation(list_num,user_id){
+		var list_num = list_num;
+		var user_id = user_id;
+		console.log(user_id);
+		var liked = ${liked};
+			if(liked == 1){
+			likeDown(list_num,user_id);
+			}else{
+			likeUp(list_num,user_id);
 			}
-			reader.readAsDataURL(input.files[0]);
 		}
+
+	function likeUp(list_num,user_id) {
+		var user_id = user_id;
+		$.ajax({
+			url:"${contextPath}/user/u_board/likeUp",
+			type : 'POST',
+			dataType:"text",
+			data : {
+				list_num : list_num,
+				user_id : user_id
+			},
+		    success: function (data) {
+		    	console.log("성공");
+	        },
+	        error: function(request, status, error, data) {
+	        	console.log("error: " + error);
+	        	console.log("message: " + request.responseText);
+	        	console.log("Data::::: " + data);
+	        	
+	        }
+		});
+	}
+	function likeDown(list_num,user_id) {
+		var user_id = user_id;
+		$.ajax({
+			url:"${contextPath}/user/u_board/likeDown",
+			type : 'POST',
+			dataType:"text",
+			data : {
+				list_num : list_num,
+				user_id : user_id
+			},
+		    success: function (data) {
+		    	console.log("성공");
+	        },
+	        error: function(request, status, error, data) {
+	        	console.log("error: " + error);
+	        	console.log("message: " + request.responseText);
+	        	console.log("Data::::: " + data);
+	        	
+	        }
+		});
+	}
+	
+	function badValidation(list_num,user_id){
+		var list_num = list_num;
+		var user_id = user_id;
+		var bad = ${bad};
+			if(bad == 1){
+			badDown(list_num,user_id);
+			}else{
+			badUp(list_num,user_id);
+			}
+		}
+
+	function badUp(list_num,user_id) {
+		var user_id = user_id;
+		$.ajax({
+			url:"${contextPath}/user/u_board/badUp",
+			type : 'POST',
+			dataType:"text",
+			data : {
+				list_num : list_num,
+				user_id : user_id
+			},
+		    success: function (data) {
+		    	console.log("성공");
+	        },
+	        error: function(request, status, error, data) {
+	        	console.log("error: " + error);
+	        	console.log("message: " + request.responseText);
+	        	console.log("Data::::: " + data);
+	        	
+	        }
+		});
+	}
+	function badDown(list_num,user_id) {
+		var user_id = user_id;
+		$.ajax({
+			url:"${contextPath}/user/u_board/badDown",
+			type : 'POST',
+			dataType:"text",
+			data : {
+				list_num : list_num,
+				user_id : user_id
+			},
+		    success: function (data) {
+		    	console.log("성공");
+	        },
+	        error: function(request, status, error, data) {
+	        	console.log("error: " + error);
+	        	console.log("message: " + request.responseText);
+	        	console.log("Data::::: " + data);
+	        	
+	        }
+		});
 	}
 </script>
 </head>
@@ -171,10 +287,24 @@ request.setCharacterEncoding("utf-8");
 				</td>
 			</tr>	
 		</table>
+		<div class="likeNbad">
+			<div class = "lNb">
+				<button type="button" class="likebtn" onclick="likeValidation(${board.list_num},'${member.user_id}')" >
+					<img src="${contextPath}/image/liked.png">
+					좋아요 : ${board.liked}
+				</button>
+			</div>
+			<div class = "lNb">
+				<button type="button" class="badbtn" onclick="badValidation(${board.list_num},'${member.user_id}')" >
+					<img src="${contextPath}/image/bad.png">
+					싫어요 : ${board.bad}
+				</button>
+			</div>
+		</div>
 		<c:if test="${member.user_id==board.user_id}">			
-				<input class="writebtn" type="button" value="삭제하기" onClick="fn_remove_article('${contextPath}/user/removeBoard', ${board.list_num})" />
-			</c:if>
-				<input class="writebtn" type="button" value="리스트로 돌아가기" onClick="backToList(this.form)" />
+			<input class="writebtn" type="button" value="삭제하기" onClick="fn_remove_article('${contextPath}/user/removeBoard', ${board.list_num})" />
+		</c:if>
+		<input class="writebtn" type="button" value="리스트로 돌아가기" onClick="backToList(this.form)" />
 	</form>
 	<form action="${contextPath}/u_board/addcomment" method="post">
 		<div class="col-lg-12" id="comments-div">
@@ -183,21 +313,40 @@ request.setCharacterEncoding("utf-8");
             <h3 class="card-title">Comments</h3>
         </div>
         <div class="card-body">
-            <div class="row">
-            <div class="form-group col-sm-2">
-            ${member.user_id}           
-            <input type="hidden" name="comment_id" value="${member.user_id}">
-            <input type="hidden" name="list_num" value="${board.list_num}">
-			</div>
-            <div class="form-group col-sm-8">
-            <input class="form-control input-sm" id="newReplyText" name="comments" type="text" placeholder="댓글 입력...">
-            </div>
-			<div class="form-group col-sm-2">
-			<button type="submit" class="btn btn-primary btn-sm btn-block replyAddBtn">
-			<i class="fa fa-save"></i> 댓글쓰기
-			</button>
-			</div>
-			</div>
+        	<c:if test="${isLogOn == true or isLogOn != null }">
+	            <div class="row">
+	            <div class="form-group col-sm-2">
+	           	<span style="font-size: 20px;"> ${member.user_id}</span>           
+	            <input type="hidden" name="comment_id" value="${member.user_id}">
+	            <input type="hidden" name="list_num" value="${board.list_num}">
+				</div>
+	            <div class="form-group col-sm-8">
+	            <input class="form-control input-sm" id="newReplyText" name="comments" type="text" placeholder="댓글 입력...">
+	            </div>
+				<div class="form-group col-sm-2">
+				<button type="submit" class="btn btn-primary btn-sm btn-block replyAddBtn">
+				<i class="fa fa-save"></i> 댓글쓰기
+				</button>
+				</div>
+				</div>
+			</c:if>
+			<c:if test="${isLogOn == false or isLogOn == null }">
+	            <div class="row">
+	            <div class="form-group col-sm-2">
+	           	<span style="font-size: 20px;"> ${member.user_id}</span>           
+	            <input type="hidden" name="comment_id" value="">
+	            <input type="hidden" name="list_num" value="${board.list_num}">
+				</div>
+	            <div class="form-group col-sm-8">
+	            <input class="form-control input-sm" id="newReplyText" name="comments" type="text" placeholder="댓글 입력...">
+	            </div>
+				<div class="form-group col-sm-2">
+				<button type="submit" class="btn btn-primary btn-sm btn-block replyAddBtn">
+				<i class="fa fa-save"></i> 댓글쓰기
+				</button>
+				</div>
+				</div>
+			</c:if>
 			</div>
 	      <div class="card-footer">
             <table align="center" width="80%" id="table-comment" >
@@ -220,11 +369,11 @@ request.setCharacterEncoding("utf-8");
 							<c:forEach begin="1" end="${comment.level}" step="1">
 								<span style="padding-left: 10px"></span>
 							</c:forEach>
-								<span style="font-size: 20px; font-style: blue;">${comment.comment_id}</span>
+								<span style="font-size: 20px;">${comment.comment_id}</span>
 								&nbsp;&nbsp;${comment.comments}
 							</c:when>
 							<c:otherwise>
-								<span style="font-size: 20px; font-style: blue;">${comment.comment_id}</span>
+								<span style="font-size: 20px;">${comment.comment_id}</span>
 								&nbsp;&nbsp;${comment.comments}
 							</c:otherwise>
 								</c:choose>

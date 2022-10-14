@@ -22,8 +22,8 @@
 	});	 */
 	
 	$(document).ready(function() {
-		if(${isLogOn} == false){
-			alert("로그인 실패");
+		if(${result =="loginFailed"}){
+			alert("아이디와 비밀번호를 확인해주세요.");
 		}
 	});
 	
@@ -47,7 +47,7 @@
 	
 
 
-<script>
+ <script>
 function select_ck(f){
 	if($("input[name='select']:checked").val()=='사용자'){
 		alert('사용자로 로그인합니다.');
@@ -60,12 +60,12 @@ function select_ck(f){
 		
 		}
 }
-</script>
+</script> 
 
 <style>
 #wrapper{
 	width:1000px;
-	margin: 100px 15%;
+	margin: 100px auto;
 }
 #logo{
 	text-align:center;

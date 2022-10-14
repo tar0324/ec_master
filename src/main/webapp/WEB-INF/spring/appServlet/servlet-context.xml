@@ -4,6 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc
 		https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans
@@ -64,5 +65,14 @@
 	   <beans:bean class="com.spring.ec.common.interceptor.ViewNameInterceptor" />
 </mvc:interceptor>
 </mvc:interceptors>
+
+
+<beans:bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" /> 
+ 
+<!-- jsonView --> 
+<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"> 
+<beans:property name="contentType" value="application/json;charset=UTF-8" /> 
+</beans:bean> 
+
 
 </beans:beans>

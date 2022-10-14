@@ -141,7 +141,22 @@ public class CateControllerImpl implements CateController {
 		mav.addObject("prosumList", prosumList);
 		return mav;
 	}
+	
+	@Override
+	@RequestMapping(value = "/reviewList.do", method = RequestMethod.GET)
+	public ModelAndView reviewList (HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String> listMap = new HashMap<String, String>();
 
+		List ReviewList = cateService.selectReview();
+		List Reviewavgsum = cateService.selectReviewavgsum();
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("reviewList", ReviewList);
+		mav.addObject("reviewavgsum", Reviewavgsum);
+		return mav;
+	}
+	  
+	
 	/* ����ȸ */
 	@Override
 	@RequestMapping(value = "/storeInfo.do", method = RequestMethod.GET)
@@ -172,7 +187,7 @@ public class CateControllerImpl implements CateController {
 
 	
 	//221005
-	// ���ϱ�
+	// 찜추가
 	@Override
 	@RequestMapping(value = "/addwish.do", method = RequestMethod.POST)
 	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id,
@@ -187,12 +202,10 @@ public class CateControllerImpl implements CateController {
 		String wishsellsum = cateService.selectsellerwishsum(seller_id);
 
 
-		String state = "";
-		if (result == 1) {
-			state = "true";
-		} else {
-			state = "false";
-		}
+		/*
+		 * String state = ""; if (result == 1) { state = "true"; } else { state =
+		 * "false"; }
+		 */
 		return wishsellsum;
 	}
 
@@ -282,8 +295,8 @@ public class CateControllerImpl implements CateController {
 	public ModelAndView addreview(@ModelAttribute("review") ReviewVO review, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session = request.getSession();
-		
 		MemberVO mm = (MemberVO) session.getAttribute("member");
+		System.out.println(mm.getUser_nick());
 		review.setUser_id(mm.getUser_id());
 		review.setUser_nick(mm.getUser_nick());
 		int result = cateService.addreview(review);
@@ -291,6 +304,52 @@ public class CateControllerImpl implements CateController {
 		ModelAndView mav = new ModelAndView("redirect:/category.do");
 		return mav;
 	}
+	
+	// 리뷰삭제
+	@Override
+	@RequestMapping(value = "/reviewdel.do", method = RequestMethod.POST)
+	public @ResponseBody String reviewdel(@RequestParam(value = "seller_id") String seller_id,
+			@RequestParam(value = "user_id") String user_id, @RequestParam(value = "review_num") String review_num, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		HttpSession session = request.getSession();
+		Map<String, String> listMap = new HashMap<String, String>();
+		listMap.put("seller_id", seller_id);
+		listMap.put("user_id", user_id);
+		listMap.put("review_num", review_num);
+		int result = cateService.reviewdel(listMap);
+		String Reviewavgsum = cateService.selectoneReviewsum(seller_id);
+		
+		return Reviewavgsum;
+	}
+	
+	// 리뷰수정
+	@Override
+	@RequestMapping(value = "/reviewmod.do", method = RequestMethod.POST)
+	public @ResponseBody String reviewmod(@RequestParam(value = "seller_id") String seller_id,
+			@RequestParam(value = "user_id") String user_id, @RequestParam(value = "review_num") String review_num, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		HttpSession session = request.getSession();
+		Map<String, String> listMap = new HashMap<String, String>();
+		listMap.put("seller_id", seller_id);
+		listMap.put("user_id", user_id);
+		listMap.put("review_num", review_num);
+		
+		String result = cateService.reviewmod(listMap);
+		
+		
+		//수정한 리뷰값 가져오는 controller 작성 필요
+		//List ReviewOne = cateService.selectReviewone(listMap);
+		
+		
+		
+		//listMap.put("reviewone", ReviewOne);
+		//String Reviewavgsum = cateService.selectoneReviewsum(seller_id);
+		
+		return result;
+	}
+	
+	
+	
 	
 	@Override
 	@RequestMapping(value = "/reservation.do", method = { RequestMethod.POST, RequestMethod.GET })

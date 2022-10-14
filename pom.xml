@@ -34,6 +34,32 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+<!-- JSON 라이브러리 -->
+<!-- jackson -->
+
+<dependency>
+
+    <groupId>com.fasterxml.jackson.core</groupId>
+
+    <artifactId>jackson-databind</artifactId>
+
+    <version>2.1.1</version>
+
+</dependency>
+
+<dependency>
+
+<groupId>net.sf.json-lib</groupId>
+
+<artifactId>json-lib-ext-spring</artifactId>
+
+<version>1.0.2</version>
+
+</dependency>
+
+		
+		
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

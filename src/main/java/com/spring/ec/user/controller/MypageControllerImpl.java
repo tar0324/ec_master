@@ -61,6 +61,14 @@ public class MypageControllerImpl implements MypageController {
 	public ModelAndView myplist(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+        MemberVO mm = (MemberVO) session.getAttribute("member");
+        String user_id = mm.getUser_id();
+		
+      //먹플리볼플리 리스트
+        List BoardList = mypageService.selectBoard(user_id);
+        mav.addObject("boardList", BoardList);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -69,6 +77,14 @@ public class MypageControllerImpl implements MypageController {
 	public ModelAndView uReview(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
+		
+        HttpSession session = request.getSession();
+        MemberVO mm = (MemberVO) session.getAttribute("member");
+        String user_id = mm.getUser_id();
+                
+          //리뷰 리스트
+        List ReviewList = mypageService.selectReview(user_id);
+        mav.addObject("reviewList", ReviewList);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -77,6 +93,14 @@ public class MypageControllerImpl implements MypageController {
 	public ModelAndView uBook(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+        MemberVO mm = (MemberVO) session.getAttribute("member");
+        String user_id = mm.getUser_id();
+        
+      //예약 리스트
+        List BookList = mypageService.selectBook(user_id);
+        mav.addObject("bookList", BookList);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -85,6 +109,14 @@ public class MypageControllerImpl implements MypageController {
 	public ModelAndView uLike(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+        MemberVO mm = (MemberVO) session.getAttribute("member");
+        String user_id = mm.getUser_id();
+		
+      //찜목록
+        List wishList = mypageService.selectwish(user_id);
+        mav.addObject("wishList", wishList);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -93,6 +125,14 @@ public class MypageControllerImpl implements MypageController {
 	public ModelAndView uAsk(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+        MemberVO mm = (MemberVO) session.getAttribute("member");
+        String user_id = mm.getUser_id();
+        
+      //1:1문의 리스트
+        List AskList = mypageService.selectAsk(user_id);
+        mav.addObject("askList", AskList);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -101,6 +141,7 @@ public class MypageControllerImpl implements MypageController {
 	public ModelAndView recentView(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    String viewName = (String) request.getAttribute("viewName");
         ModelAndView mav = new ModelAndView();
+        
         mav.setViewName(viewName);
         return mav;
 	}

@@ -17,13 +17,19 @@ import com.spring.ec.user.vo.ReviewVO;
 import com.spring.ec.user.vo.WishVO;
 
 public interface MemberService {
-	//È¸¿ø°¡ÀÔ
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public int addMember(MemberVO memberVO) throws DataAccessException; 
-	//·Î±×ÀÎ
+	//ï¿½Î±ï¿½ï¿½ï¿½
 	public MemberVO login(MemberVO member)throws DataAccessException;
-	//ºñ¹Ð¹øÈ£ Ã£±â
+	
+	public int idCheck(String user_id) throws Exception;
+	//ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+	public int nickCheck(String user_nick) throws Exception;
+	
+	public int mobileCheck(String mobile) throws Exception;
+	
 	public String find_pwd_Result(MemberVO member) throws DataAccessException;
-	//¾ÆÀÌµð Ã£±â
+	//ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
 	public String find_id_Result(MemberVO member) throws DataAccessException;
 
 }

@@ -32,5 +32,6 @@
 			alias="likedVO" />
 		<typeAlias type="com.spring.ec.user.vo.BadVO" alias="badVO" />
 		<typeAlias type="com.spring.ec.user.vo.AskVO" alias="askVO" />
+		<typeAlias type="com.spring.ec.seller.vo.StoreinfosumVO" alias="storeinfosumVO" />
 	</typeAliases>
 </configuration>

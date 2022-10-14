@@ -51,7 +51,7 @@
 		sans-serif !important;
 	font-size: 16px;
 	text-align: center;
-	vertical-align: top
+	vertical-align: top;
 	width: 10%;
 }
 
@@ -60,7 +60,7 @@
 		sans-serif !important;
 	font-size: 18px;
 	text-align: center;
-	vertical-align: top
+	vertical-align: top;
 	width: 400px;
 }
 
@@ -68,7 +68,7 @@
 	font-family: "Lucida Sans Unicode", "Lucida Grande",
 		sans-serif !important;
 	font-size: 14px;
-	text-align: left;
+	text-align: center;
 	vertical-align: top
 }
 </style>
@@ -76,85 +76,26 @@
 <section>
 <table class="tg">
 <thead>
-  <tr>
+ <tr>
     <th class="tg-i4e2">NO.</th>
-    <th class="tg-i4e2">예약한 곳</th>
+    <th class="tg-i4e2">가게명</th>
     <th class="tg-i4e2">예약일자</th>
-    <th class="tg-i4e2">예약 금액</th>
+    <th class="tg-i4e2">예약인원</th>
+    <th class="tg-i4e2">예약금액</th>
     <th class="tg-i4e2">비고</th>
   </tr>
 </thead>
 <tbody>
-<tr>
-    <td class="tg-jpx8">10</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
+	<c:forEach var="review" items="${reviewList }" varStatus="revNum">
+	<tr>
+    <td class="tg-jpx8">${revNum.count }</td>
+    <td class="tg-qvqu">가게명</td>
+    <td class="tg-qvqu">${review.content }</td>
+    <td class="tg-qvqu">${review.reg_date}</td>
+    <td class="tg-qvqu">${review.rating }</td>
+    <td class="tg-qvqu">${review.liked }</td>
   </tr>
-  <tr>
-    <td class="tg-jpx8">9</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">8</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">7</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">6</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">5</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">4</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">3</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">2</td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-    <td class="tg-qvqu"></td>
-  </tr>
-  <tr>
-    <td class="tg-jpx8">1</td>
-    <td class="tg-qvqu">먹고보자</td>
-    <td class="tg-qvqu">2022.08.15</td>
-    <td class="tg-qvqu">10,000원</td>
-    <td class="tg-qvqu">어른2인, 유아 2인(변동가능성 있음)</td>
-  </tr>
+	</c:forEach>
 </tbody>
 </table>
 </section>

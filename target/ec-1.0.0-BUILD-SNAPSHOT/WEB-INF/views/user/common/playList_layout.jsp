@@ -10,6 +10,9 @@
 	#content{
 		width: 90%;
 	}
+	#header{
+	height: 140px;
+	}
 </style>
 <title><tiles:insertAttribute name="title" /></title>
 </head>
@@ -19,9 +22,6 @@
  		<div id="header">
 			<tiles:insertAttribute name="header" />
 		</div>
-		<div id="sidebar-right">
-			<tiles:insertAttribute name="side" />
-		</div> 
 		<div id="content">
 			<tiles:insertAttribute name="body" />
 		</div>

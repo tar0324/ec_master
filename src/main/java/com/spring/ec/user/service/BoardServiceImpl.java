@@ -3,12 +3,14 @@ package com.spring.ec.user.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.ec.user.dao.BoardDAO;
 import com.spring.ec.user.vo.BoardVO;
 import com.spring.ec.user.vo.CommentVO;
+import com.spring.ec.user.vo.LikedVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -62,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
 	public void addHits(int list_num)throws Exception{
 		boardDAO.addHits(list_num);
 	}
-	// �Խñ� comment �޼ҵ�
+	// �Խñ� comment �޼ҵ�
 	@Override
 	public List<CommentVO> listComments(int list_num)throws Exception{
 		return boardDAO.selectAllCommentsList(list_num);
@@ -73,4 +75,49 @@ public class BoardServiceImpl implements BoardService {
 		commentMap.put("comment_num", comment_num);
 		return comment_num;
 	}
+	//���ƿ� �������� Ȯ��
+	@Override
+	public int likedCheck(Map likedMap) throws Exception {
+		int likedOk = boardDAO.selectLiked(likedMap);
+		return likedOk;
+	}	
+	// ���ƿ� �߰�
+	@Override
+	public int likedUp(Map likedMap)throws Exception {
+		int list_num = (Integer)likedMap.get("list_num");
+		int liked = boardDAO.likeUp(list_num);
+		boardDAO.updateLiked(likedMap);
+		return liked;
+	}
+	// ���ƿ� ����
+	@Override
+	public int likedDown(Map likedMap)throws Exception {
+		int list_num = (Integer)likedMap.get("list_num");
+		int liked = boardDAO.likeDown(list_num);
+		boardDAO.updateLiked(likedMap);
+		return liked;
+	}
+	
+	//�Ⱦ�� �������� Ȯ��
+		@Override
+		public int badCheck(Map badMap) throws Exception {
+			int badOk = boardDAO.selectBad(badMap);
+			return badOk;
+		}	
+		// �Ⱦ�� �߰�
+		@Override
+		public int badUp(Map badMap)throws Exception {
+			int list_num = (Integer)badMap.get("list_num");
+			int bad = boardDAO.badUp(list_num);
+			boardDAO.updateBad(badMap);
+			return bad;
+		}
+		// �Ⱦ�� ����
+		@Override
+		public int badDown(Map badMap)throws Exception {
+			int list_num = (Integer)badMap.get("list_num");
+			int bad = boardDAO.badDown(list_num);
+			boardDAO.updateBad(badMap);
+			return bad;
+		}
 }
