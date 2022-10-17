@@ -92,7 +92,7 @@ public class InfoControllerImpl implements InfoController  {
 		return mav; 
 	}
 	
-	// 메뉴관리 - 삭제
+	// 메뉴관리 - 리스트 삭제
 	@Override
 	@ResponseBody 
 	@RequestMapping(value = "/deletemenu.do", method = RequestMethod.GET)
@@ -121,10 +121,35 @@ public class InfoControllerImpl implements InfoController  {
 	}
 	
 	
+	// 메뉴관리 - 상세보기 삭제
+	@Override
+	@ResponseBody 
+	@RequestMapping(value = "/delonemenu.do", method = RequestMethod.POST)
+	public ModelAndView delonemenu(@RequestParam("seller_id") String seller_id, @RequestParam("pro_num") String pro_num, RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, Object> listMap = new HashMap<String, Object>();
+		ModelAndView mav = new ModelAndView();
+
+		listMap.put("seller_id", seller_id);
+		listMap.put("pro_num", pro_num);
+		
+		int result = infoService.delonemenu(listMap);
+		if(result >= 1) { 
+			rAttr.addFlashAttribute("result", "deletesuccess");
+			mav.setViewName("redirect:/menumanage.do"); 
+		} else { 
+			rAttr.addFlashAttribute("result", "deletefail");
+			mav.setViewName("redirect:/error.do");
+		}
+
+		return mav; 
+	}
+	
+	
 	// 메뉴관리 - 상세페이지
 	@Override
+	@ResponseBody
 	@RequestMapping(value = "/menudetail.do", method = RequestMethod.POST)
-	public @ResponseBody  ProductVO menudetail(@RequestParam("pro_num") String pro_num,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ProductVO menudetail(@RequestParam("pro_num") String pro_num,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//String viewName = (String) request.getAttribute("viewName");
 		Map<String, String> listMap = new HashMap<String, String>();
 		ModelAndView mav = new ModelAndView();

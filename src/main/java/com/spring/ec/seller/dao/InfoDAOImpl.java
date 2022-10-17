@@ -29,12 +29,22 @@ public class InfoDAOImpl implements InfoDAO {
 		return articlesList;
 	}
 	
-	//menu delete
+	//menu list delete
 	@Override
 	public int deletemenu(Map<String, Object> listMap) throws Exception {
 		int deletemenu = sqlSession.delete("mapper.seller.menu.deletemenu",listMap);
 		return deletemenu;
 	}
+	
+	//menu one delete
+	@Override
+	public int delonemenu(Map<String, Object> listMap) throws Exception {
+		int delonemenu = sqlSession.delete("mapper.seller.menu.delonemenu",listMap);
+		return delonemenu;
+	}
+	
+	
+	
 	
 	//menu detail
 	@Override

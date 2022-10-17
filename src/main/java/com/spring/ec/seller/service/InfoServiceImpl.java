@@ -28,11 +28,19 @@ public class InfoServiceImpl implements InfoService {
 		return infoDAO.selectsearchMenu(listMap);
 	}
 	
-	//product(menu) delete
+	//product(menu) list delete
 	@Override
 	public int deletemenu(Map<String, Object> listMap) throws Exception {
 		return infoDAO.deletemenu(listMap);
 	}
+	
+	//product(menu) one delete
+	@Override
+	public int delonemenu(Map<String, Object> listMap) throws Exception {
+		return infoDAO.delonemenu(listMap);
+	}
+	
+	
 	
 	//product(menu) detail
 	@Override

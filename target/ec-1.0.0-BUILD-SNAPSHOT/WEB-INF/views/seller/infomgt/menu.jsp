@@ -88,7 +88,7 @@ function menudetail(pro_num) {
 	$.ajax({
 		url:"${contextPath}/menudetail.do",
 		type : 'POST',
-		dataType:"JSON",
+		
 		data : {
 			pro_num : pro_num
 			

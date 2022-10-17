@@ -12,4 +12,5 @@ public interface InfoService {
 	public int deletemenu(Map<String, Object> listMap) throws Exception;
 	public ProductVO menudetail(Map<String, String> listMap) throws Exception;
 	public StoreinfosumVO selectinfosum(String seller_id) throws Exception;
+	public int delonemenu(Map<String, Object> listMap) throws Exception;
 }

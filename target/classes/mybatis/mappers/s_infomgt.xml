@@ -77,6 +77,14 @@
 		 ]]>
 	</select>
 	
+	<delete id="delonemenu" parameterType="java.util.HashMap">
+		<![CDATA[
+		DELETE FROM product_tbl WHERE seller_id = #{seller_id} and pro_num = #{pro_num}
+		]]>
+	</delete>
+	
+	
+	
 	
 	
 </mapper>
