@@ -21,4 +21,5 @@ public interface InfoDAO {
 	public ProductVO menudetail(Map<String, String> listMap) throws Exception;
 	public StoreinfosumVO selectinfosum(String seller_id) throws Exception;
 	public int delonemenu(Map<String, Object> listMap) throws Exception;
+	public int modProduct(Map<String, Object> menuMap) throws Exception;
 }

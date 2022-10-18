@@ -60,6 +60,15 @@ public class InfoDAOImpl implements InfoDAO {
 		return selectinfosum;
 	}
 	
+	//menu mod
+	@Override
+	public int modProduct(Map<String, Object> menuMap) throws Exception {
+		int modProduct = sqlSession.update("mapper.seller.menu.modProduct",menuMap);
+		return modProduct;
+	}
+	
+	
+	
 	
 	
 	

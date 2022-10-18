@@ -1,5 +1,6 @@
 package com.spring.ec.seller.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,16 @@ public class InfoServiceImpl implements InfoService {
 	public StoreinfosumVO selectinfosum(String seller_id) throws Exception {
 		return infoDAO.selectinfosum(seller_id);
 	}
+	
+	
+	//product(menu) mod
+	@Override
+	public int modProduct(Map<String, Object> menuMap) throws Exception {
+		return infoDAO.modProduct(menuMap);
+	}
+	
+	
+	
 	
 	
 	

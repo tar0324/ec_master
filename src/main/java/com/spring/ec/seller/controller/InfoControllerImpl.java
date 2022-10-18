@@ -1,20 +1,31 @@
 package com.spring.ec.seller.controller;
 
+import java.io.File;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,6 +36,7 @@ import com.spring.ec.seller.vo.StoreinfosumVO;
 
 @Controller("infoController")
 public class InfoControllerImpl implements InfoController  {
+	private static final String MENU_IMAGE_REPO="C:\\EATSEE\\menu_image";
 	private static final Logger logger = LoggerFactory.getLogger(InfoControllerImpl.class);
 	@Autowired
 	private InfoService infoService;
@@ -169,7 +181,80 @@ public class InfoControllerImpl implements InfoController  {
 		return menudetail; 
 	}
 	
+	// 메뉴관리 - 수정
+	@Override
+	@RequestMapping(value = "/menumod.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity menumod(@ModelAttribute("menu") ProductVO menu,MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html; charset=UTF-8");
+		multipartRequest.setCharacterEncoding("utf-8");
+		Map<String, Object> menuMap = new HashMap<String, Object>();
+		Enumeration enu = multipartRequest.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String value = multipartRequest.getParameter(name);
+			menuMap.put(name, value);
+		}
+		
+
+		String imageFileName = upload(multipartRequest);
+		HttpSession session = multipartRequest.getSession();
+		
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			infoService.modProduct(menuMap);
+			if(imageFileName != null && imageFileName.length() != 0) {
+				File srcFile = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				File destDir = new File(MENU_IMAGE_REPO + "\\" + "menu" + "\\" + menu.getSeller_id());
+				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				
+				//String originalFileName = (String) menuMap.get("originalFileName");
+				//File oldFile = new File(MENU_IMAGE_REPO + "\\" +  "menu" + "\\" + menu.getSeller_id() + "\\" + originalFileName);
+				//oldFile.delete();
+			}
+			
+			message = "<script>";
+			message += " alert('글을 수정했습니다.');";
+			message += " location.href='" + multipartRequest.getContextPath() + "/menudetail?pro_num=" + menu.getPro_num() + "'; ";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		} catch (Exception e) {
+			File srcFile = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+			srcFile.delete();
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해 주세요');";
+			message += " location.href='" + multipartRequest.getContextPath() + "/error.do'; ";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
 	
+	
+	//이미지 한개 수정
+	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
+		String imageFileName = null;
+		Map<String, String> menuMap = new HashMap<String, String>();
+		Iterator<String> fileNames = multipartRequest.getFileNames();
+		while (fileNames.hasNext()) {
+			String fileName = fileNames.next();
+			MultipartFile mFile = multipartRequest.getFile(fileName);
+			imageFileName = mFile.getOriginalFilename();
+			File file = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
+			if (mFile.getSize() != 0) {
+				if (!file.exists()) {
+					file.getParentFile().mkdirs();
+					mFile.transferTo(new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName));
+				}
+			}
+		}
+		return imageFileName;
+	}
 	
 	
 	

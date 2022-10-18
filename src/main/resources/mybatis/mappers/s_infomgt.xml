@@ -84,6 +84,19 @@
 	</delete>
 	
 	
+	<update id="modProduct" parameterType="productVO" >
+			update product_tbl
+			set pro_name = #{pro_name},
+			pro_price = #{pro_price},
+			pro_desc = #{pro_desc},
+			mod_date = now()
+			<if test="pro_img != '' and pro_img != null">
+			, pro_img = #{pro_img} 
+			</if>
+			where pro_num=#{pro_num} and seller_id = #{seller_id}
+	</update>
+	
+	
 	
 	
 	

@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="imgfilePath" value="C:/EATSEE/menu_image/menu" />
 <%
 request.setCharacterEncoding("utf-8");
 %>
@@ -27,8 +28,32 @@ request.setCharacterEncoding("utf-8");
   vertical-align: top;
 }
 
-.hoveri:hover {
-	color: blue;
+/* 이미지 파일 선택 라벨 */
+
+.fileRegiBtn label {
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #ffffff; 
+	font-size: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #FC7D01; 
+	cursor: pointer; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em;
+}
+
+/*파일선택시 선택된 파일명이 붙는것을 가려준다*/
+.fileRegiBtn input[type="file"]{
+	position: absolute; 
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px; 
+	overflow: hidden; 
+	clip:rect(0,0,0,0); 
+	border: 0;
 }
 
 </style>
@@ -178,7 +203,7 @@ function menudetail(pro_num) {
 	    	$("#delmenu").attr('onclick','delonemenu("' + data.pro_num + '" , "' + data.seller_id + '")');
 	    	$("#menumod").attr('onclick','menu_mod("' + data.pro_num + '" , "' + data.seller_id + '")');
 	    	$("#proname").append(data.pro_name);
-	    	$("#proimg").attr('src','${contextPath}/image/menu/' + data.seller_id + '/' + data.pro_img);
+	    	$("#proimg").attr('src','${contextPath}/menu/download.do?seller_id=' + data.seller_id + '&imageFileName=' + data.pro_img);
 	    	$("#prodesc").append(data.pro_desc);
 	    	$("#regdate").append('등록일 : ' + data.reg_date);
 	    	if(data.mod_date != null) {
@@ -187,6 +212,7 @@ function menudetail(pro_num) {
 	    	
 	    	/* 정규식 사용하여 가격 , 입력 */
 	    	$("#proprice").append(data.pro_price.replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 원');
+	    	//$("#proprice").append(data.pro_price +' 원');
 	    	
         },
         error: function(request, status, error, data) {
@@ -211,7 +237,10 @@ function menu_mod(pro_num, seller_id) {
 	    success: function (data) {
 	    	$(".col-md-3").remove();
 	    	let $detail = `<div class="col-md-3" >
-	    	<form method="post" action="${contextPath}/menumod.do">
+	    	<form method="post" action="${contextPath}/menumod.do" enctype="multipart/form-data">
+	    	<input type="hidden" name="pro_num" id="hideennum">
+	    	<input type="hidden" name="seller_id" id="hiddenselid">
+	    	<input type="hidden" name="pro_img" id="hiddenimg">
 	    	<div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0 small">
                 메뉴 수정
@@ -240,15 +269,10 @@ function menu_mod(pro_num, seller_id) {
                     <img src="" alt="user-avatar" class="img-fluid" id="proimg" style="border-radius:10px;">
                   </div>
                   <div class="form-group" style="margin: 8px 0 8px;">
-
                   <input id="fileName" class="form-control" value="파일선택" disabled="disabled" style="width:85%; display: inline;">
-
                   		<div class="fileRegiBtn">
-
                   		<label for="myFileUp">파일등록하기</label>
-
-                  		<input type="file" id="myFileUp">
-
+                  		<input type="file" id="myFileUp" name="imageFileName" onchange="readURL(this);">
                   </div>
 
                   </div>
@@ -256,9 +280,9 @@ function menu_mod(pro_num, seller_id) {
               </div>
               <div class="card-footer">
                 <div class="text-right">
-                  <a href="#" class="btn btn-sm bg-teal" id="menumodform">
+                  <button type="submit" class="btn btn-sm bg-teal">
                     <i class="ion ion-compose" style="font-size:18px"></i> 수정완료
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -267,9 +291,10 @@ function menu_mod(pro_num, seller_id) {
             `;
 	    	$("#leftdetail").before($detail);
 	    	$("#delmenu").attr('onclick','delonemenu("' + data.pro_num + '" , "' + data.seller_id + '")');
-	    	$("#menumodform").attr('onclick','modmenu();');
 	    	$("#proname").attr('value',data.pro_name);
-	    	$("#proimg").attr('src','${contextPath}/image/menu/' + data.seller_id + '/' + data.pro_img);
+	    	$("#hideennum").attr('value',data.pro_num);
+	    	$("#hiddenselid").attr('value',data.seller_id);
+	    	$("#proimg").attr('src','${imgfilePath}/' + data.seller_id + '/' + data.pro_img);
 	    	$("#prodesc").append(data.pro_desc);
 	    	$("#regdate").append('등록일 : ' + data.reg_date);
 	    	if(data.mod_date != null) {
@@ -277,7 +302,7 @@ function menu_mod(pro_num, seller_id) {
 	    	}
 	    	
 	    	/* 정규식 사용하여 가격 , 입력 */
-	    	$("#proprice").attr('value',data.pro_price.replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+	    	$("#proprice").attr('value',data.pro_price);
 	    	
         },
         error: function(request, status, error, data) {
@@ -289,6 +314,20 @@ function menu_mod(pro_num, seller_id) {
 	});
 }
 
+
+//이미지 파일 보이기
+function readURL(input) {
+	    	console.log("버튼클릭함1");
+	        if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	                $('#proimg').attr('src', e.target.result);        //cover src로 붙여지고
+	                $('#fileName').attr('value',input.files[0].name);    //파일선택 form으로 파일명이 들어온다
+	                $('#hiddenimg').attr('value',input.files[0].name);    
+	        }
+	          reader.readAsDataURL(input.files[0]);
+	        }
+	    }
 
 
 </script>
