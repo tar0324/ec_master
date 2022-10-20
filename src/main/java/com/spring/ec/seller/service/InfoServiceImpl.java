@@ -64,6 +64,13 @@ public class InfoServiceImpl implements InfoService {
 	}
 	
 	
+	//product(menu) add
+	@Override
+	public int menumadd(Map<String, Object> menuMap) throws Exception {
+		return infoDAO.menumadd(menuMap);
+	}
+	
+	
 	
 	
 	

@@ -97,6 +97,15 @@
 	</update>
 	
 	
+	<insert id="menumadd" parameterType="java.util.HashMap">
+		INSERT INTO product_tbl SET 
+		pro_num = (select max(pro_num)+1 from product_tbl a)  , category_code = #{category_code}, seller_id = #{seller_id} , pro_name= #{pro_name}, pro_price=#{pro_price}, pro_desc=#{pro_desc}, reg_date = NOW()
+		<if test="pro_img != '' and pro_img != null">
+			, pro_img = #{pro_img} 
+		</if>
+	</insert>
+	
+	
 	
 	
 	

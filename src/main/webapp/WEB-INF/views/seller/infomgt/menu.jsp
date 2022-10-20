@@ -31,6 +31,7 @@ request.setCharacterEncoding("utf-8");
 /* 이미지 파일 선택 라벨 */
 
 .fileRegiBtn label {
+	float: right;
 	display: inline-block; 
 	padding: .5em .75em; 
 	color: #ffffff; 
@@ -58,6 +59,13 @@ request.setCharacterEncoding("utf-8");
 
 </style>
 <script type="text/javascript">
+<%
+String searchword = request.getParameter("search");
+if(searchword == null || searchword.equals("null")) {
+	searchword = "";
+}
+%>
+
 $(function () {
     //Enable check and uncheck all functionality
     $('.checkbox-toggle').click(function () {
@@ -74,19 +82,6 @@ $(function () {
       $(this).data('clicks', !clicks)
     })
 
-    //Handle starring for font awesome
-    $('.mailbox-star').click(function (e) {
-      e.preventDefault()
-      //detect type
-      var $this = $(this).find('a > i')
-      var fa    = $this.hasClass('fa')
-
-      //Switch states
-      if (fa) {
-        $this.toggleClass('fa-star')
-        $this.toggleClass('fa-star-o')
-      }
-    })
   })
   
   
@@ -167,7 +162,7 @@ function menudetail(pro_num) {
 	    	<div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0 small">
                 메뉴 상세보기
-                <a href="#">
+                <a href="#" id="detailclose">
                 <i class="ion ion-ios-close-empty" style="float:right;font-size:25px;color:gray"></i>
               </a>
               </div>
@@ -202,8 +197,17 @@ function menudetail(pro_num) {
 	    	$("#leftdetail").before($detail);
 	    	$("#delmenu").attr('onclick','delonemenu("' + data.pro_num + '" , "' + data.seller_id + '")');
 	    	$("#menumod").attr('onclick','menu_mod("' + data.pro_num + '" , "' + data.seller_id + '")');
+	    	$("#detailclose").attr('onclick','detailclose();');
 	    	$("#proname").append(data.pro_name);
-	    	$("#proimg").attr('src','${contextPath}/menu/download.do?seller_id=' + data.seller_id + '&imageFileName=' + data.pro_img);
+	    	
+	    	if(data.pro_img == null && data.category_code == "10"){
+	    		$("#proimg").attr('src','${contextPath}/noimg/download.do?imageFileName=no_menu_img.png');
+	    	} else if (data.pro_img == null && data.category_code == "20"){
+	    		$("#proimg").attr('src','${contextPath}/noimg/download.do?imageFileName=no_price_img.png');
+	    	} else {
+	    		$("#proimg").attr('src','${contextPath}/menu/download.do?seller_id=' + data.seller_id + '&imageFileName=' + data.pro_img);
+	    	}
+	    	
 	    	$("#prodesc").append(data.pro_desc);
 	    	$("#regdate").append('등록일 : ' + data.reg_date);
 	    	if(data.mod_date != null) {
@@ -224,6 +228,8 @@ function menudetail(pro_num) {
 	});
 }
 
+
+
 //메뉴 수정창
 function menu_mod(pro_num, seller_id) {
 	$.ajax({
@@ -237,14 +243,14 @@ function menu_mod(pro_num, seller_id) {
 	    success: function (data) {
 	    	$(".col-md-3").remove();
 	    	let $detail = `<div class="col-md-3" >
-	    	<form method="post" action="${contextPath}/menumod.do" enctype="multipart/form-data">
+	    	<form enctype="multipart/form-data" onsubmit="return false;">
 	    	<input type="hidden" name="pro_num" id="hideennum">
 	    	<input type="hidden" name="seller_id" id="hiddenselid">
 	    	<input type="hidden" name="pro_img" id="hiddenimg">
 	    	<div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0 small">
                 메뉴 수정
-                <a href="#">
+                <a href="#" id="detailclose">
                 <i class="ion ion-ios-close-empty" style="float:right;font-size:25px;color:gray"></i>
               </a>
               </div>
@@ -252,35 +258,39 @@ function menu_mod(pro_num, seller_id) {
                 <div class="row">
                   <div class="col-7">
                   <p class="text-muted text-sm">
-                  	<label for="proname" class="form-label">메뉴 설명</label>
+                  	<label for="proname" class="form-label">메뉴명</label>
                   	<input class="form-control lead" type="text" id="proname" name="pro_name" aria-label="default input example">
+                  	<p id="proname_p" class="vali"></p>
               		</p>
                     <p class="text-muted text-sm">
 	                    <label for="prodesc" class="form-label">메뉴 설명</label>
 	                    <textarea class="form-control" id="prodesc" rows="3" name="pro_desc"></textarea>
-                    </p>
+	                    <p id="prodesc_p" class="vali"></p>
+	                </p>
+                   
                     <p class="text-muted text-sm">
                     <label for="proprice" class="form-label">가격</label>
                     <input class="form-control lead" type="text" id="proprice" aria-label="default input example" name="pro_price"/>
-               		 </p>
+                   	<p id="proprice_p" class="vali"></p> 
+                    </p>
                   </div>
                   
                   <div class="col-5 text-center">
-                    <img src="" alt="user-avatar" class="img-fluid" id="proimg" style="border-radius:10px;">
-                  </div>
-                  <div class="form-group" style="margin: 8px 0 8px;">
-                  <input id="fileName" class="form-control" value="파일선택" disabled="disabled" style="width:85%; display: inline;">
-                  		<div class="fileRegiBtn">
-                  		<label for="myFileUp">파일등록하기</label>
-                  		<input type="file" id="myFileUp" name="imageFileName" onchange="readURL(this);">
-                  </div>
+                    <img src="" alt="no-image" class="img-fluid" id="proimg" style="border-radius:10px; width:143px; height:143px">
+                    <div class="form-group" style="margin: 8px 0 8px;">
+                    <input id="fileName" class="form-control" value="파일선택" disabled="disabled" style="width:65%; display: inline; float:left">
+	             		<div class="fileRegiBtn">
+	            		<label for="myFileUp"><i class="fas fa-search"></i></label>
+	            		<input type="file" class="btn btn-primary" id="myFileUp" name="imageFileName" onchange="readURL(this);">
+	            		</div>
 
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="card-footer">
                 <div class="text-right">
-                  <button type="submit" class="btn btn-sm bg-teal">
+                  <button type="submit" class="btn btn-sm bg-teal" onclick="checkmod(this.form);">
                     <i class="ion ion-compose" style="font-size:18px"></i> 수정완료
                   </button>
                 </div>
@@ -294,7 +304,8 @@ function menu_mod(pro_num, seller_id) {
 	    	$("#proname").attr('value',data.pro_name);
 	    	$("#hideennum").attr('value',data.pro_num);
 	    	$("#hiddenselid").attr('value',data.seller_id);
-	    	$("#proimg").attr('src','${imgfilePath}/' + data.seller_id + '/' + data.pro_img);
+	    	$("#detailclose").attr('onclick','detailclose();');
+	    	$("#proimg").attr('src','${contextPath}/menu/download.do?seller_id=' + data.seller_id + '&imageFileName=' + data.pro_img);
 	    	$("#prodesc").append(data.pro_desc);
 	    	$("#regdate").append('등록일 : ' + data.reg_date);
 	    	if(data.mod_date != null) {
@@ -312,6 +323,58 @@ function menu_mod(pro_num, seller_id) {
         	
         }
 	});
+}
+
+//메뉴 수정 정규식
+function checkmod(frm){
+    var proprice = /^[0-9]+$/;
+    var checkText = "";
+    var check = null;
+    var count = 0;
+
+    var modproname = document.getElementById("proname").value;
+    var modprodesc = document.getElementById("prodesc").value;
+    var modproprice = document.getElementById("proprice").value;
+
+    
+    if(modproname.length == 0) {
+    	$("#proname_p").html("메뉴명을 입력해주세요");
+    	count++;
+    } else if(modproname.length > 10) {
+    	$("#proname_p").html("10글자 이내로 입력해주세요.");
+    	count++;
+    } else {
+    	$("#proname_p").html("");
+    }
+    
+    if(modprodesc.length == 0){
+    	$("#prodesc_p").html("내용을 입력해주세요");
+    	count++;
+    }else {
+    	$("#prodesc_p").html("");
+    }
+    if (modproprice.length == 0){
+    	checkText = "가격을 입력해주세요";
+    	$("#proprice_p").html(checkText);
+    	count++;
+    } else if (!proprice.test(modproprice) ){
+        checkText = "숫자만 입력해주세요";
+        $("#proprice_p").html(checkText);
+        count++;
+   	} else {
+    	$("#proprice_p").html("");
+    }
+    
+    if (count >=1) {
+    	return false;
+   	} else {
+   	    frm.method="post";
+   	    frm.action="${contextPath}/menumod.do";
+   	    frm.submit();
+   	}
+
+    
+
 }
 
 
@@ -408,7 +471,7 @@ function readURL(input) {
               <div class="card-tools">
               <form action="${contextPath}/searchmenu.do">
                 <div class="input-group input-group-sm">
-                  <input type="text" class="form-control" placeholder="메뉴명 검색"  name="search">
+                  <input type="text" class="form-control" placeholder="메뉴명 검색"  name="search" value="<%= searchword %>">
                   <div class="input-group-append">
                     <button type="submit" class="btn btn-primary" >
                       <i class="fas fa-search"></i>
@@ -428,7 +491,7 @@ function readURL(input) {
                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-default btn-sm">
+                  <button type="button" class="btn btn-default btn-sm" id="btn-modal" onclick="btnmodalOn();">
                     <!-- <i class="fas fa-reply"></i> -->
                     <i class="ion ion-android-add" style="font-size: 18px;" ></i>
                   </button>
@@ -443,18 +506,27 @@ function readURL(input) {
                 
                   <tbody>
                   <c:forEach var="menu" items="${menuList }" varStatus="menuNum">
-                  <tr>
-                    <td>
+                  <tr style="border-top: 1px solid #dee2e6;border-bottom: 1px solid #dee2e6">
+                    <td style="border-top: 0">
                       <div class="icheck-primary">
                         <input type="checkbox" name="menucheck" value="${menu.pro_num }" id="check${menuNum.index }"> <!-- 아이디 증가해야함  -->
                         <label for="check${menuNum.index }"></label>
                       </div>
                     </td>
                     <!-- <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td> -->
-                    <td class="mailbox-name"><a href="#" onclick="menudetail(${menu.pro_num})">${menu.pro_name }</a></td>
-                    <td class="mailbox-subject zPfVt">${menu.pro_desc }</td>
-                    <td class="mailbox-attachment"><b><fmt:formatNumber value="${menu.pro_price }" pattern="#,###"/></b></td>
-                    <td class="mailbox-date"><b>${menu.reg_days } days ago</b></td>
+                    <td class="mailbox-name" style="border-top: 0"><a href="#" onclick="menudetail(${menu.pro_num})">${menu.pro_name }</a></td>
+                    <td class="mailbox-subject zPfVt" style="border-top: 0">${menu.pro_desc }</td>
+                    <td class="mailbox-attachment" style="border-top: 0"><b><fmt:formatNumber value="${menu.pro_price }" pattern="#,###"/></b></td>
+                    <td class="mailbox-date" style="border-top: 0">
+	                    <b>
+	                    <c:if test="${menu.reg_days eq 0}">
+	                    	today
+	                    </c:if>
+	                    <c:if test="${menu.reg_days ne 0}">
+	                    	${menu.reg_days } days ago
+	                    </c:if>
+	          			</b>
+          			</td>
                   </tr>
        			</c:forEach>
                   </tbody>
@@ -490,7 +562,7 @@ function readURL(input) {
       <!-- /.row -->
       
     </section>
-<%@ include file="/WEB-INF/views/seller/infomgt/menu_mod.jsp" %>
+<%@ include file="/WEB-INF/views/seller/infomgt/menu_add.jsp" %>
 
 </body>
 

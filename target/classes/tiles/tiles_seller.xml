@@ -39,4 +39,19 @@
 		<put-attribute name="title" value="먹고보자 :: 메뉴 상세"/>
 		<put-attribute name="body" value="/WEB-INF/views/seller/infomgt/menu.jsp"/>
 	</definition>
+	
+	
+	<!-- 마이페이지 - 본인확인창 -->
+	<definition name="/checkuserpage" template="/WEB-INF/views/seller/mypage/mypage_layout.jsp">
+		<put-attribute name="title" value="먹고보자 :: 본인확인"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/mypage/check_user.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/seller/mypage/footer.jsp"/>
+	</definition>
+		
+	<!-- 마이페이지 - 비밀번호변경창 -->
+	<definition name="/changepwdpage" template="/WEB-INF/views/seller/mypage/mypage_layout.jsp">
+		<put-attribute name="title" value="먹고보자 :: 비밀번호 변경"/>
+		<put-attribute name="body" value="/WEB-INF/views/seller/mypage/change_pwd.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/seller/mypage/footer.jsp"/>
+	</definition>
 </tiles-definitions>

@@ -20,4 +20,5 @@ public interface InfoController {
 	public ProductVO menudetail(@RequestParam("pro_num") String pro_num,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView delonemenu(@RequestParam("seller_id") String seller_id, @RequestParam("pro_num") String pro_num, RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ResponseEntity menumod(@ModelAttribute("menu") ProductVO menu,MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception;
+	public ResponseEntity menumadd(@ModelAttribute("menu") ProductVO menu,MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception;
 }

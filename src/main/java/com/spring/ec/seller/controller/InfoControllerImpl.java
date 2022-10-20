@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import com.spring.ec.seller.service.InfoService;
 import com.spring.ec.seller.vo.ProductVO;
 import com.spring.ec.seller.vo.StoreinfosumVO;
@@ -211,14 +212,20 @@ public class InfoControllerImpl implements InfoController  {
 				File destDir = new File(MENU_IMAGE_REPO + "\\" + "menu" + "\\" + menu.getSeller_id());
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
 				
-				//String originalFileName = (String) menuMap.get("originalFileName");
-				//File oldFile = new File(MENU_IMAGE_REPO + "\\" +  "menu" + "\\" + menu.getSeller_id() + "\\" + originalFileName);
-				//oldFile.delete();
+				String originalFileName = (String) menuMap.get("originalFileName");
+				File oldFile = new File(MENU_IMAGE_REPO + "\\" +  "menu" + "\\" + menu.getSeller_id() + "\\" + originalFileName);
+				oldFile.delete();
 			}
 			
 			message = "<script>";
-			message += " alert('글을 수정했습니다.');";
-			message += " location.href='" + multipartRequest.getContextPath() + "/menudetail?pro_num=" + menu.getPro_num() + "'; ";
+			message += " alert('메뉴를 수정했습니다.');";
+			
+			/*
+			 * message += " location.href='" + multipartRequest.getContextPath() +
+			 * "/menudetail.do?pro_num=" + menu.getPro_num() + "'; ";
+			 */
+			 
+			message += " location.href='" + multipartRequest.getContextPath() +"/menumanage.do'";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -236,28 +243,87 @@ public class InfoControllerImpl implements InfoController  {
 	}
 	
 	
-	//이미지 한개 수정
-	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
-		String imageFileName = null;
-		Map<String, String> menuMap = new HashMap<String, String>();
-		Iterator<String> fileNames = multipartRequest.getFileNames();
-		while (fileNames.hasNext()) {
-			String fileName = fileNames.next();
-			MultipartFile mFile = multipartRequest.getFile(fileName);
-			imageFileName = mFile.getOriginalFilename();
-			File file = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
-			if (mFile.getSize() != 0) {
-				if (!file.exists()) {
-					file.getParentFile().mkdirs();
-					mFile.transferTo(new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName));
+	
+	// 메뉴관리 - 메뉴 등록
+		@Override
+		@RequestMapping(value = "/menumadd.do", method = RequestMethod.POST)
+		@ResponseBody
+		public ResponseEntity menumadd(@ModelAttribute("menu") ProductVO menu,MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+			response.setContentType("text/html; charset=UTF-8");
+			multipartRequest.setCharacterEncoding("utf-8");
+			Map<String, Object> menuMap  = new HashMap<String, Object>();
+			Enumeration enu = multipartRequest.getParameterNames();
+			while (enu.hasMoreElements()) {
+				String name = (String) enu.nextElement();
+				String value = multipartRequest.getParameter(name);
+				menuMap.put(name, value);
+			}
+			
+			//session에 남아있는 sellerid,category_code를 가져와야함
+			//MemberVO mm = (MemberVO) session.getAttribute("member");
+			//String seller_id = mm.getSeller_id());
+			
+			String seller_id = "stest001";
+			String category_code = "10";
+			menuMap.put("seller_id", seller_id);
+			menuMap.put("category_code", category_code);
+
+			String imageFileName = upload(multipartRequest);
+			menuMap.put("pro_img", imageFileName);
+			HttpSession session = multipartRequest.getSession();
+			
+
+			String message;
+			ResponseEntity resEnt = null;
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+			try {
+				int articleNO = infoService.menumadd(menuMap);
+				if (imageFileName != null && imageFileName.length() != 0) {
+					File srcFile = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+					File destDir = new File(MENU_IMAGE_REPO + "\\" + "menu" + "\\" + seller_id);
+					FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				}
+
+				message = "<script>";
+				message += " alert('메뉴를 추가했습니다.');";
+				message += " location.href='" + multipartRequest.getContextPath() +"/menumanage.do'";
+				message += " </script>";
+				resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			} catch (Exception e) {
+				File srcFile = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				srcFile.delete();
+
+				message = "<script>";
+				message += " alert('오류가 발생했습니다. 다시 시도해 주세요');";
+				message += " location.href='" + multipartRequest.getContextPath() + "/error.do'; ";
+				message += " </script>";
+				resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+				e.printStackTrace();
+			}
+			return resEnt;
+		}
+
+		//이미지 한개 수정/등록
+		private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
+			String imageFileName = null;
+			Map<String, String> menuMap = new HashMap<String, String>();
+			Iterator<String> fileNames = multipartRequest.getFileNames();
+			while (fileNames.hasNext()) {
+				String fileName = fileNames.next();
+				MultipartFile mFile = multipartRequest.getFile(fileName);
+				imageFileName = mFile.getOriginalFilename();
+				
+				File file = new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
+				if (mFile.getSize() != 0) {
+					if (!file.exists()) {
+						file.getParentFile().mkdirs();
+						mFile.transferTo(new File(MENU_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName));
+					}
 				}
 			}
+			return imageFileName;
 		}
-		return imageFileName;
-	}
-	
-	
-	
 	
 	
 

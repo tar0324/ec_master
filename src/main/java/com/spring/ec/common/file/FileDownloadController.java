@@ -71,29 +71,61 @@ public class FileDownloadController {
 	}
 	
 	
-	/* @RequestMapping("/menu/download.do") */
-/*	  public void menudownload(@RequestParam("imageFileName") String imageFileName, HttpServletResponse response) throws Exception {
+	 @RequestMapping("/menu/download.do") 
+	  public void menudownload(@RequestParam("imageFileName") String imageFileName, @RequestParam("seller_id") String seller_id, HttpServletResponse response) throws Exception {
 			OutputStream out = response.getOutputStream();
-			String downFile = MENU_IMAGE_REPO + "\\" + list_num + "\\" + imageFileName;
+			String	downFile = MENU_IMAGE_REPO + "\\menu\\" + seller_id + "\\" + imageFileName;
+
+			
 			File file = new File(downFile);
 			int lastIndex = imageFileName.lastIndexOf(".");
 			String fileName = imageFileName.substring(0, lastIndex);
 			
+			/*
 			 * File thumbnail = new File(MENU_IMAGE_REPO +
 			 * "\\" + "thumbnail" + "\\" + fileName + ".png"); if (file.exists()) {
 			 * thumbnail.getParentFile().mkdirs(); Thumbnails.of(file).size(500,
-			 * 200).outputFormat("png").toFile(thumbnail); } FileInputStream in = new
-			 * FileInputStream(thumbnail);
+			 * 200).outputFormat("png").toFile(thumbnail); }
+			 */
+			 FileInputStream in = new FileInputStream(file); 
 			 
 			byte[] buffer = new byte[1024 * 8];
 			while (true) {
-				int count = in.read(buffer);
+				int count = in.read(buffer); 
 				if (count == -1)
 					break;
 				out.write(buffer, 0, count);
 			}
-			in.close();
+			in.close(); 
 			out.close();
-		}*/
+		}
+	 @RequestMapping("/noimg/download.do") 
+	  public void menudownload(@RequestParam("imageFileName") String imageFileName, HttpServletResponse response) throws Exception {
+			OutputStream out = response.getOutputStream();
+			String	downFile = MENU_IMAGE_REPO + "\\noimg\\" + imageFileName;
+
+			
+			File file = new File(downFile);
+			int lastIndex = imageFileName.lastIndexOf(".");
+			String fileName = imageFileName.substring(0, lastIndex);
+			
+			/*
+			 * File thumbnail = new File(MENU_IMAGE_REPO +
+			 * "\\" + "thumbnail" + "\\" + fileName + ".png"); if (file.exists()) {
+			 * thumbnail.getParentFile().mkdirs(); Thumbnails.of(file).size(500,
+			 * 200).outputFormat("png").toFile(thumbnail); }
+			 */
+			 FileInputStream in = new FileInputStream(file); 
+			 
+			byte[] buffer = new byte[1024 * 8];
+			while (true) {
+				int count = in.read(buffer); 
+				if (count == -1)
+					break;
+				out.write(buffer, 0, count);
+			}
+			in.close(); 
+			out.close();
+		}
 	 
 }

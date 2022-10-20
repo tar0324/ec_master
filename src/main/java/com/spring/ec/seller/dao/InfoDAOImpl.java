@@ -67,6 +67,16 @@ public class InfoDAOImpl implements InfoDAO {
 		return modProduct;
 	}
 	
+	//menu add
+	@Override
+	public int menumadd(Map<String, Object> menuMap) throws Exception {
+		int menumadd = sqlSession.insert("mapper.seller.menu.menumadd",menuMap);
+		return menumadd;
+	}
+	
+	
+	
+	
 	
 	
 	

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- member.xml의 네임 스페이스 지정 -->
+<mapper namespace="mapper.seller.mypage">
+	<resultMap type="sellerVO" id="sellResult">
+		<result property="seller_num" column="seller_num" />
+		<result property="category_code" column="category_code" />
+		<result property="seller_id" column="seller_id" />
+		<result property="seller_pw" column="seller_pw" />
+		<result property="seller_tel" column="seller_tel" />
+		<result property="seller_bizReg" column="seller_bizReg" />
+		<result property="seller_name" column="seller_name" />
+		<result property="seller_email" column="seller_email" />
+		<result property="seller_addr" column="seller_addr" />
+		<result property="bizReg_image_name" column="bizReg_image_name" />
+		<result property="area" column="area" />
+		<result property="keyword" column="keyword" />
+		<result property="storeInfo_num" column="storeInfo_num" />
+		<result property="seller_id" column="seller_id" />
+		<result property="image_fileName" column="image_fileName" />
+		<result property="store_introduce" column="store_introduce" />
+		<result property="openTime" column="openTime" />
+		<result property="closeDay" column="closeDay" />
+		<result property="store_nic" column="store_nic" />
+		<result property="store_benefit" column="store_benefit" />
+		<result property="reg_date" column="reg_date" />
+		<result property="mod_date" column="mod_date" />
+	</resultMap>
+
+	
+	<select id="checkuser" resultType="int" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		SELECT count(*) from seller_tbl where seller_id =#{seller_id} and seller_pw = #{seller_pw}
+		 ]]>
+	</select>
+	
+	
+	<select id="sellerinfo" resultMap="sellResult">
+		<![CDATA[ 
+		SELECT * from seller_tbl where seller_id =#{seller_id}
+		 ]]>
+	</select>
+
+</mapper>
