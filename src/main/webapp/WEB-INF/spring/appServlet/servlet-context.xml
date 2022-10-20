@@ -4,7 +4,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc
 		https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans
@@ -65,11 +64,23 @@
 	   <beans:bean class="com.spring.ec.common.interceptor.ViewNameInterceptor" />
 </mvc:interceptor>
 </mvc:interceptors>
-
-
-<beans:bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" /> 
- 
-
-<!-- <mvc:annotation-driven /> -->
-
+<!-- naver SMTP 메일설정 -->
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<beans:property name="host" value="smtp.naver.com"/>
+	<beans:property name="port" value="465"/> 
+	<beans:property name="username" value="ec_test@naver.com"/>
+	<beans:property name="password" value="socool5@@"/>
+	
+		<!-- 보안연결 SSL과 관련된 설정 -->
+		<beans:property name="javaMailProperties">
+		<beans:props>
+			<beans:prop key="mail.transport.protocol">smtp</beans:prop>
+			<beans:prop key="mail.smtp.auth">true</beans:prop>
+			<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+			<beans:prop key="mail.smtp.ssl.enable">true</beans:prop>
+			<beans:prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSlSocketFactory</beans:prop>
+			<beans:prop key="mail.debug">true</beans:prop>
+		</beans:props>
+	</beans:property>
+	</beans:bean>
 </beans:beans>

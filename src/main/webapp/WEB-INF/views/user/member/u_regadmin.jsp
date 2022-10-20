@@ -25,7 +25,9 @@ function nochk(){
  alert("동의하지 않으면 가입하실 수 없습니다");
 location.href="${contextPath}/user/u_regadmin.do";}
 </script>
-
+<style type="text/css">
+#container{ height:1000px; }
+</style>
 
 <meta charset="UTF-8">
 <title>약관동의</title>

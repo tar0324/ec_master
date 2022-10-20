@@ -217,26 +217,6 @@
 		 ]]>
 	</insert>  
 	
-	<!--리뷰  delete  -->
-	<delete id="reviewdel"  parameterType="String">
-		<![CDATA[ delete FROM review_tbl WHERE user_id = #{user_id} and seller_id = #{seller_id} and review_num = #{review_num} ]]>
-	</delete>
-	
-	<!-- 리뷰 삭제 시 해당 가게의 리뷰 개수 -->
-	<select id="selectoneReviewsum" resultType="String">
-		<![CDATA[
-			SELECT COUNT(*) AS review_count FROM review_tbl WHERE seller_id= #{seller_id}
-		 ]]>
-	</select>
-	
-	<update id="reviewmod" parameterType="reviewVO">
-		<![CDATA[
-			update review_tbl set image_fileName=#{image_fileName}, content=#{content}, mod_date = now(), rating=#{rating} WHERE user_id = #{user_id} and seller_id = #{seller_id} and review_num = #{review_num}
-		 ]]>
-	</update>
-	
-	
-	
 	<!--리뷰 num 가져오기  -->
 	<select id="selectNewList_num" resultType="int">
 		<![CDATA[
@@ -282,7 +262,4 @@
 			select max(book_num)+1 from nouser_book_tbl 			
 		 ]]>
 	</select>
-	
-	
-	
 </mapper>

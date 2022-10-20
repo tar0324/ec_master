@@ -245,12 +245,21 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView find_pwd_Result(@ModelAttribute("member") MemberVO member, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-
-		String user_pwd = memService.find_pwd_Result(member);
-
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("user_pwd", user_pwd);
-		mav.setViewName(viewName);
+		String user_pwd = memService.find_pwd_Result(member);
+		System.out.println("user_pwd : " +user_pwd);
+		if(user_pwd == null) {
+			
+			mav.addObject("check",1);
+			
+			mav.setViewName(viewName);
+		}else {
+			mav.addObject("check",0);
+			mav.addObject("user_pwd", user_pwd);
+			mav.setViewName(viewName);
+			
+		}
+		
 		return mav;
 	}
 

@@ -70,8 +70,7 @@ public class FileDownloadController {
 		out.close();
 	}
 	
-	
-	 @RequestMapping("/menu/download.do") 
+	@RequestMapping("/menu/download.do") 
 	  public void menudownload(@RequestParam("imageFileName") String imageFileName, @RequestParam("seller_id") String seller_id, HttpServletResponse response) throws Exception {
 			OutputStream out = response.getOutputStream();
 			String	downFile = MENU_IMAGE_REPO + "\\menu\\" + seller_id + "\\" + imageFileName;
@@ -127,5 +126,4 @@ public class FileDownloadController {
 			in.close(); 
 			out.close();
 		}
-	 
 }

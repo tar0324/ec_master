@@ -123,6 +123,7 @@ public class ReservVO {
 	public void setStore_introduce(String store_introduce) {
 		this.store_introduce = store_introduce;
 	}
+
 	
 	
 	

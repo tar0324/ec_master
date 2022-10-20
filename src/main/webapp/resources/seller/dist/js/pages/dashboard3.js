@@ -75,7 +75,7 @@ $(function () {
         }]
       }
     }
-  })
+  })	
 
   var $visitorsChart = $('#visitors-chart')
   // eslint-disable-next-line no-unused-vars

@@ -8,27 +8,27 @@ import com.spring.ec.user.vo.CommentVO;
 import com.spring.ec.user.vo.LikedVO;
 
 public interface BoardService {
-	//ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	//ÇÃ·¹ÀÌ ¸®½ºÆ® °Ô½ÃÆÇ ¸ñ·Ï
 	public List<BoardVO> listBoards(int page)throws Exception;
-	//ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//¸ÔÇÃ¸® °Ô½Ã¹°¸ñ·Ï¸¸ ³ëÃâ
 	public List<BoardVO> eatListBoards(int page)throws Exception;
-	//ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//º¼ÇÃ¸® °Ô½Ã¹° ¸ñ·Ï¸¸ ³ëÃâ
 	public List<BoardVO> seeListBoards(int page)throws Exception;
-	//ï¿½Ã·ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//ÇÃ·¹ÀÌ¸®½ºÆ® ÆäÀÌÁö °¹¼ö
 	public int allListCount()throws Exception;
-	//ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//¸ÔÇÃ¸® ÆäÀÌÁö °¹¼ö
 	public int eatListCount()throws Exception;
-	//ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//º¼ÇÃ¸® ÆäÀÌÁö °¹¼ö
 	public int seeListCount()throws Exception;	
-	//ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½Ã¢	
+	//°Ô½Ã¹° »ó¼¼Ã¢	
 	public BoardVO viewBoard(int list_num) throws Exception;
-	//ï¿½Ô½Ã¹ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
+	//°Ô½Ã¹° Å¬¸¯¼ö
 	public void addHits(int list_num)throws Exception;
-	//ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+	//°Ô½Ã±Û ¾²±â
 	public int addNewBoard(Map boardMap) throws Exception;
-	// ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ´ñ±Û ºÒ·¯¿À±â
 	public List<CommentVO> listComments(int list_num)throws Exception;
-	// ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½
+	// ´ñ±Û ÀÛ¼º
 	public int addNewComment(Map commentMap) throws Exception;
 	
 	public int likedCheck(Map likedMap) throws Exception;

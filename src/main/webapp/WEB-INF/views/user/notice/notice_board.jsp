@@ -106,9 +106,9 @@ String viewName = (String)request.getAttribute("viewName");
 									<td width="10%">${paging.boardCount-((paging.nowPage-1)*10)-noticeNum.index}</td>
 								</c:otherwise>
 								</c:choose>
-							<td width="10%">운영자</td>
+							<td width="10%">운영자</td>	
 							<td align="center" width="35%">${notice.no_title}</td>
-							<td width="15%"><fmt:formatDate value="${notice.reg_date}" /></td>
+							<td width="15%"><fmt:formatDate value="${notice.reg_date}" pattern="yyyy-MM-dd" /></td>
 							<td width="10%">${notice.hits}</td>
 						</tr>
 					</c:forEach>
@@ -119,7 +119,7 @@ String viewName = (String)request.getAttribute("viewName");
   			<ul class="pagination pg-darkgrey">
   			<c:if test="${paging.prev == 'false'}">
     			<li class="page-item">
-      				<a class="page-link" aria-label="Previous" href="">
+      				<a class="page-link" aria-label="Previous" href="#">
         				<span aria-hidden="true">&laquo;</span>
         				<span class="sr-only">Previous</span>
       				</a>

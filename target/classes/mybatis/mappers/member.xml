@@ -20,12 +20,19 @@
 		<result property="birth_dd" column="birth_dd" />
 		<result property="gender" column="gender" />
 		</resultMap>
+	
+	
+	
+	
+	
  	<insert id="insertMember" parameterType="memberVO">
 		<![CDATA[
-		insert into user_tbl(user_no,user_id,user_nick, user_pwd,tel,user_name, user_email, birth_yy, birth_mm, birth_dd, gender)
-			values((SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl b), #{user_id}, #{user_nick},#{user_pwd}, #{tel}, #{user_name}, #{user_email}, #{birth_yy},#{birth_mm},#{birth_dd}, #{gender})		
+		insert into user_tbl(user_no,user_id,user_nick, user_pwd,tel,user_name, user_email, birth_yy, birth_mm, birth_dd, gender,user_id_yn)
+			values((SELECT IFNULL(MAX(user_no)+1,1) FROM user_tbl b), #{user_id}, #{user_nick},#{user_pwd}, #{tel}, #{user_name}, #{user_email}, #{birth_yy},#{birth_mm},#{birth_dd}, #{gender}, #{user_id_yn)
+	 		
 		]]>
-	</insert> 	
+	</insert> 
+	
 	<!-- 유저아이디 개수 세기 -->
 	<!-- resultType : 결과(보낼)타입 // parameterType : 받아온 값의 타입 -->
 	<select id="idCheck" parameterType="String" resultType="Int" >
@@ -45,35 +52,27 @@
 		select count(*) from user_tbl where tel = #{mobile}
 		]]>
 	</select>
-	<!-- 로그인 -->
+	
+
 	<select id="loginById" resultType="memberVO" parameterType="memberVO">
 		<![CDATA[
 			select * from user_tbl where user_id = #{user_id} and user_pwd = #{user_pwd}
 		]]>
 	</select>
-	<!-- 아이디찾기 결과 -->
 	<select id="find_id_Result" resultType="string" parameterType="memberVO">
-		<![CDATA[ 
-			select user_id from user_tbl where user_name = #{user_name} and tel = #{tel} 
-		]]>
+		<![CDATA[ select user_id from user_tbl where user_name = #{user_name} and tel = #{tel} ]]>
 	</select>
-	<!-- 비밀번호찾기 결과 -->
+
 	<select id="find_pwd_Result" resultType="string" parameterType="memberVO">
-		<![CDATA[ 
-			select user_pwd from user_tbl where user_id = #{user_id} and user_name = #{user_name} and user_email = #{user_email} 
-		]]>
+		<![CDATA[ select user_pwd from user_tbl where user_id = #{user_id} and user_name = #{user_name} and user_email = #{user_email}]]>
 	</select>
-	<!-- 카카오 로그인시 기존 회원인지 확인 -->
+
 	<select id="findKakao" resultType="kakaoVO" parameterType="java.util.HashMap">
-		<![CDATA[ 
-			select * from kakao_tbl where k_name=#{nickname} and k_email=#{email}
-		]]>
+		select * from kakao_tbl where k_name=#{nickname} and k_email=#{email}
 	</select>
-	<!-- 카카오 계정 추가 -->
+
 	<select id="kakaoInsert" parameterType="java.util.HashMap">
-		<![CDATA[
-			insert into kakao_tbl(k_number,k_name, k_email) 
-			VALUES ((SELECT IFNULL(MAX(k_number)+1,1) FROM kakao_tbl k),#{nickname},#{email})
-		]]>
+		insert into kakao_tbl(k_number,k_name, k_email) VALUES((SELECT
+		IFNULL(MAX(k_number)+1,1) FROM kakao_tbl k),#{nickname},#{email})
 	</select>
 </mapper>

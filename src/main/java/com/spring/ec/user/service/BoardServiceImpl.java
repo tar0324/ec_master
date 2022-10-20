@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
 	public void addHits(int list_num)throws Exception{
 		boardDAO.addHits(list_num);
 	}
-	// ï¿½Ô½Ã±ï¿½ comment ï¿½Þ¼Òµï¿½
+	// °Ô½Ã±Û comment ¸Þ¼Òµå
 	@Override
 	public List<CommentVO> listComments(int list_num)throws Exception{
 		return boardDAO.selectAllCommentsList(list_num);
@@ -75,13 +75,13 @@ public class BoardServiceImpl implements BoardService {
 		commentMap.put("comment_num", comment_num);
 		return comment_num;
 	}
-	//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	//ÁÁ¾Æ¿ä ´­·¶´ÂÁö È®ÀÎ
 	@Override
 	public int likedCheck(Map likedMap) throws Exception {
 		int likedOk = boardDAO.selectLiked(likedMap);
 		return likedOk;
 	}	
-	// ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ß°ï¿½
+	// ÁÁ¾Æ¿ä Áß°¡
 	@Override
 	public int likedUp(Map likedMap)throws Exception {
 		int list_num = (Integer)likedMap.get("list_num");
@@ -89,7 +89,7 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.updateLiked(likedMap);
 		return liked;
 	}
-	// ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ÁÁ¾Æ¿ä °¨¼Ò
 	@Override
 	public int likedDown(Map likedMap)throws Exception {
 		int list_num = (Integer)likedMap.get("list_num");
@@ -98,13 +98,13 @@ public class BoardServiceImpl implements BoardService {
 		return liked;
 	}
 	
-	//ï¿½È¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	//½È¾î¿ä ´­·¶´ÂÁö È®ÀÎ
 		@Override
 		public int badCheck(Map badMap) throws Exception {
 			int badOk = boardDAO.selectBad(badMap);
 			return badOk;
 		}	
-		// ï¿½È¾ï¿½ï¿½ ï¿½ß°ï¿½
+		// ½È¾î¿ä Áß°¡
 		@Override
 		public int badUp(Map badMap)throws Exception {
 			int list_num = (Integer)badMap.get("list_num");
@@ -112,7 +112,7 @@ public class BoardServiceImpl implements BoardService {
 			boardDAO.updateBad(badMap);
 			return bad;
 		}
-		// ï¿½È¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// ½È¾î¿ä °¨¼Ò
 		@Override
 		public int badDown(Map badMap)throws Exception {
 			int list_num = (Integer)badMap.get("list_num");

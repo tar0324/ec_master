@@ -124,31 +124,6 @@ public class CateDAOImpl implements CateDAO {
 		String result = sqlSession.selectOne("mapper.category.selectsellerwishsum", seller_id);
 		return result;
 	}
-	
-	/*리뷰 삭제*/
-	@Override
-	public int reviewdel(Map<String, String> listMap) throws DataAccessException {
-		int result = sqlSession.delete("mapper.category.reviewdel", listMap);
-		return result;
-	}
-	
-	/*리뷰 삭제 시 해당 가게 리뷰개수*/
-	@Override
-	public String selectoneReviewsum(String seller_id) throws DataAccessException {
-		String result = sqlSession.selectOne("mapper.category.selectoneReviewsum", seller_id);
-		return result;
-	}
-	
-	/*리뷰 수정*/
-	@Override
-	public String reviewmod(Map<String, String> listMap) throws DataAccessException {
-		String result = sqlSession.selectOne("mapper.category.reviewmod", listMap);
-		return result;
-	}
-	
-	
-	
-	
 // 예약
 
 	@Override

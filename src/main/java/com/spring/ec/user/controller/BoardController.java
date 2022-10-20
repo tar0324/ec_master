@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.ec.user.vo.LikedVO;
 
 public interface BoardController {
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
+	//»ç¿ëÀÚ °Ô½ÃÆÇ ¿¬°á ¸Þ¼Òµå
 		public ModelAndView listBoards(HttpServletRequest request, HttpServletResponse response) throws Exception;
 		
 		public ModelAndView listEatBoards(HttpServletRequest request, HttpServletResponse response) throws Exception;

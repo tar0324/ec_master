@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ec.user.service.NoticeService;
-import com.spring.ec.user.vo.MemberVO;
 import com.spring.ec.user.vo.NoticeVO;
 
 @Controller("noticeController")
@@ -28,8 +27,6 @@ public class NoticeControllerImpl implements NoticeController {
 	public static final int pagingCount = 10;
 	@Autowired
 	private NoticeService noticeService;
-	@Autowired
-	MemberVO memberVO;
 	@Autowired
 	NoticeVO noticeVO;
 	// 공지사항-이벤트 보드

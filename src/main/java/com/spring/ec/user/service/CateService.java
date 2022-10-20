@@ -50,10 +50,4 @@ public interface CateService {
 	public int addBooking(Map booking) throws Exception;
 	
 	public int addNoUserBooking(Map booking) throws Exception;
-	
-	public int reviewdel(Map<String, String> listMap) throws DataAccessException;
-	
-	public String selectoneReviewsum(String seller_id) throws Exception;
-
-	public String reviewmod(Map<String, String> listMap) throws Exception;
 }

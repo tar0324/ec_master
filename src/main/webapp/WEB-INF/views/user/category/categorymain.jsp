@@ -2522,90 +2522,6 @@ textarea {
 
 
 
-
-/* 리뷰 수정/삭제 */
-._2Dxyk .JpUkc {
-    height: 31px;
-    margin: 0 -8px 0 4px;
-}
-
-._11WqG {
-    position: relative;
-}
-
-._2Fbn2 {
-    width: 26px;
-    height: 31px;
-}
-
-._3Qs_p {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    vertical-align: top;
-}
-
-._2Rz9w {
-    font-family: inherit;
-    font-size: inherit;
-}
-
-._3Qs_p ._3Ts2b {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    fill: #b8b8b8;
-    width: 16px;
-    height: 21px;
-}
-
-._3EISl ._3MDww+._3MDww {
-    border-top: 1px solid;
-    border-color: #dee0e2;
-}
-
-._3EISl ._3MDww {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 56px;
-    padding-left: 17px;
-    box-sizing: border-box;
-    color: #333;
-    color: rgba(var(--place-color-text6), 1);
-    text-align: left;
-}
-
-
-.oVwrv {
-    fill: #424242;
-    /* position: absolute; */
-    bottom: 0;
-    width: 13px;
-    height: 13px;
-    margin-top: 3px;
-}
-
-._3QNaU {
-    top: 37px;
-    right: 0;
-}
-
-._3EISl {
-    position: absolute;
-    z-index: 2010;
-    width: 184px;
-    border: 1px solid;
-    border-color: #dee0e2;
-    border-radius: 18px;
-    background: #fff;
-    box-shadow: 0 2px 6px 0 rgb(0 0 0 / 5%), 0 0 1px 0 rgb(0 21 81 / 5%);
-    box-sizing: border-box;
-}
-
-
-
 </style>
 
 <script>
@@ -2897,6 +2813,12 @@ $(".tab_cont > div").eq(idx).show();
     
     
 /*리뷰 더보기*/
+/*   $(function(){
+   	   $('.fvwqf').click(function () { 
+   		var getId=$(this).attr("id");
+   	   });
+    }); 
+ */
  
 function cardreview(id){
 	 var id = "#" + id;
@@ -2929,53 +2851,6 @@ function load(id, cnt, btn) {
     }
     $(girls_list + ":lt(" + girls_total_cnt + ")").addClass("active");
 }
-
-
-
-/*리뷰 삭제  */
-function reviewdel(review_num, seller_id,reviewsum,loadreivew) {
-	var user_id = "${member.user_id}";
-	if (user_id == ""){
-		alert("로그인이 필요합니다.");
-		return;
-	} else {  
-		//리뷰삭제
-			$.ajax({
-				url:"${contextPath}/reviewdel.do",
-				type : 'POST',
-				async: false ,
-				dataType:"text",
-				data : {
-					user_id : user_id,
-					seller_id : seller_id,
-					review_num : review_num
-					
-				},
-			    success: function (data) {
-			    	console.log("성공");
-			    	alert("삭제되었습니다 : )");
-			    	$(reviewsum).html(data);
-			    	//특정부분만 reload 필요
-			    	location.reload();
-			    	//$("#"+loadreivew).load("${contextPath}/category.do " + "#"+ loadreivew);
-			    	
-		        },
-		        error: function(request, status, error, data) {
-		        	console.log("error: " + error);
-		        	console.log("message: " + request.responseText);
-		        	console.log("Data::::: " + data);
-		        	
-		   }
-		});
-		
-		
-}
-}
-
-
-
-
-
 
 
 
@@ -3763,17 +3638,7 @@ geocoder.addressSearch(addr,function(result, status){
 											<c:forEach var="review" items="${reviewList }" varStatus="revNum">
 											<c:if test="${review.seller_id eq store.seller_id}">
 											<c:if test="${not loop_flag }">
-
-
-																	
-
-
-
-
-
-
-
-													<li class="qrzj_"><div class="IEbo1">
+											<li class="qrzj_"><div class="IEbo1">
 														<div class="GP2eR">
 															<div class="RGkHL ZZ4OK">
 															
@@ -3801,8 +3666,6 @@ geocoder.addressSearch(addr,function(result, status){
 																	<a
 																	href="#" role="button" class="iKqnp">
 																	<div class="rg88i">${review.user_nick }</div>
-																	
-
 																	<div class="FrWK3">
 																		<span class="ExHfk"><span class="place_blind">작성일</span>
 																		<div class="rg88i">${review.reg_date }</div>
@@ -4026,7 +3889,7 @@ geocoder.addressSearch(addr,function(result, status){
 							<!--review:start  -->
 									<div data-nclicks-area-code="rrv" id="review">
 									
-										<div class="place_section lcndr Xj_yJ" id="reviewload${storeNum.index}">
+										<div class="place_section lcndr Xj_yJ">
 										
 										<h2 class="place_section_header">
 												리뷰<span class="place_section_count review_revsum${storeNum.index}" id="">0</span>
@@ -4107,7 +3970,7 @@ geocoder.addressSearch(addr,function(result, status){
 																	
 																	
 																	<!-- 별점 -->
-																		<div style="CLEAR: both;PADDING-RIGHT: 0px;	PADDING-LEFT: 0px;	BACKGROUND: url(image/icon_star2.gif) 0px 0px;	FLOAT: left;	PADDING-BOTTOM: 0px;	MARGIN: 0px;	WIDTH: 90px;	PADDING-TOP: 0px;	HEIGHT: 18px;">
+																		<div style="CLEAR: both;	PADDING-RIGHT: 0px;	PADDING-LEFT: 0px;	BACKGROUND: url(image/icon_star2.gif) 0px 0px;	FLOAT: left;	PADDING-BOTTOM: 0px;	MARGIN: 0px;	WIDTH: 90px;	PADDING-TOP: 0px;	HEIGHT: 18px;">
 																			<p style="WIDTH: ${review.rating_percent}%; PADDING-RIGHT:0px;	PADDING-LEFT:0px;	BACKGROUND: url(image/icon_star.gif) 0px 0px;	PADDING-BOTTOM: 0px;	MARGIN: 0px;	PADDING-TOP: 0px;	HEIGHT: 18px;">
 																				
 																			</p>
@@ -4158,25 +4021,6 @@ geocoder.addressSearch(addr,function(result, status){
 																	방문일</span>
 															<time aria-hidden="true">${review.reg_date}</time></span>
 														</div>
-														
-														
-														
-														<!-- 수정/삭제하기 -->
-														<c:if test="${member.user_id eq review.user_id }">
-														
-														<!-- <a href="#" style="font-size:small; color:#8f8f8f;">수정 <svg viewBox="0 0 15 15" class="oVwrv" role="presentation">
-														<path d="M13.162 5.121l-9.08 8.977H0v-4.3L8.92.878a3 3 0 0 1 4.242 4.243zm-.707-3.535a2 2 0 0 0-2.829 0L1 10.212v2.886h2.67l8.786-8.685a2 2 0 0 0-.001-2.827zm-4.605.878l.707-.707 3.707 3.707-.707.708L7.85 2.464z"></path></svg>
-														</a> -->
-														
-														<a href="#" onclick="reviewdel('${review.review_num }','${review.seller_id }',reviewsum${storeNum.index},'reviewload${storeNum.index}');" style="font-size:small; color:#8f8f8f;">
-														삭제 
-														<svg viewBox="0 0 15 15" class="oVwrv" role="presentation">
-														<path d="M4.792 2.654V.5h5.416v2.154H14V3.73H1V2.654h3.792zm1.083 0h3.25V1.577h-3.25v1.077zm5.958 10.77V4.807h1.084V14.5H2.083V4.808h1.084v8.615h8.666zm-3.79-1.616H6.958v-7h1.083v7zm-2.71 0H4.25v-7h1.083v7zm5.417 0H9.667v-7h1.083v7z">
-														</path>
-														</svg>
-														</a>
-														
-														</c:if>
 														</li>
 														</div>
 														</c:if>

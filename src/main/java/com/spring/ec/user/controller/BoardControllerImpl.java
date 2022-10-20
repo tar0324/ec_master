@@ -49,7 +49,7 @@ public class BoardControllerImpl implements BoardController {
 	@Autowired
 	CommentVO commentVO;
 
-	// ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ¸ßÇÃ¸® º¼ÇÃ¸® ÆäÀÌÁö
 	@Override
 	@RequestMapping(value = "/user/u_board", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listBoards(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -302,7 +302,7 @@ public class BoardControllerImpl implements BoardController {
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
 			}
 			message = "<script>";
-			message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
+			message += " alert('»õ±ÛÀ» Ãß°¡Çß½À´Ï´Ù.');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -311,7 +311,7 @@ public class BoardControllerImpl implements BoardController {
 			srcFile.delete();
 
 			message = "<script>";
-			message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½');";
+			message += " alert('¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);

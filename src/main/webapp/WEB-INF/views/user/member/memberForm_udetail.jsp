@@ -47,6 +47,7 @@ display: none;
 color:#6A82FB; 
 display: none;
 }
+#container{ height:1000px; }
 </style>
 
         <meta charset="UTF-8">                                                                       
@@ -96,7 +97,7 @@ display: none;
                         <input type="text" id="nick" name="user_nick" oninput = "nickCheck()" class="int" maxlength="20">
                        
                  	</span>
-                 	<span class="nick_ok">중복되지않는 닉네임입니다.</span>
+                 		<span class="nick_ok">중복되지않는 닉네임입니다.</span>
                  	<span class="nick_already">이미 사용중인 닉네임입니다.</span> 
                     <span class="error_next_box"></span>
                 </div>

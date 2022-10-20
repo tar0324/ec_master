@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="${contextPath}/seller/dist/css/adminlte.min.css">
+ <!-- Daterange picker -->
+<link rel="stylesheet" href="${contextPath}/seller/plugins/daterangepicker/daterangepicker.css">
 <!-- jQuery -->
 <script src="${contextPath}/seller/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -24,8 +26,6 @@
 <script src="${contextPath}/seller/dist/js/adminlte.js"></script>
 <!-- OPTIONAL SCRIPTS -->
 <script src="${contextPath}/seller/plugins/chart.js/Chart.min.js"></script>
-<!-- icheck bootstrap -->
-  <link rel="stylesheet" href="${contextPath}/seller/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 <meta charset="UTF-8">
 <style type="text/css">
 </style>

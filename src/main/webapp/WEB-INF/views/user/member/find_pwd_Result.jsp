@@ -13,7 +13,7 @@
     <head>
 
         <meta charset="UTF-8">                                                                       
-        <title>아이디찾기결과창</title>
+        <title>비밀번호찾기결과창</title>
         <link rel="stylesheet" href="${contextPath }/css/find_id.css">
 
     </head>
@@ -34,8 +34,13 @@
         <img src="https://static.nid.naver.com/images/web/user/h_find_pw2.gif" width="70" height="22" alt="비밀번호 찾기">
         </h2>
         
-        <p style="font-size:12px;">회원정보에 저장된 아이디, 성명, 이메일인증을 이용하여 비밀번호를 찾을 수 있습니다.
-           <h1>고객님의 비밀번호는 [${user_pwd }] 입니다.</h1> 
+        <p style="font-size:12px;">회원정보에 저장된 아이디, 성명, 이메일인증을 이용하여 비밀번호를 찾을 수 있습니다.</p>
+          	 		 <c:if test="${check == 1}">
+						<h1>일치하는 정보가 존재하지 않습니다.</h1>
+					</c:if>
+					<c:if test="${check == 0 && inputCode == code}">
+						<h1>고객님의 비밀번호는 [${user_pwd }] 입니다.</h1>
+					</c:if>
         </div>
         <div style="text-align:center" class="ok">
         <input type="button" id="login2" name="login2" onclick="location.href='${contextPath}/user/loginForm.do'" value="로그인">

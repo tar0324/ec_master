@@ -84,6 +84,8 @@ function checkNick() {
     }
 }
 
+
+
 function checkPw() {
     var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
     if(pw1.value === "") {

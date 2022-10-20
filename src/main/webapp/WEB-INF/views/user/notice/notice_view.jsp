@@ -90,7 +90,7 @@ request.setCharacterEncoding("utf-8");
 <h1 align="center">게시글</h1>
 </div>
 	<div id="write">
-	<form name="frmBoard" method="post" action="${contextpath}/board/addNewboard.do" enctype="multipart/form-data">
+	<form name="frmBoard" method="post" action="${contextpath}/admin/addNewNotice" enctype="multipart/form-data">
 		<table align="center" class="table">
 			<tr style="border-top: none;">
 				<td width="150" align="center" style="border-top: none;" >

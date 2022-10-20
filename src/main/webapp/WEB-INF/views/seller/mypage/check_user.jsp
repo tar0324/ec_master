@@ -20,13 +20,6 @@ request.setCharacterEncoding("utf-8");
 </script>
 <!-- 메시지 띄우기  -->
 <c:choose>
-	<c:when test="${result=='pwdsuccess' }">
-		<script>
-			window.onload=function() {
-				alert("본인 인증이 완료되었습니다.");
-			}
-		</script>
-	</c:when>
 	<c:when test="${result=='pwdfail' }">
 		<script>
 			window.onload=function() {

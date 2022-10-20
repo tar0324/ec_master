@@ -74,15 +74,15 @@ request.setCharacterEncoding("utf-8");
         <span class="dropdown-item dropdown-header">금일 현황</span>
           <div class="dropdown-divider"></div>
 	        <a href="#" class="dropdown-item">
-		        <i class="fas fa-users mr-2"></i> 예약:<!-- 금일 예약신청수 --><span class="today_text">명</span>
+		        <i class="fas fa-users mr-2"></i> 예약:<!-- 금일 예약신청수 --><span class="today_text">${todayBook}&nbsp;건</span>
 	        </a>
 	        <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-regular fa-pen mr-2"></i> 리뷰:<!-- 금일 작성된 리뷰수 --><span class="today_text">명</span>
+            <i class="fas fa-regular fa-pen mr-2"></i> 리뷰:<!-- 금일 작성된 리뷰수 --><span class="today_text">건</span>
           </a>          
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-heart mr-2"></i> 찜:<!-- 금일 찜한수 --><span class="today_text">명</span>
+            <i class="fas fa-heart mr-2"></i> 찜:<!-- 금일 찜한수 --><span class="today_text">건</span>
           </a>
         </div>
       </li>

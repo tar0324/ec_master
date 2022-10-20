@@ -71,12 +71,6 @@ public class CateServiceImpl implements CateService {
 		List<ReviewVO> ReviewList = cateDAO.selectReviewavgsum();
 		return ReviewList;
 	}
-	
-	/*리뷰 삭제 후 해당 가게 리뷰 개수*/
-	@Override
-	public String selectoneReviewsum(String seller_id) throws Exception {
-		return cateDAO.selectoneReviewsum(seller_id);
-	}
 
 	@Override
 	public ReservVO selectStoreInfo(String seller_id) throws Exception {
@@ -127,19 +121,4 @@ public class CateServiceImpl implements CateService {
 	public int addNoUserBooking(Map booking) throws Exception{
 		return cateDAO.insertNoUserBooking(booking);
 	}
-	
-	@Override
-	public int reviewdel(Map<String, String> listMap) throws DataAccessException {
-		return cateDAO.reviewdel(listMap);
-	}
-	
-	
-	@Override
-	public String reviewmod(Map<String, String> listMap) throws Exception {
-		return cateDAO.reviewmod(listMap);
-	}
-
-	
-	
-	
 }

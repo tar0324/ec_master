@@ -19,7 +19,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½
+	// ¸ÔÇÃ¸® º¼ÇÃ¸®
 	@Override
 	public List selectAllBoardsList(int page) throws DataAccessException {
 		page = (page - 1) * 10;
@@ -47,7 +47,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectOne("mapper.board.selectBoard", list_num);
 	}
 
-	// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® È£ï¿½ï¿½
+	// ÀÌ¹ÌÁö ÆÄÀÏ ¸®½ºÆ® È£Ãâ
 	@Override
 	public List selectImageFileList(int list_num) throws DataAccessException {
 		List<ImageVO> imageFileList = null;
