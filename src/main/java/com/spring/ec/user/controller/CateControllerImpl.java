@@ -43,7 +43,7 @@ public class CateControllerImpl implements CateController {
 	@Autowired
 	ReviewVO reviewVO;
 	
-	// Ä«Å×°í¸®
+	// Ä«ï¿½×°ï¿½
 	@Override
 	@RequestMapping(value = "/category.do", method = RequestMethod.GET)
 	public ModelAndView category(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,7 +76,7 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 
-	/* °Ë»ö */
+	/* ï¿½Ë»ï¿½ */
 	@Override
 	@RequestMapping(value = "/searchcategory.do", method = RequestMethod.GET)
 	public ModelAndView searchcategory(@RequestParam(value = "search") String search,
@@ -94,17 +94,17 @@ public class CateControllerImpl implements CateController {
 		System.out.println("listMap::::" + listMap);
 		System.out.println("Type is: " + listMap.getClass());
 
-		if (area == null || area.equals("null") || area.equals("Áö¿ª")) {
+		if (area == null || area.equals("null") || area.equals("ì§€ì—­")) {
 			listMap.put("area", "null");
 		} else {
 			listMap.put("area", area);
 		}
 		
-		if (kind == null || kind.equals("null")|| kind.equals("¾÷Á¾")) {
+		if (kind == null || kind.equals("null")|| kind.equals("ì—…ì¢…")) {
 			listMap.put("kind", "null");
-		} else if (kind.equals("¸Ô°Å¸®")) {
+		} else if (kind.equals("ë¨¹ê±°ë¦¬")) {
 			listMap.put("kind", "10");
-		} else if (kind.equals("º¼°Å¸®")) {
+		} else if (kind.equals("ë³¼ê±°ë¦¬")) {
 			listMap.put("kind", "20");
 		} else {
 			listMap.put("kind", kind);
@@ -142,7 +142,7 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 
-	/* »ó¼¼Á¶È¸ */
+	/* ï¿½ï¿½ï¿½ï¿½È¸ */
 	@Override
 	@RequestMapping(value = "/storeInfo.do", method = RequestMethod.GET)
 	public ModelAndView storeInfo(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request,
@@ -158,7 +158,7 @@ public class CateControllerImpl implements CateController {
 		return mav;
 	}
 
-	/* ¸®ºä ÁÁ¾Æ¿ä up */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¿ï¿½ up */
 	@Override
 	@RequestMapping(value = "/reviewlike.do", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody String reviewlike(@RequestParam(value = "review_num") int reviewnum,
@@ -172,7 +172,7 @@ public class CateControllerImpl implements CateController {
 
 	
 	//221005
-	// ÂòÇÏ±â
+	// ï¿½ï¿½ï¿½Ï±ï¿½
 	@Override
 	@RequestMapping(value = "/addwish.do", method = RequestMethod.POST)
 	public @ResponseBody String addwish(@RequestParam(value = "seller_id") String seller_id,
@@ -183,7 +183,7 @@ public class CateControllerImpl implements CateController {
 		listMap.put("seller_id", seller_id);
 		listMap.put("user_id", user_id);
 		int result = cateService.addwish(listMap);
-		// Âò°³¼ö °¡Á®¿À±â
+		// ï¿½ò°³¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String wishsellsum = cateService.selectsellerwishsum(seller_id);
 
 
@@ -198,7 +198,7 @@ public class CateControllerImpl implements CateController {
 
 	
 	//221005
-	// Âò»èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	@RequestMapping(value = "/delwish.do", method = RequestMethod.POST)
 	public @ResponseBody String delwish(@RequestParam(value = "seller_id") String seller_id,
@@ -219,7 +219,7 @@ public class CateControllerImpl implements CateController {
 		return wishsellsum;
 	}
 
-	// ´ÙÁß ÀÌ¹ÌÁö ±Û Ãß°¡ÇÏ±â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½
 	/*
 	 * @Override
 	 * 
@@ -235,7 +235,7 @@ public class CateControllerImpl implements CateController {
 	 * name = (String)enu.nextElement(); String value =
 	 * multipartRequest.getParameter(name); reviewMap.put(name, value); }
 	 * 
-	 * //·Î±×ÀÎ ½Ã ¼¼¼Ç¿¡ ÀúÀåµÈ È¸¿ø Á¤º¸¿¡¼­ ±Û¾´ÀÌ ¾ÆÀÌµð¸¦ ¾ò¾î¿Í¼­ Map¿¡ ÀúÀåÇÕ´Ï´Ù. HttpSession session =
+	 * //ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Í¼ï¿½ Mapï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. HttpSession session =
 	 * multipartRequest.getSession(); MemberVO memberVO =
 	 * (MemberVO)session.getAttribute("member"); String id = memberVO.getUser_id();
 	 * reviewMap.put("user_id", id); reviewMap.put("seller_id", seller_id);
@@ -255,7 +255,7 @@ public class CateControllerImpl implements CateController {
 	 * = new File(REVIEW_IMAGE_REPO + "\\" + review_num); //destDir.mkdirs();
 	 * FileUtils.moveFileToDirectory(srcFile, destDir, true); } }
 	 * 
-	 * message = "<script>"; message += " alert('¸®ºä¸¦ Ãß°¡Çß½À´Ï´Ù.');";
+	 * message = "<script>"; message += " alert('ï¿½ï¿½ï¿½ä¸¦ ï¿½ß°ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.');";
 	 * 
 	 * message += " location.href='" + multipartRequest.getContextPath() +
 	 * "/board/listArticles.do'; ";
@@ -267,7 +267,7 @@ public class CateControllerImpl implements CateController {
 	 * File(REVIEW_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
 	 * srcFile.delete(); } }
 	 * 
-	 * message = "<script>"; message += " alert('¿À·ù°¡ ¹ß»ýÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');"; message
+	 * message = "<script>"; message += " alert('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½');"; message
 	 * += " location.href='" + multipartRequest.getContextPath() +
 	 * "/board/articleForm.do'; "; message += " </script>"; resEnt = new
 	 * ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -276,7 +276,7 @@ public class CateControllerImpl implements CateController {
 	
 	
 	
-	//¸®ºä µî·Ï
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	@Override
 	@RequestMapping(value="/addreview.do", method = RequestMethod.POST)
 	public ModelAndView addreview(@ModelAttribute("review") ReviewVO review, HttpServletRequest request, HttpServletResponse response) throws Exception {

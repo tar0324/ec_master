@@ -19,6 +19,7 @@ public class FileDownloadController {
 	private static String S_IMAGE_REPO = "c:\\board\\s_board_imagefile";
 	private static String NO_IMAGE_REPO = "c:\\notice\\user";
 	private static final String MENU_IMAGE_REPO="C:\\EATSEE\\menu_image";
+	private static final String STORE_IMAGE_REPO="C:\\EATSEE\\store";
 	
 	@RequestMapping("/u_board/download")
 	public void userdownload(@RequestParam("image_fileName") String image_fileName, @RequestParam("list_num") String list_num, HttpServletResponse response)
@@ -126,4 +127,45 @@ public class FileDownloadController {
 			in.close(); 
 			out.close();
 		}
+	 
+	 
+	 @RequestMapping("/store/download.do") 
+	  public void storedownload(@RequestParam("imageFileName") String imageFileName, @RequestParam("seller_id") String seller_id,HttpServletResponse response) throws Exception {
+			OutputStream out = response.getOutputStream();
+			String	downFile = STORE_IMAGE_REPO + "\\"+seller_id+"\\" + imageFileName;
+			
+			if(imageFileName.equals("no_store_img.png")) {
+				downFile = STORE_IMAGE_REPO + "\\" + imageFileName;
+			}
+				
+
+			
+			File file = new File(downFile);
+			int lastIndex = imageFileName.lastIndexOf(".");
+			String fileName = imageFileName.substring(0, lastIndex);
+			
+			/*
+			 * File thumbnail = new File(MENU_IMAGE_REPO +
+			 * "\\" + "thumbnail" + "\\" + fileName + ".png"); if (file.exists()) {
+			 * thumbnail.getParentFile().mkdirs(); Thumbnails.of(file).size(500,
+			 * 200).outputFormat("png").toFile(thumbnail); }
+			 */
+			 FileInputStream in = new FileInputStream(file); 
+			 
+			byte[] buffer = new byte[1024 * 8];
+			while (true) {
+				int count = in.read(buffer); 
+				if (count == -1)
+					break;
+				out.write(buffer, 0, count);
+			}
+			in.close(); 
+			out.close();
+		}
+	 
+	 
+	 
+	 
+	 
+	 
 }

@@ -13,17 +13,67 @@ request.setCharacterEncoding("utf-8");
 <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css" />
 <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
 <style type="text/css">
+/* 이미지 파일 선택 라벨 */
 
+.fileRegiBtn label {
+	float: right;
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #ffffff; 
+	font-size: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #FC7D01; 
+	cursor: pointer; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em;
+}
+
+/*파일선택시 선택된 파일명이 붙는것을 가려준다*/
+.fileRegiBtn input[type="file"]{
+	position: absolute; 
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px; 
+	overflow: hidden; 
+	clip:rect(0,0,0,0); 
+	border: 0;
+}
 </style>
 <script type="text/javascript">
 
+//이미지 파일 보이기
+function readURL(input) {
+	    	console.log("버튼클릭함1");
+	        if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+	        reader.onload = function (e) {
+	                $('#storeimg').attr('src', e.target.result);        //cover src로 붙여지고
+	                $('#fileName').attr('value',input.files[0].name);    //파일선택 form으로 파일명이 들어온다
+	                $('#hiddenimg').attr('value',input.files[0].name);    
+	        }
+	          reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+
+
+
+//업체 소개 수정
+function modinfo(frm){
+   	    frm.method="post";
+   	    frm.action="${contextPath}/modinfo.do";
+   	    frm.submit();
+
+}
 </script>
 <!-- 메시지 띄우기  -->
 <c:choose>
-	<c:when test="${result=='pwdfail' }">
+	<c:when test="${result=='modinfosuccess' }">
 		<script>
 			window.onload=function() {
-				alert("비밀번호를 다시 입력해주세요.");
+				alert("업제청보를 수정하였습니다.");
 			}
 		</script>
 	</c:when>
@@ -39,12 +89,12 @@ request.setCharacterEncoding("utf-8");
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Profile</h1>
+            <h1>마이페이지</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">User Profile</li>
+              <li class="breadcrumb-item"><a href="#">메인</a></li>
+              <li class="breadcrumb-item active">마이페이지</li>
             </ol>
           </div>
         </div>
@@ -61,7 +111,13 @@ request.setCharacterEncoding("utf-8");
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle" src="${contextPath}/store/download.do?seller_id=' + ${sellerinfo.seller_id} + '&imageFileName=' +${sellerinfo.image_fileName}" alt="User profile picture">
+                <c:if test="${empty sellerinfo.image_fileName}">
+                 <img class="profile-user-img img-fluid img-circle" src="${contextPath}/store/download.do?seller_id=${sellerinfo.seller_id}&imageFileName=no_store_img.png" alt="seller profile picture">
+                </c:if>
+                <c:if test="${not empty sellerinfo.image_fileName}">
+                	<img class="profile-user-img img-fluid img-circle" src="${contextPath}/store/download.do?seller_id=${sellerinfo.seller_id}&imageFileName=${sellerinfo.image_fileName}" alt="seller profile picture" style="width: 100px;height: 100px;">
+                </c:if>
+                  
                 </div>
 
                 <h3 class="profile-username text-center">${seller.seller_name}</h3>
@@ -93,225 +149,180 @@ request.setCharacterEncoding("utf-8");
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Activity</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">업체 소개</a></li>
-                  <li class="nav-item"><a class="nav-link active" href="#sellerinfo" data-toggle="tab">업체 정보</a></li>
+                <li class="nav-item"><a class="nav-link active " href="#sellerinfo" data-toggle="tab">업체 정보</a></li>
+                  <li class="nav-item"><a class="nav-link " href="#storeinfo" data-toggle="tab">업체 소개</a></li>
+                  
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="tab-pane" id="activity">
-                    <!-- Post -->
-                    <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                        <span class="description">Shared publicly - 7:30 PM today</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore the hate as they create awesome
-                        tools to help create filler text for everyone from bacon lovers
-                        to Charlie Sheen fans.
-                      </p>
-
-                      <p>
-                        <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
-                        <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                        <span class="float-right">
-                          <a href="#" class="link-black text-sm">
-                            <i class="far fa-comments mr-1"></i> Comments (5)
-                          </a>
-                        </span>
-                      </p>
-
-                      <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
-                    </div>
-                    <!-- /.post -->
-
-                    <!-- Post -->
-                    <div class="post clearfix">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                        <span class="description">Sent you a message - 3 days ago</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <p>
-                        Lorem ipsum represents a long-held tradition for designers,
-                        typographers and the like. Some people hate it and argue for
-                        its demise, but others ignore the hate as they create awesome
-                        tools to help create filler text for everyone from bacon lovers
-                        to Charlie Sheen fans.
-                      </p>
-
-                      <form class="form-horizontal">
-                        <div class="input-group input-group-sm mb-0">
-                          <input class="form-control form-control-sm" placeholder="Response">
-                          <div class="input-group-append">
-                            <button type="submit" class="btn btn-danger">Send</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                    <!-- /.post -->
-
-                    <!-- Post -->
-                    <div class="post">
-                      <div class="user-block">
-                        <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                        <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                        </span>
-                        <span class="description">Posted 5 photos - 5 days ago</span>
-                      </div>
-                      <!-- /.user-block -->
-                      <div class="row mb-3">
-                        <div class="col-sm-6">
-                          <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                          <div class="row">
-                            <div class="col-sm-6">
-                              <img class="img-fluid mb-3" src="../../dist/img/photo2.png" alt="Photo">
-                              <img class="img-fluid" src="../../dist/img/photo3.jpg" alt="Photo">
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-6">
-                              <img class="img-fluid mb-3" src="../../dist/img/photo4.jpg" alt="Photo">
-                              <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">
-                            </div>
-                            <!-- /.col -->
-                          </div>
-                          <!-- /.row -->
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-
-                      <p>
-                        <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
-                        <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                        <span class="float-right">
-                          <a href="#" class="link-black text-sm">
-                            <i class="far fa-comments mr-1"></i> Comments (5)
-                          </a>
-                        </span>
-                      </p>
-
-                      <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
-                    </div>
-                    <!-- /.post -->
-                  </div>
+      
                   <!-- /.tab-pane -->
-                  <div class="tab-pane" id="timeline">
+                  <div class="tab-pane" id="storeinfo">
                     <!-- The timeline -->
-                    <div class="timeline timeline-inverse">
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-danger">
-                          10 Feb. 2014
-                        </span>
-                      </div>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-envelope bg-primary"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                          <div class="timeline-body">
-                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                            quora plaxo ideeli hulu weebly balihoo...
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-user bg-info"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                          <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-                          </h3>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-comments bg-warning"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                          <div class="timeline-body">
-                            Take me to your leader!
-                            Switzerland is small and neutral!
-                            We are more like Germany, ambitious and misunderstood!
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-success">
-                          3 Jan. 2014
-                        </span>
-                      </div>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-camera bg-purple"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-                          <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                          <div class="timeline-body">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <div>
-                        <i class="far fa-clock bg-gray"></i>
+                    <form enctype="multipart/form-data">
+         <div class="card">
+        <div class="card-body row">
+        
+          <div style=" margin: 0 auto;">
+               <div class="text-center" >
+               	<img src="${contextPath}/store/download.do?seller_id=${sellerinfo.seller_id}&imageFileName=${sellerinfo.image_fileName}" alt="user-avatar" class="img-fluid" style="border-radius:10px; width:299px; height:180px" id="storeimg">
+                </div>
+                <div class="form-group" style="margin: 40px 0 0 ;">
+                    <input id="fileName" class="form-control" value="파일선택" disabled="disabled" style="width:75%; display: inline;float: left;">
+                    		<div class="fileRegiBtn">
+                    		<label for="myFileUp"><i class="fas fa-search"></i></label>
+                    		<input type="file" class="btn btn-primary" id="myFileUp" name="imageFileName" onchange="readURL(this);">
+                    		</div>
+                </div>
+          </div>
+          <div class="col-7" style="margin: 10px  auto;">
+            <div class="form-group">
+              <label for="inputSubject">영업 시간 소개</label>
+              <input type="text" id="inputSubject" class="form-control" placeholder="ex) 매일 9:00 ~ 9:00 / 브레이크 타임 15:30 ~ 16:30" name="openTime" value="${sellerinfo.openTime }">
+            </div>
+            
+			<div class="row">
+                    <div class="col-sm-6">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>오픈시간</label>
+                        <select class="form-control" name="open_time">
+                          <option value="0500" <c:if test="${sellerinfo.open_time eq 0500}">selected</c:if>>05:00</option>
+                          <option value="0600" <c:if test="${sellerinfo.open_time eq 0600}">selected</c:if>>06:00</option>
+                          <option value="0700" <c:if test="${sellerinfo.open_time eq 0700}">selected</c:if>>07:00</option>
+                          <option value="0800" <c:if test="${sellerinfo.open_time eq 0800}">selected</c:if>>08:00</option>
+                          <option value="0900" <c:if test="${sellerinfo.open_time eq 0900}">selected</c:if>>09:00</option>
+                          <option value="1000" <c:if test="${sellerinfo.open_time eq 1000}">selected</c:if>>10:00</option>
+                          <option value="1100" <c:if test="${sellerinfo.open_time eq 1100}">selected</c:if>>11:00</option>
+                          <option value="1200" <c:if test="${sellerinfo.open_time eq 1200}">selected</c:if>>12:00</option>
+                          <option value="1300" <c:if test="${sellerinfo.open_time eq 1300}">selected</c:if>>13:00</option>
+                          <option value="1400" <c:if test="${sellerinfo.open_time eq 1400}">selected</c:if>>14:00</option>
+                          <option value="1500" <c:if test="${sellerinfo.open_time eq 1500}">selected</c:if>>15:00</option>
+                          <option value="1600" <c:if test="${sellerinfo.open_time eq 1600}">selected</c:if>>16:00</option>
+                          <option value="1700" <c:if test="${sellerinfo.open_time eq 1700}">selected</c:if>>17:00</option>
+                          <option value="1800" <c:if test="${sellerinfo.open_time eq 1800}">selected</c:if>>18:00</option>
+                          <option value="1900" <c:if test="${sellerinfo.open_time eq 1900}">selected</c:if>>19:00</option>
+                          <option value="2000" <c:if test="${sellerinfo.open_time eq 2000}">selected</c:if>>20:00</option>
+                        </select>
                       </div>
                     </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>마감시간</label>
+                        <select class="form-control" name="close_time">
+                          <option value="1300" <c:if test="${sellerinfo.close_time eq 1300}">selected</c:if>>13:00</option>
+                          <option value="1400" <c:if test="${sellerinfo.close_time eq 1400}">selected</c:if>>14:00</option>
+                          <option value="1500" <c:if test="${sellerinfo.close_time eq 1500}">selected</c:if>>15:00</option>
+                          <option value="1600" <c:if test="${sellerinfo.close_time eq 1600}">selected</c:if>>16:00</option>
+                          <option value="1700" <c:if test="${sellerinfo.close_time eq 1700}">selected</c:if>>17:00</option>
+                          <option value="1800" <c:if test="${sellerinfo.close_time eq 1800}">selected</c:if>>18:00</option>
+                          <option value="1900" <c:if test="${sellerinfo.close_time eq 1900}">selected</c:if>>19:00</option>
+                          <option value="2000" <c:if test="${sellerinfo.close_time eq 2000}">selected</c:if>>20:00</option>
+                          <option value="2100" <c:if test="${sellerinfo.close_time eq 2100}">selected</c:if>>21:00</option>
+                          <option value="2200" <c:if test="${sellerinfo.close_time eq 2200}">selected</c:if>>22:00</option>
+                          <option value="2300" <c:if test="${sellerinfo.close_time eq 2300}">selected</c:if>>23:00</option>
+                          <option value="2400" <c:if test="${sellerinfo.close_time eq 2400}">selected</c:if>>24:00</option>
+                          <option value="0100" <c:if test="${sellerinfo.close_time eq 0100}">selected</c:if>>01:00</option>
+                          <option value="0200" <c:if test="${sellerinfo.close_time eq 0200}">selected</c:if>>02:00</option>
+                          <option value="0300" <c:if test="${sellerinfo.close_time eq 0300}">selected</c:if>>03:00</option>
+                          <option value="0400" <c:if test="${sellerinfo.close_time eq 0400}">selected</c:if>>04:00</option>
+                          <option value="0500" <c:if test="${sellerinfo.close_time eq 0500}">selected</c:if>>05:00</option>
+                          <option value="0600" <c:if test="${sellerinfo.close_time eq 0600}">selected</c:if>>06:00</option>
+                          <option value="0700" <c:if test="${sellerinfo.close_time eq 0700}">selected</c:if>>07:00</option>
+                          <option value="0800" <c:if test="${sellerinfo.close_time eq 0800}">selected</c:if>>08:00</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <!-- select -->
+                      <div class="form-group">
+                        <label>예약 최소인원</label>
+                        <select class="form-control" name="min_People">
+                          <option value="1" <c:if test="${sellerinfo.min_People eq 1}">selected</c:if>>1</option>
+                          <option value="2" <c:if test="${sellerinfo.min_People eq 2}">selected</c:if>>2</option>
+                          <option value="3" <c:if test="${sellerinfo.min_People eq 3}">selected</c:if>>3</option>
+                          <option value="4" <c:if test="${sellerinfo.min_People eq 4}">selected</c:if>>4</option>
+                          <option value="5" <c:if test="${sellerinfo.min_People eq 5}">selected</c:if>>5</option>
+                          <option value="6" <c:if test="${sellerinfo.min_People eq 6}">selected</c:if>>6</option>
+                          <option value="7" <c:if test="${sellerinfo.min_People eq 7}">selected</c:if>>7</option>
+                          <option value="8" <c:if test="${sellerinfo.min_People eq 8}">selected</c:if>>8</option>
+                          <option value="9" <c:if test="${sellerinfo.min_People eq 9}">selected</c:if>>9</option>
+                          <option value="10" <c:if test="${sellerinfo.min_People eq 10}">selected</c:if>>10</option>
+                          <option value="11" <c:if test="${sellerinfo.min_People eq 11}">selected</c:if>>11</option>
+                          <option value="12" <c:if test="${sellerinfo.min_People eq 12}">selected</c:if>>12</option>
+                          <option value="13" <c:if test="${sellerinfo.min_People eq 13}">selected</c:if>>13</option>
+                          <option value="14" <c:if test="${sellerinfo.min_People eq 14}">selected</c:if>>14</option>
+                          <option value="15" <c:if test="${sellerinfo.min_People eq 15}">selected</c:if>>15</option>
+                          
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>예약 최대인원</label>
+                        <select class="form-control" name="max_People">
+                          <option value="1" <c:if test="${sellerinfo.max_People eq 1}">selected</c:if>>1</option>
+                          <option value="2" <c:if test="${sellerinfo.max_People eq 2}">selected</c:if>>2</option>
+                          <option value="3" <c:if test="${sellerinfo.max_People eq 3}">selected</c:if>>3</option>
+                          <option value="4" <c:if test="${sellerinfo.max_People eq 4}">selected</c:if>>4</option>
+                          <option value="5" <c:if test="${sellerinfo.max_People eq 5}">selected</c:if>>5</option>
+                          <option value="6" <c:if test="${sellerinfo.max_People eq 6}">selected</c:if>>6</option>
+                          <option value="7" <c:if test="${sellerinfo.max_People eq 7}">selected</c:if>>7</option>
+                          <option value="8" <c:if test="${sellerinfo.max_People eq 8}">selected</c:if>>8</option>
+                          <option value="9" <c:if test="${sellerinfo.max_People eq 9}">selected</c:if>>9</option>
+                          <option value="10" <c:if test="${sellerinfo.max_People eq 10}">selected</c:if>>10</option>
+                          <option value="11" <c:if test="${sellerinfo.max_People eq 11}">selected</c:if>>11</option>
+                          <option value="12" <c:if test="${sellerinfo.max_People eq 12}">selected</c:if>>12</option>
+                          <option value="13" <c:if test="${sellerinfo.max_People eq 13}">selected</c:if>>13</option>
+                          <option value="14" <c:if test="${sellerinfo.max_People eq 14}">selected</c:if>>14</option>
+                          <option value="15" <c:if test="${sellerinfo.max_People eq 15}">selected</c:if>>15</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="col-sm-6" style="padding-left: 0">
+                      <div class="form-group">
+                        <label>예약금</label>
+                        <select class="form-control" name="reserv_pay" >
+                          <option value="0" <c:if test="${sellerinfo.reserv_pay eq 0}">selected</c:if> >없음</option>
+                          <option value="10000" <c:if test="${sellerinfo.reserv_pay eq 10000}">selected</c:if>>10,000</option>
+                        </select>
+                      </div>
+                    </div>
+            <div class="form-group">
+              <label for="inputcloseDay">휴무일</label>
+              <input type="text" id="inputcloseDay" class="form-control" placeholder="ex) 연중무휴" name="closeDay" value="${sellerinfo.closeDay}">
+            </div>
+            <div class="form-group">
+              <label for="inputbenefit">편의 시설</label>
+              <input type="text" id="inputbenefit" class="form-control" placeholder="ex) 단체석, 포장, 주차, 남/녀 화장실 구분 " name="store_benefit"  value="${sellerinfo.store_benefit}">
+            </div>
+            <div class="form-group">
+              <label for="inputMessage">가게 소개</label>
+              <textarea id="inputMessage" class="form-control" rows="4" name="store_introduce">${sellerinfo.store_introduce }</textarea>
+            </div>
+            <div class="form-group" style="float: right">
+                <c:if test="${infostatus eq 0 }">
+                  <button type="button" class="btn btn-primary" onclick="addinfo(this.form);">등록</button>
+                 </c:if>
+                 <c:if test="${infostatus eq 1 }">
+                  <button type="button" class="btn btn-primary" onclick="modinfo(this.form);">수정</button>
+                 </c:if>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      </form>
                   </div>
                   <!-- /.tab-pane -->
 				<!-- 업체 정보 수정  -->
                   <div class="tab-pane active" id="sellerinfo">
-<form>
+				<form method="post" action="${contextPath }/modseller.do">
                 <div class="card-body">
 				  <div class="form-group">
                         <label>가게 아이디</label>
@@ -323,25 +334,25 @@ request.setCharacterEncoding("utf-8");
                       </div>
                   <div class="form-group">
                     <label for="seller_tel">전화번호</label>
-                    <input class="form-control" id="seller_tel" type="text" placeholder="'-' 없이 작성" value="${seller.seller_tel }">
+                    <input class="form-control" id="seller_tel" name="seller_tel" type="text" placeholder="'-' 없이 작성" value="${seller.seller_tel }">
                   </div>
                   <div class="form-group">
                     <label for="seller_tel">상호명</label>
-                    <input class="form-control" id="seller_tel" type="text" value="${seller.seller_name }">
+                    <input class="form-control" id="seller_name" name="seller_name" type="text" value="${seller.seller_name }">
                   </div>
                   <label for="seller_email">이메일</label>
                   <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                   </div>
-                  <input type="email" class="form-control" placeholder="Email" id="seller_email" value="${seller.seller_email }">
+                  <input type="email" name="seller_email" class="form-control" placeholder="Email" id="seller_email" value="${seller.seller_email }">
                 </div>
                   <div class="row">
                     <div class="col-sm-6">
                       <!-- select -->
                       <div class="form-group">
                         <label>지역</label>
-                        <select class="form-control">
+                        <select class="form-control" name="area">
                           	<%-- <option hidden><%=searcharea %></option> --%>
 						  	<option value="null">전체</option>
 						  	<option value="서울특별시" <c:if test="${seller.area eq '서울특별시'}">selected</c:if>>서울특별시</option>
@@ -378,25 +389,20 @@ request.setCharacterEncoding("utf-8");
              <label>키워드</label>
                 <div class="row">
                   <div class="col-4">
-                    <input type="text" class="form-control" placeholder=".col-3">
+                    <input type="text" class="form-control" placeholder="키워드1" name="key01" id="key01" value="${keyword[0]}">
                   </div>
                   <div class="col-4">
-                    <input type="text" class="form-control" placeholder=".col-4">
+                    <input type="text" class="form-control" placeholder="키워드2" name="key02" id="key02" value="${keyword[1]}">
                   </div>
                   <div class="col-4">
-                    <input type="text" class="form-control" placeholder=".col-5">
+                    <input type="text" class="form-control" placeholder="키워드3" name="key03" id="key03" value="${keyword[2]}">
                   </div>
                 </div>
               
                 <!-- /.card-body -->
 				</div>
                 <div class="card-footer">
-                <c:if test="${infostatus eq 0 }">
                   <button type="submit" class="btn btn-primary">등록</button>
-                 </c:if>
-                <c:if test="${infostatus eq 1 }">
-                  <button type="submit" class="btn btn-primary">수정</button>
-                 </c:if>
                 </div>
                 
               </form>

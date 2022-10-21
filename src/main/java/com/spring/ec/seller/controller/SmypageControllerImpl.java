@@ -1,24 +1,38 @@
 package com.spring.ec.seller.controller;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.ec.seller.service.InfoService;
 import com.spring.ec.seller.service.SmypageService;
+import com.spring.ec.seller.vo.ProductVO;
 import com.spring.ec.seller.vo.SellerVO;
 import com.spring.ec.seller.vo.StoreinfosumVO;
 
@@ -26,6 +40,7 @@ import com.spring.ec.seller.vo.StoreinfosumVO;
 @Controller("smypageController")
 public class SmypageControllerImpl implements SmypageController  {
 	private static final String MENU_IMAGE_REPO="C:\\EATSEE\\menu_image";
+	private static final String STORE_IMAGE_REPO="C:\\EATSEE\\store";
 	private static final Logger logger = LoggerFactory.getLogger(SmypageControllerImpl.class);
 	@Autowired
 	private SmypageService smypageService;
@@ -105,6 +120,8 @@ public class SmypageControllerImpl implements SmypageController  {
 		int infostatus;
 	
 		
+		List<String> keyword = Arrays.asList(seller.getKeyword().split(","));
+		
 		if(storeinfonum == null) {
 			infostatus = 0;
 			
@@ -123,6 +140,7 @@ public class SmypageControllerImpl implements SmypageController  {
 		mav.addObject("seller", seller);
 		mav.addObject("sellerinfo", sellerdetail);
 		mav.addObject("infostatus", infostatus);
+		mav.addObject("keyword", keyword);
 		mav.setViewName(viewName);
 		return mav; 
 	}
@@ -171,6 +189,132 @@ public class SmypageControllerImpl implements SmypageController  {
 		
 		return mav; 
 	}
+	
+	
+	// mod seller 정보수정
+	@Override 
+	@RequestMapping(value = "/modseller.do", method = RequestMethod.POST)
+	public ModelAndView modseller(@ModelAttribute("seller") SellerVO modseller, @RequestParam("key01") String key01,@RequestParam("key02") String key02,@RequestParam("key03") String key03, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		ModelAndView mav = new ModelAndView();
+		//session에 남아있는 sellerid를 가져와야함
+		//MemberVO mm = (MemberVO) session.getAttribute("member");
+		//String seller_id = mm.getSeller_id());
+		
+		modseller.setSeller_id("stest001");
+		modseller.setKeyword(key01 + ", " + key02 + ", " + key03);
+		int result = smypageService.modseller(modseller);
+		
+		
+		if(result == 1) { 
+			rAttr.addFlashAttribute("result", "modinfosuccess");
+			mav.setViewName("redirect:/smypage.do");
+ 
+		} else { 
+			rAttr.addFlashAttribute("result", "modinfofail");
+			mav.setViewName("redirect:/error.do");
+		}
+		
+		return mav; 
+	}
+	
+	
+	
+	// mod modinfo 소개수정
+		@Override
+		@RequestMapping(value = "/modinfo.do", method = RequestMethod.POST)
+		@ResponseBody
+		public ResponseEntity modinfo(@ModelAttribute("sellerinfo") StoreinfosumVO modinfo,MultipartHttpServletRequest multipartRequest, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {		
+			response.setContentType("text/html; charset=UTF-8");
+			multipartRequest.setCharacterEncoding("utf-8");
+			Map<String, Object> modinfoMap = new HashMap<String, Object>();
+			Enumeration enu = multipartRequest.getParameterNames();
+			while (enu.hasMoreElements()) {
+				String name = (String) enu.nextElement();
+				String value = multipartRequest.getParameter(name);
+				modinfoMap.put(name, value);
+			}
+			
+
+			String imageFileName = upload(multipartRequest);
+			HttpSession session = multipartRequest.getSession();
+			
+			//session에 남아있는 sellerid를 가져와야함
+			//MemberVO mm = (MemberVO) session.getAttribute("member");
+			//String seller_id = mm.getSeller_id());
+			
+			modinfoMap.put("seller_id","stest001");
+			modinfoMap.put("image_fileName", imageFileName);
+			
+			
+			String message;
+			ResponseEntity resEnt = null;
+			HttpHeaders responseHeaders = new HttpHeaders();
+			responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+			try {
+				smypageService.modinfo(modinfoMap);
+				
+				if(imageFileName != null && imageFileName.length() != 0) {
+					File srcFile = new File(STORE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+					File destDir = new File(STORE_IMAGE_REPO + "\\" + modinfoMap.get("seller_id"));
+					FileUtils.moveFileToDirectory(srcFile, destDir, true);
+					
+					/*
+					 * String originalFileName = (String) menuMap.get("originalFileName"); File
+					 * oldFile = new File(STORE_IMAGE_REPO + "\\" + modinfo.getSeller_id()) + "\\" +
+					 * originalFileName); oldFile.delete();
+					 */
+				}
+				
+				message = "<script>";
+				message += " alert('업체 소개를 수정하였습니다.');";
+				
+				/*
+				 * message += " location.href='" + multipartRequest.getContextPath() +
+				 * "/menudetail.do?pro_num=" + menu.getPro_num() + "'; ";
+				 */
+				 
+				message += " location.href='" + multipartRequest.getContextPath() +"/smypage.do'";
+				message += " </script>";
+				resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			} catch (Exception e) {
+				File srcFile = new File(STORE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName);
+				srcFile.delete();
+
+				message = "<script>";
+				message += " alert('오류가 발생했습니다. 다시 시도해 주세요');";
+				message += " location.href='" + multipartRequest.getContextPath() + "/error.do'; ";
+				message += " </script>";
+				resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+				e.printStackTrace();
+			}
+			return resEnt;
+		}
+	
+		//이미지 한개 수정/등록
+				private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
+					String imageFileName = null;
+					Map<String, String> menuMap = new HashMap<String, String>();
+					Iterator<String> fileNames = multipartRequest.getFileNames();
+					while (fileNames.hasNext()) {
+						String fileName = fileNames.next();
+						MultipartFile mFile = multipartRequest.getFile(fileName);
+						imageFileName = mFile.getOriginalFilename();
+						
+						File file = new File(STORE_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
+						if (mFile.getSize() != 0) {
+							if (!file.exists()) {
+								file.getParentFile().mkdirs();
+								mFile.transferTo(new File(STORE_IMAGE_REPO + "\\" + "temp" + "\\" + imageFileName));  // store/temp 폴더에 이미지 들어감
+							}
+						}
+					}
+					return imageFileName;
+				}
+
+	
+	
+	
 	
 
 	

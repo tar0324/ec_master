@@ -38,6 +38,19 @@ public class SmypageServiceImpl implements SmypageService {
 		return smypageDAO.changepwd(listMap);
 	}
 
+	//mod seller
+	@Override
+	public int modseller(SellerVO modinfo) throws Exception {
+		return smypageDAO.modseller(modinfo);
+	}
+	
+	//mod info
+	@Override
+	public int modinfo(Map<String, Object> modinfoMap) throws Exception {
+		return smypageDAO.modinfo(modinfoMap);
+	}
+	
+	
 	
 
 }

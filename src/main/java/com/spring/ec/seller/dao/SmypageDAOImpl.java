@@ -37,15 +37,32 @@ public class SmypageDAOImpl implements SmypageDAO {
 	}
 	
 	
-	
-	
-	
 	//pwd change
 	@Override
 	public int changepwd(Map<String, Object> listMap) throws Exception {
 		int changepwd = sqlSession.update("mapper.seller.mypage.changepwd",listMap);
 		return changepwd;
 	}
+	
+	
+	//mod info
+	@Override
+	public int modseller(SellerVO modinfo) throws Exception {
+		int info = sqlSession.update("mapper.seller.mypage.modseller",modinfo);
+		return info;
+	}
+	
+	//mod seller
+	@Override
+	public int modinfo(Map<String, Object> modinfoMap) throws Exception {
+		int info = sqlSession.update("mapper.seller.mypage.modinfo",modinfoMap);
+		return info;
+	}
+	
+	
+	
+	
+	
 	
 	
 	
