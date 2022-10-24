@@ -2,6 +2,8 @@ package com.spring.ec.user.vo;
 
 
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component("wishVO")
@@ -12,17 +14,19 @@ public class WishVO {
 	private String user_id;
 	private String seller_id;
 	private int wish_sum;
+	private Date reg_date;
 	
 	public WishVO() {
 
 	}
 
-	public WishVO(int wish_num, String category_code,String user_id, String seller_id,int wish_sum) {
+	public WishVO(int wish_num, String category_code,String user_id, String seller_id,int wish_sum,Date reg_date) {
 		this.wish_num = wish_num;
 		this.category_code= category_code;
 		this.user_id = user_id;
 		this.seller_id = seller_id;
 		this.wish_sum = wish_sum;
+		this.reg_date = reg_date;
 	}
 
 	public int getWish_num() {
@@ -65,6 +69,15 @@ public class WishVO {
 		this.wish_sum = wish_sum;
 	}
 
+	public Date getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
+
+	
 
 	
 

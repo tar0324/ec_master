@@ -49,7 +49,7 @@ public class BoardControllerImpl implements BoardController {
 	@Autowired
 	CommentVO commentVO;
 
-	// ���ø� ���ø� ������
+	// playList page move
 	@Override
 	@RequestMapping(value = "/user/u_board", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listBoards(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -62,7 +62,9 @@ public class BoardControllerImpl implements BoardController {
 		} else {
 			page = 1;
 		}
-		int endPage = (int) (Math.ceil(page / (double) displayNum) * displayNum);
+		int endPage = (int) (Math.ceil(page / (double) displayNum) * displayNum);  //현재의 페이지 번호를 기준으로 연산
+		
+		//Endpage는 전체 게시글 수 에 영향을 많이 받아 에러가 생길 수 있음
 		int tempEndPage = (int) (Math.ceil(boardCount / (double) displayNum));
 		int startPage = (endPage - displayNum) + 1;
 		if (endPage > tempEndPage) {
@@ -86,7 +88,7 @@ public class BoardControllerImpl implements BoardController {
 		mav.addObject("boardsList", boardsList);
 		return mav;
 	}
-
+	// EatplayList page move
 	@Override
 	@RequestMapping(value = "/user/u_board/eatpl", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listEatBoards(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -123,7 +125,7 @@ public class BoardControllerImpl implements BoardController {
 		mav.addObject("boardsList", boardsList);
 		return mav;
 	}
-
+	// SeeplayList page move
 	@Override
 	@RequestMapping(value = "/user/u_board/seepl", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listSeeBoards(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -161,7 +163,7 @@ public class BoardControllerImpl implements BoardController {
 		mav.addObject("boardsList", boardsList);
 		return mav;
 	}
-
+	// board detail page move
 	@Override
 	@RequestMapping(value = "/user/u_board/u_boardView", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView viewboard(@RequestParam("list_num") int list_num, HttpServletRequest request,
@@ -171,84 +173,83 @@ public class BoardControllerImpl implements BoardController {
 		BoardVO board = boardService.viewBoard(list_num);
 		List commentsList = boardService.listComments(list_num);
 		HttpSession session = request.getSession();
-		MemberVO memberVO = (MemberVO) session.getAttribute("member");
-		String user_id = null;
-		if(memberVO != null) {
-			user_id = memberVO.getUser_id();
-		}else {
-			user_id = "1";
-		}
-		Map likedMap = new HashMap();
-		Map badMap = new HashMap();
-		likedMap.put("list_num", list_num);
-		likedMap.put("user_id", user_id);
-		badMap.put("list_num", list_num);
-		badMap.put("user_id", user_id);
-		int liked = boardService.likedCheck(likedMap);
-		int bad = boardService.badCheck(badMap);
+//		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+//		String user_id = null;
+//		if(memberVO != null) {
+//			user_id = memberVO.getUser_id();
+//		}else {
+//			user_id = "";
+//		}
+//		Map likedMap = new HashMap();
+//		Map badMap = new HashMap();
+//		likedMap.put("list_num", list_num);
+//		likedMap.put("user_id", user_id);
+//		badMap.put("list_num", list_num);
+//		badMap.put("user_id", user_id);
+//		int liked = boardService.likedCheck(likedMap);
+//		int bad = boardService.badCheck(badMap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
-		mav.addObject("liked",liked);
-		mav.addObject("bad",bad);
+//		mav.addObject("liked",liked);
+//		mav.addObject("bad",bad);
 		mav.addObject("board", board);
-		mav.addObject("likedMap", likedMap);
 		mav.addObject("comments", commentsList);
 		return mav;
 	}
-	@Override
-	@RequestMapping(value = "/user/u_board/likeUp", method = { RequestMethod.POST, RequestMethod.GET })
-	@ResponseBody
-	public int boardLikeUp(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map likedMap = new HashMap();
-		int liked = 1;
-		likedMap.put("user_id", user_id);
-		likedMap.put("list_num", list_num);
-		likedMap.put("liked", liked);
-		int liked2 = boardService.likedUp(likedMap);
-		return liked;
-	}
-	@Override
-	@RequestMapping(value = "/user/u_board/likeDown", method = { RequestMethod.POST, RequestMethod.GET })
-	@ResponseBody
-	public int boardLikeDown(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map likedMap = new HashMap();
-		int liked = 0;
-		likedMap.put("user_id", user_id);
-		likedMap.put("list_num", list_num);
-		likedMap.put("liked", liked);
-		int liked2 = boardService.likedDown(likedMap);
-		likedMap.put("totalLiked", liked2);
-		return liked;
-	}
-	@Override
-	@RequestMapping(value = "/user/u_board/badUp", method = { RequestMethod.POST, RequestMethod.GET })
-	@ResponseBody
-	public int boardBadUp(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map badMap = new HashMap();
-		int bad = 1;
-		badMap.put("user_id", user_id);
-		badMap.put("list_num", list_num);
-		badMap.put("bad", bad);
-		int bad2 = boardService.badUp(badMap);
-		return bad;
-	}
-	@Override
-	@RequestMapping(value = "/user/u_board/badDown", method = { RequestMethod.POST, RequestMethod.GET })
-	@ResponseBody
-	public int boardBadDown(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map badMap = new HashMap();
-		int bad = 0;
-		badMap.put("user_id", user_id);
-		badMap.put("list_num", list_num);
-		badMap.put("bad", bad);
-		int liked2 = boardService.badDown(badMap);
-		return bad;
-	}
-	
+//	@Override
+//	@RequestMapping(value = "/user/u_board/likeUp", method = { RequestMethod.POST, RequestMethod.GET })
+//	@ResponseBody
+//	public int boardLikeUp(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
+//			HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		Map likedMap = new HashMap();
+//		int liked = 1;
+//		likedMap.put("user_id", user_id);
+//		likedMap.put("list_num", list_num);
+//		likedMap.put("liked", liked);
+//		int liked2 = boardService.likedUp(likedMap);
+//		return liked;
+//	}
+//	@Override
+//	@RequestMapping(value = "/user/u_board/likeDown", method = { RequestMethod.POST, RequestMethod.GET })
+//	@ResponseBody
+//	public int boardLikeDown(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
+//			HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		Map likedMap = new HashMap();
+//		int liked = 0;
+//		likedMap.put("user_id", user_id);
+//		likedMap.put("list_num", list_num);
+//		likedMap.put("liked", liked);
+//		int liked2 = boardService.likedDown(likedMap);
+//		likedMap.put("totalLiked", liked2);
+//		return liked;
+//	}
+//	@Override
+//	@RequestMapping(value = "/user/u_board/badUp", method = { RequestMethod.POST, RequestMethod.GET })
+//	@ResponseBody
+//	public int boardBadUp(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
+//			HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		Map badMap = new HashMap();
+//		int bad = 1;
+//		badMap.put("user_id", user_id);
+//		badMap.put("list_num", list_num);
+//		badMap.put("bad", bad);
+//		int bad2 = boardService.badUp(badMap);
+//		return bad;
+//	}
+//	@Override
+//	@RequestMapping(value = "/user/u_board/badDown", method = { RequestMethod.POST, RequestMethod.GET })
+//	@ResponseBody
+//	public int boardBadDown(@RequestParam(value = "list_num") int list_num,@RequestParam(value = "user_id") String user_id,
+//			HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		Map badMap = new HashMap();
+//		int bad = 0;
+//		badMap.put("user_id", user_id);
+//		badMap.put("list_num", list_num);
+//		badMap.put("bad", bad);
+//		int liked2 = boardService.badDown(badMap);
+//		return bad;
+//	}
+	// board write page move
 	@Override
 	@RequestMapping(value = "/user/u_board/boardForm", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView boardform(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -257,6 +258,8 @@ public class BoardControllerImpl implements BoardController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	
+	// board write summit method
 	@Override
 	@RequestMapping(value = "/board/addNewboard", method = RequestMethod.POST)
 	@ResponseBody
@@ -265,6 +268,8 @@ public class BoardControllerImpl implements BoardController {
 		multipartRequest.setCharacterEncoding("utf-8");
 		String image_fileName = null;
 		Map boardMap = new HashMap();
+		
+		//폼에서 전송한 input 타입의 name들을 file속성을 제외하고 enu에 저장
 		Enumeration enu = multipartRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
@@ -281,11 +286,10 @@ public class BoardControllerImpl implements BoardController {
 			category = "seepl";
 		}
 		image_fileName = upload(multipartRequest);
-		System.out.println("conroller=" + image_fileName);
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
-//		  String user_id = memberVO.getUser_id();
-		boardMap.put("user_id", "test1");
+		String user_id = memberVO.getUser_id();
+		boardMap.put("user_id", user_id);
 		boardMap.put("parent_num", 0);
 		boardMap.put("category_code", category_code);
 		boardMap.put("image_fileName", image_fileName);
@@ -302,7 +306,7 @@ public class BoardControllerImpl implements BoardController {
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
 			}
 			message = "<script>";
-			message += " alert('������ �߰��߽��ϴ�.');";
+			message += " alert('새글을 추가하였습니다.');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -311,7 +315,7 @@ public class BoardControllerImpl implements BoardController {
 			srcFile.delete();
 
 			message = "<script>";
-			message += " alert('������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');";
+			message += " alert('오류가 발생하였습니다.');";
 			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
@@ -319,7 +323,7 @@ public class BoardControllerImpl implements BoardController {
 		}
 		return resEnt;
 	}
-
+	// comment summit method
 	@Override
 	@RequestMapping(value = "/u_board/addcomment", method = RequestMethod.POST)
 	public ModelAndView addComment(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -328,10 +332,13 @@ public class BoardControllerImpl implements BoardController {
 		String comment_id = request.getParameter("comment_id");
 		String comments = request.getParameter("comments");
 		int list_num = Integer.parseInt(request.getParameter("list_num"));
-		commentMap.put("comment_id", "test1");
+		HttpSession session = request.getSession();
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		String user_id = memberVO.getUser_id();
+		commentMap.put("comment_id", comment_id);
 		commentMap.put("comments", comments);
 		commentMap.put("list_num", list_num);
-		commentMap.put("parent_num", "0");
+		/* commentMap.put("parent_num", "0"); */
 		boardService.addNewComment(commentMap);
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
@@ -341,20 +348,99 @@ public class BoardControllerImpl implements BoardController {
 
 	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
 		String image_fileName = null;
+		
+		//iterator 형태로 추출된 파일들의 이름을 저장
 		Iterator<String> fileNames = multipartRequest.getFileNames();
 		while (fileNames.hasNext()) {
 			String fileName = fileNames.next();
+			
+			//mfile에 해당 이름을 인자로 파일들의 정보를 저장
 			MultipartFile mFile = multipartRequest.getFile(fileName);
+			
+			//파일들의 확장자를 포함한 이미지파일 명을 저장
 			image_fileName = mFile.getOriginalFilename();
-			System.out.println("upload=" + image_fileName);
-			File file = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);
+			File file = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);  //해당 경로에 대한 파일 객체 생성
 			if (mFile.getSize() != 0) {
-				if (!file.exists()) {
-					file.getParentFile().mkdirs();
-					mFile.transferTo(new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + image_fileName));
+				if (!file.exists()) {  //경로상에 파일이 존재하지 않다면 
+					file.getParentFile().mkdirs();  //디렉토리를 생성
+					mFile.transferTo(new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + image_fileName));  //transferTo 메소드를 사용하여 해당위치에 저장
 				}
 			}
 		}
 		return image_fileName;
+	}
+	//�Խñ� ����
+	@Override
+	@RequestMapping(value = "/user/removeBoard", method = RequestMethod.POST )
+	public ModelAndView removeBoard(@RequestParam("list_num") int list_num, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		boardService.removeBoard(list_num);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/user/u_board");
+		return mav;
+	}
+	//�Խñ� ���������� �̵�
+	@Override
+	@RequestMapping(value = "/user/modBoard", method = {RequestMethod.POST,RequestMethod.GET })
+	public ModelAndView modBoardForm(@RequestParam("list_num") int list_num, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		BoardVO board = boardService.viewBoard(list_num);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		mav.addObject("board", board);
+		return mav;
+	}
+	//�Խñ� ���� �Ϸ�
+	@Override
+	@RequestMapping(value = "/board/modBoardCompl", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity modBoardcompletion(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
+			throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		String image_fileName = null;
+		Map boardMap = new HashMap();
+		
+		Enumeration enu = multipartRequest.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String value = multipartRequest.getParameter(name);
+			boardMap.put(name, value);
+		}
+		image_fileName = upload(multipartRequest);
+		HttpSession session = multipartRequest.getSession();
+		boardMap.put("parent_num", 0);
+		boardMap.put("image_fileName", image_fileName);
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			int list_num = Integer.parseInt(multipartRequest.getParameter("list_num"));
+			boardMap.put("list_num", list_num);
+			int modcompl = boardService.modBoard(boardMap);
+			System.out.println(list_num);
+			if (image_fileName != null && image_fileName.length() != 0) {
+				File srcFile = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + image_fileName);
+				File destDir = new File(U_IMAGE_REPO + "\\" + list_num);
+				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+			}
+			message = "<script>";
+			message += " alert('수정이 완료되었습니다.');";
+			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board/u_boardView?list_num=" + list_num+ "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		} catch (Exception e) {
+			File srcFile = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + image_fileName);
+			srcFile.delete();
+
+			message = "<script>";
+			message += " alert('오류가 발생하였습니다.');";
+			message += " location.href='" + multipartRequest.getContextPath() + "/user/u_board'; ";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
 	}
 }

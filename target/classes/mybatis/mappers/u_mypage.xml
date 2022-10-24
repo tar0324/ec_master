@@ -9,6 +9,7 @@
 		<result column="user_id" property="user_id" />
 		<result column="seller_id" property="seller_id" />
 		<result column="wish_sum" property="wish_sum" />
+		<result column="reg_date" property="reg_date" />
 	</resultMap>
 	
 	<resultMap id="revResult" type="reviewVO">
@@ -66,6 +67,21 @@
 		<result property="mod_date" column="mod_date" />
 	</resultMap>
 	
+<!-- 		
+	<resultMap type="memberVO" id="infoResult">
+		<result property="user_no" column="user_no" />
+		<result property="user_id" column="user_id" />
+		<result property="user_nick" column="user_nick" />
+		<result property="user_pwd" column="user_pwd" />
+		<result property="pwd_ck" column="pwd_ck" />
+		<result property="tel" column="tel" />
+		<result property="user_name" column="user_name" />
+		<result property="user_email" column="user_email" />
+		<result property="birth_yy" column="birth_yy" />
+		<result property="birth_mm" column="birth_mm" />
+		<result property="birth_dd" column="birth_dd" />
+		<result property="gender" column="gender" />
+	</resultMap> -->
 	
 	
 	<!--로그인 된 회원의 찜목록 select  -->
@@ -75,12 +91,12 @@
 	
 		<!--로그인 된 회원의 리뷰목록 select  -->
 	<select id="selectReview" resultMap="revResult" parameterType="String">
-		<![CDATA[ SELECT a.* , b.seller_name from review_tbl a, seller_tbl b WHERE a.seller_id = b.seller_id and user_id = #{user_id}; ]]>
+		<![CDATA[ SELECT * FROM review_tbl WHERE user_id = #{user_id} ]]>
 	</select>
 	
 	<!--로그인 된 회원의 먹플리 볼플리 목록 select  -->
 	<select id="selectBoard" resultMap="boardsResult" parameterType="String">
-		<![CDATA[ SELECT * FROM u_board_tbl WHERE user_id = #{user_id} limit 5 ]]>
+		<![CDATA[ SELECT * FROM u_board_tbl WHERE user_id = #{user_id} ]]>
 	</select>
 	
 	<!--로그인 된 회원의 예약 목록 select  -->
@@ -93,6 +109,26 @@
 		<![CDATA[ SELECT * FROM u_ask_tbl WHERE user_id = #{user_id} ]]>
 	</select>
 	
-	
+	<!-- 마이페이지 -->
+	<!--비밀번호 변경(pwd change)-->
+	<update id="userPwdChange"  parameterType="String">
+		<![CDATA[ UPDATE user_tbl SET user_pwd=#{user_pwd} WHERE user_id = #{user_id}]]>
+	</update>
+	<!--회원정보 수정(information update)-->
+	<update id="userUpdate" parameterType="MemberVO">
+		<![CDATA[ UPDATE user_tbl SET user_nick=#{user_nick}, tel=#{tel}, user_name=#{user_name}, user_email=#{user_email}, birth_yy=#{birth_yy}, birth_mm=#{birth_mm}, birth_dd=#{birth_dd} WHERE user_id=#{user_id}]]>
+	</update>
+	<!-- 회원정보 들어가기 전 정보 보여주기 -->
+	<select id="userSelect" resultType="MemberVO" parameterType="String">
+	<![CDATA[select * from user_tbl WHERE user_id=#{user_id}]]>
+	</select>
+	<!--회원정보 수정 전 비밀번호로 본인 확인 Verify your identity with your password before modifying your member information-->
+	<select id="passChk" resultType="int" parameterType="java.util.HashMap">
+	<![CDATA[ SELECT COUNT(*) FROM user_tbl WHERE user_id = #{user_id} AND user_pwd = #{user_pwd}]]>
+	</select>
+	<!-- 회원탈퇴-->
+   <delete id="userDelete" parameterType="String">
+   <![CDATA[ delete from user_tbl where id=#{id}]]>
+   </delete>
 	
 </mapper>

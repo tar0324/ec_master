@@ -324,7 +324,7 @@ ul {
 										width="16" height="16">
 										<use xlink:href="#people-circle" /></svg> 로그인
 							</a></li>
-							<li><a href="${contextPath}/user/memberForm_main.do "
+							<li><a href="${contextPath}/user/u_regadmin.do"
 								class="nav-link nav-hover"> <svg class="bi pe-none me-2"
 										width="16" height="16">
 										<use xlink:href="#people-circle" /></svg> 회원가입

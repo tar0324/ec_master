@@ -19,7 +19,7 @@ public class BoardDAOImpl implements BoardDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// ¸ÔÇÃ¸® º¼ÇÃ¸®
+	// ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½
 	@Override
 	public List selectAllBoardsList(int page) throws DataAccessException {
 		page = (page - 1) * 10;
@@ -47,7 +47,7 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectOne("mapper.board.selectBoard", list_num);
 	}
 
-	// ÀÌ¹ÌÁö ÆÄÀÏ ¸®½ºÆ® È£Ãâ
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® È£ï¿½ï¿½
 	@Override
 	public List selectImageFileList(int list_num) throws DataAccessException {
 		List<ImageVO> imageFileList = null;
@@ -207,5 +207,29 @@ public class BoardDAOImpl implements BoardDAO {
 	public int badDown(int list_num) throws DataAccessException {
 		sqlSession.update("mapper.board.badDown", list_num);
 		return sqlSession.selectOne("mapper.board.selectBoardBad", list_num);
+	}
+	
+	@Override
+	public int deleteBoard(int list_num) throws DataAccessException{
+		return sqlSession.delete("mapper.board.deleteBoard", list_num);
+	}
+	
+	@Override
+	public int updateBoard(Map boardMap) throws Exception {
+		return sqlSession.insert("mapper.board.updateBoard", boardMap);
+	}
+
+	@Override
+	public void updateImage(Map boardMap) throws DataAccessException {
+		String image_fileName = (String) boardMap.get("image_fileName");
+		int list_num = (Integer) boardMap.get("list_num");
+		int image_num = selectNewImage_num();
+		ImageVO imageVO = new ImageVO();
+		imageVO.setImage_num(image_num);
+		imageVO.setList_num(list_num);
+		imageVO.setOrigin_fileName(image_fileName);
+		imageVO.setImage_fileName(image_fileName);
+
+		sqlSession.insert("mapper.board.updateImage", imageVO);
 	}
 }

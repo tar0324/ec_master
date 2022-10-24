@@ -18,6 +18,10 @@ request.setCharacterEncoding("utf-8");
 		min-width: 200px;
 		max-width: 200px;
 	}
+	.logout_text{
+		padding-top: 7px;
+		font-weight: bold;
+	}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -36,6 +40,10 @@ request.setCharacterEncoding("utf-8");
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+    <!-- 로그인시 -->
+    	<c:if test="${isLogOn == true && sellerMember !=null }">
+		<li class="logout_text"><a href="${contextPath}/seller/member/loginForm.do ">로그아웃</a></li>
+		</c:if>
       <!-- 1대1문의 드롭박스 -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -68,7 +76,7 @@ request.setCharacterEncoding("utf-8");
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
+          <span class="badge badge-warning navbar-badge">${todayBook+todayReview+todayWish}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right today-dropbox">
         <span class="dropdown-item dropdown-header">금일 현황</span>
@@ -78,11 +86,11 @@ request.setCharacterEncoding("utf-8");
 	        </a>
 	        <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-regular fa-pen mr-2"></i> 리뷰:<!-- 금일 작성된 리뷰수 --><span class="today_text">건</span>
+            <i class="fas fa-regular fa-pen mr-2"></i> 리뷰:<!-- 금일 작성된 리뷰수 --><span class="today_text">${todayReview}&nbsp;건</span>
           </a>          
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
-            <i class="fas fa-heart mr-2"></i> 찜:<!-- 금일 찜한수 --><span class="today_text">건</span>
+            <i class="fas fa-heart mr-2"></i> 찜:<!-- 금일 찜한수 --><span class="today_text">${todayWish}&nbsp;건</span>
           </a>
         </div>
       </li>

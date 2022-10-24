@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
 	public void addHits(int list_num)throws Exception{
 		boardDAO.addHits(list_num);
 	}
-	// °Ô½Ã±Û comment ¸Þ¼Òµå
+	// ï¿½Ô½Ã±ï¿½ comment ï¿½Þ¼Òµï¿½
 	@Override
 	public List<CommentVO> listComments(int list_num)throws Exception{
 		return boardDAO.selectAllCommentsList(list_num);
@@ -75,13 +75,13 @@ public class BoardServiceImpl implements BoardService {
 		commentMap.put("comment_num", comment_num);
 		return comment_num;
 	}
-	//ÁÁ¾Æ¿ä ´­·¶´ÂÁö È®ÀÎ
+	//ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 	@Override
 	public int likedCheck(Map likedMap) throws Exception {
 		int likedOk = boardDAO.selectLiked(likedMap);
 		return likedOk;
 	}	
-	// ÁÁ¾Æ¿ä Áß°¡
+	// ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ß°ï¿½
 	@Override
 	public int likedUp(Map likedMap)throws Exception {
 		int list_num = (Integer)likedMap.get("list_num");
@@ -89,7 +89,7 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.updateLiked(likedMap);
 		return liked;
 	}
-	// ÁÁ¾Æ¿ä °¨¼Ò
+	// ï¿½ï¿½ï¿½Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public int likedDown(Map likedMap)throws Exception {
 		int list_num = (Integer)likedMap.get("list_num");
@@ -98,13 +98,13 @@ public class BoardServiceImpl implements BoardService {
 		return liked;
 	}
 	
-	//½È¾î¿ä ´­·¶´ÂÁö È®ÀÎ
+	//ï¿½È¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		@Override
 		public int badCheck(Map badMap) throws Exception {
 			int badOk = boardDAO.selectBad(badMap);
 			return badOk;
 		}	
-		// ½È¾î¿ä Áß°¡
+		// ï¿½È¾ï¿½ï¿½ ï¿½ß°ï¿½
 		@Override
 		public int badUp(Map badMap)throws Exception {
 			int list_num = (Integer)badMap.get("list_num");
@@ -112,12 +112,24 @@ public class BoardServiceImpl implements BoardService {
 			boardDAO.updateBad(badMap);
 			return bad;
 		}
-		// ½È¾î¿ä °¨¼Ò
+		// ï¿½È¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		@Override
 		public int badDown(Map badMap)throws Exception {
 			int list_num = (Integer)badMap.get("list_num");
 			int bad = boardDAO.badDown(list_num);
 			boardDAO.updateBad(badMap);
 			return bad;
+		}
+		
+		// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+		@Override
+		public int removeBoard(int list_num)throws Exception{
+			return boardDAO.deleteBoard(list_num);
+		}
+		
+		// ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½
+		public int modBoard(Map boardMap)throws Exception{
+			boardDAO.updateImage(boardMap);
+			return boardDAO.updateBoard(boardMap);
 		}
 }

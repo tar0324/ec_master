@@ -159,9 +159,11 @@ margin-bottom: 20px;
 			<li class="second"><a href="${contextPath }/board/myplist.do"><span
 					id="upointCurAmt">${totalWishCount}<strong>개</span></strong>
 					<button type="button" id="my01" style="border: none;" alt="먹플리, 볼플리"></button></a></li>
+			
 			<li class="second"><a href="${contextPath }/mypage/uReview.do"><span
-					id="upointCurAmt">0<strong>개</span></strong>
+					id="upointCurAmt">${totalWishCount}<strong>개</span></strong>
 					<button type="button" id="my02" style="border: none;" alt="내가 쓴 리뷰"></button></a></li>
+
 			<li class="second"><a href="${contextPath }/mypage/uBook.do"><strong><span
 						id="upointCurAmt">${totalWishCount}<strong>개</span></strong>
 					<button type="button" id="my03" style="border: none;" alt="예약조회"></button></a></li>

@@ -40,9 +40,8 @@ public class BookingControllerImpl implements BookingController {
 	public ModelAndView bookingStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		HttpSession session = request.getSession();
-//		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
-//		String seller_id = sellerVO.getSeller_id();
-		String seller_id = "stest002";
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
 		List bookList = bookService.bookingAllList(seller_id);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("bookList", bookList);
@@ -55,9 +54,8 @@ public class BookingControllerImpl implements BookingController {
 	public ModelAndView bookingSign(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		HttpSession session = request.getSession();
-//		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
-//		String seller_id = sellerVO.getSeller_id();
-		String seller_id = "stest002";
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
 		
 		int boardCount = bookService.s_bookingCount(seller_id);
 		int displayNum = 10;
@@ -105,9 +103,9 @@ public class BookingControllerImpl implements BookingController {
 	public ModelAndView groupBookSignOn(@RequestParam("bookCheck") String order_ids,  RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> listMap = new HashMap();
 		ModelAndView mav = new ModelAndView();
-		//session�뿉 �궓�븘�엳�뒗 sellerid瑜� 媛��졇���빞�븿
-		//MemberVO mm = (MemberVO) session.getAttribute("member");
-		//String seller_id = mm.getSeller_id());
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
 		String[] signList = order_ids.split(",");
 		listMap.put("order_ids", signList);
 		int result = bookService.groupBookSignOn(listMap);
@@ -127,9 +125,9 @@ public class BookingControllerImpl implements BookingController {
 	public ModelAndView groupBookSignOff(@RequestParam("bookCheck") String order_ids,  RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> listMap = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView();
-		//session�뿉 �궓�븘�엳�뒗 sellerid瑜� 媛��졇���빞�븿
-		//MemberVO mm = (MemberVO) session.getAttribute("member");
-		//String seller_id = mm.getSeller_id());
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
 		String[] signList = order_ids.split(",");
 		listMap.put("order_ids", signList);
 		int result = bookService.groupBookSignOff(listMap);

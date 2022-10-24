@@ -38,6 +38,11 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
+	public int emailCheck(String user_email)throws Exception{
+		return sqlSession.selectOne("mapper.member.emailCheck", user_email);
+	}
+	
+	@Override
 	public int mobileCheck(String mobile)throws Exception{
 		return sqlSession.selectOne("mapper.member.mobileCheck", mobile);
 	}

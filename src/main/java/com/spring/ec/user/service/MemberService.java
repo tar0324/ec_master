@@ -26,6 +26,8 @@ public interface MemberService {
 	//��й�ȣ ã��
 	public int nickCheck(String user_nick) throws Exception;
 	
+	public int emailCheck(String user_email) throws Exception;
+	
 	public int mobileCheck(String mobile) throws Exception;
 	
 	public String find_pwd_Result(MemberVO member) throws DataAccessException;

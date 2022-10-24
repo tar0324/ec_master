@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ec.seller.service.BookingService;
 import com.spring.ec.seller.service.NoticeService;
+import com.spring.ec.seller.service.ReviewAnsService;
+import com.spring.ec.seller.service.WishService;
 import com.spring.ec.seller.vo.BookingVO;
 import com.spring.ec.seller.vo.GraphVO;
 import com.spring.ec.seller.vo.SellerVO;
@@ -30,6 +33,10 @@ public class MainControllerImpl implements MainController  {
 	@Autowired
 	private NoticeService noticeService;
 	@Autowired
+	private ReviewAnsService reAnsService;
+	@Autowired
+	private WishService wishService;
+	@Autowired
 	BookingVO bookingVO;
 	@Autowired
 	SellerVO sellerVO;
@@ -39,11 +46,13 @@ public class MainControllerImpl implements MainController  {
 	@RequestMapping(value = "/sellerMain", method = RequestMethod.GET)
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-//		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
-//		String seller_id = sellerVO.getSeller_id();
-		String seller_id = "stest002";
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
 		List bookList = bookService.bookingAllList(seller_id);
 		int todayBooking = bookService.todayBookingCount(seller_id);
+		int todayReview = reAnsService.todayReviewCount(seller_id);
+		int todayWish = wishService.todayWishCount(seller_id);
 		int boardCount = noticeService.s_noticeCount();
 		int displayNum = 5;
 		int page = 0;
@@ -72,14 +81,24 @@ public class MainControllerImpl implements MainController  {
 		paging.put("next", next);
 		ModelAndView mav = new ModelAndView();
 		Map monthBook = new HashMap();
+		Map monthReview = new HashMap();
+		Map monthWish = new HashMap();
 		List noticeList = noticeService.s_mainNoticeBoards(page);
 		List<GraphVO> monthsBooking = bookService.monthsBookingCount(seller_id);
+		List<GraphVO> monthsReview = reAnsService.monthsReviewCount(seller_id);
+		List<GraphVO> monthsWish = wishService.monthsWishCount(seller_id);
 		monthBook = monthsList(monthsBooking);
+		monthReview = monthsList(monthsReview);
+		monthWish = monthsList(monthsWish);
 		mav.addObject("paging", paging);
 		mav.addObject("noticeList", noticeList);
 		mav.addObject("bookList", bookList);
 		mav.addObject("todayBook",todayBooking);
 		mav.addObject("monthBook",monthBook);
+		mav.addObject("todayReview", todayReview);
+		mav.addObject("monthReview", monthReview);
+		mav.addObject("todayWish", todayWish);
+		mav.addObject("monthWish", monthWish);
 		mav.setViewName(viewName);
 		return mav; 
 	}

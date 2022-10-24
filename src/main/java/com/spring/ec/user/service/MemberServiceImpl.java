@@ -34,6 +34,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
+	public int emailCheck(String user_email) throws Exception{
+		return memberDAO.emailCheck(user_email);
+	}
+	
+	@Override
 	public int mobileCheck(String mobile) throws Exception{
 		return memberDAO.mobileCheck(mobile);
 	}

@@ -28,4 +28,13 @@
 			group by DATE_FORMAT(b.reg_date, '%m')
 		]]>
 	</select>
+	
+	<!-- 월별 찜 수 -->
+	<select id="selectMonthsWish" resultMap="graphResult" parameterType="String">
+		<![CDATA[
+			select DATE_FORMAT(b.reg_date, '%m') months, count(*) count
+			FROM review_tbl AS b WHERE b.seller_id = #{seller_id}
+			group by DATE_FORMAT(b.reg_date, '%m')
+		]]>
+	</select>
 </mapper>

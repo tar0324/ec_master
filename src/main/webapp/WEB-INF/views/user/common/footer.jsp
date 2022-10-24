@@ -23,13 +23,18 @@ request.setCharacterEncoding("utf-8");
 	word-break: keep-all;
 	word-wrap: break-word;
 	letter-spacing: 2px;
-}
-
-#footer {
+	margin-top: 10px;
+	height: 100%;
 	position: absolute;
 	width: 100%;
 	min-height: 200px;
-	background-color: #E1DCD9;
+}
+
+/* #footer {
+	position: absolute;
+	width: 100%;
+	min-height: 200px;
+	background-color: #E1DCD9; */
 
 }
 
@@ -44,10 +49,16 @@ list-style: none;
 	align-self: center;
 }
 
+#spa1{
+margin-bottom: 1px;
+	font-size: 12px;
+	text-align: center;
+}
 #space {
 	margin-bottom: 1px;
 	font-size: 12px;
 	text-align: center;
+	bottom: 0;
 }
 
 a {
@@ -64,10 +75,10 @@ a:hover {
 </head>
 <body>
 <div class="fufu">
-	<div id="space">
+	<div id="spa1">
 		<ul>
-			<li class="last"><a href="main.do"></a><img src="${contextPath }/image/logo_blue.png"
-				width="55px" height="55px"></li>
+			<li class="last"><a href="main.do"></a><img src="${contextPath }/image/logo_8681_2.png"
+				width="100px" height="55px"></li>
 			<li class="last"><a href="#" target="_blank"><img
 					src="${contextPath }/image/menu_007.png" width="100px"
 					height="40px" alt="고객센터"></a></li>
@@ -84,7 +95,6 @@ a:hover {
 		</ul>
 	</div>
 	</div>
-
 	<!-- 		<div class="container">
 			<p class="text-white footercon">
 			<img alt="로고" src="image/logo.png" width="100" height="100">

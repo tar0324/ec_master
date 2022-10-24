@@ -28,7 +28,7 @@ input {
 	transform: translate(-50%);
 	width: 460px;
 }
-#ari { /* 굵은 글씨 */
+.ari { /* 굵은 글씨 */
 	font-size: 14px;
 	font-weight: 700;
 }
@@ -124,70 +124,64 @@ input {
 	color: red;
 	display: none;
 }
+.btn_mybu {
+	display: inline;
+	width: 130px;
+	height: 50px;
+    padding: 5px 0 5px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 350;
+    margin: 3px 5px;
+}
 </style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>개인 정보 수정</title>
 </head>
 <body>
-<div>
+	<div>
 	<div id="infobody">
 		<div id="content2">
 			<form method="post">
 				<!-- Nickname -->
 				<div>
-					<p id="ari">
+					<p class="ari">
 						<label for="nick">닉네임</label>
 					</p>
 					<span class="box int_id">
-					<input type="text" id="nick" name="user_nick" class="int" maxlength="20"></span>
+					<input class="int" value="${infovo.user_nick}" maxlength="20"></span>
 					<span class="error_next_box"></span>
 				</div>
-				<!-- PW1 -->
-				<div>
-					<p id="ari">
-						<label for="pswd1">비밀번호</label>
-					</p>
-					<span class="box int_pass">
-					<input type="password" id="pswd1" name="user_pwd" class="int" maxlength="20">
-					<span id="alertTxt">사용불가</span>
-					<img src="${contextPath }/image/m_icon_pass.png" id="pswd1_img1" class="pswdImg">
-					</span> <span class="error_next_box"></span>
-				</div>
-				<!-- PW2 -->
-				<div>
-					<p id="ari">
-						<label for="pswd2">비밀번호 재확인</label>
-					</p>
-					<span class="box int_pass_check">
-					<input type="password" id="pswd2" name="pwd_ck" class="int" maxlength="20">
-					<img src="${contextPath }/image/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg"></span>
-					<span class="error_next_box"></span>
-				</div>
+					
 				<!-- NAME -->
+				<br>
 				<div>
-					<p id="ari">
+					<p class="ari">
 						<label for="name">이름</label>
 					</p>
-					<span class="box int_name"> <input type="text" id="name"
-						name="user_name" class="int" maxlength="20" readonly disabled>
+					<span class="box int_name">
+					<input type="text" id="name" name="user_name" class="int" maxlength="20" value="${infovo.user_name}" readonly disabled>
 					</span> <span class="error_next_box"></span>
 				</div>
+				<br>
 				<!-- BIRTH -->
 				<div>
-					<p id="ari">
+					<p class="ari">
 						<label for="yy">생년월일</label>
 					</p>
 					<div id="bir_wrap">
 						<!-- BIRTH_YY -->
 						<div id="bir_yy">
 							<span class="box"> <input type="text" id="yy"
-								name="birth_yy" class="int" maxlength="4" placeholder="년(4자)">
+								name="birth_yy" class="int" value="${infovo.birth_yy}" maxlength="4">
 							</span>
 						</div>
 						<!-- BIRTH_MM -->
 						<div id="bir_mm">
 							<span class="box"> <select id="mm" name="birth_mm" class="sel" style="width:110px;">
-									<option>월</option>
+									<option value="${infovo.birth_mm}" selected>${infovo.birth_mm}</option>
 									<!-- 자동으로 value에 텍스트 월 들어감 -->
 									<option value="01">1</option>
 									<option value="02">2</option>
@@ -207,37 +201,39 @@ input {
 						<!-- BIRTH_DD -->
 						<div id="bir_dd">
 							<span class="box">
-							<input type="text" id="dd" name="birth_dd" class="int" maxlength="2" placeholder="일">
+							<input type="text" id="dd" name="birth_dd" class="int" value="${infovo.birth_dd}" maxlength="2" >
 							</span>
 						</div>
 					</div>
 					<span class="error_next_box"></span>
 				</div>
+				<br>
 				<!-- EMAIL -->
 				<div>
-					<p id="ari">
-						<label for="email">본인확인 이메일</label>
+					<p class="ari">
+						<label for="email">이메일 주소</label>
 					</p>
 					<span class="box int_email">
-					<input type="text" id="email" name="user_email" class="int" maxlength="100"
-						placeholder="예)id@google.com"></span>
+					<input type="text" id="email" name="user_email" class="int" value="${infovo.user_email}" maxlength="100"></span>
 					<span class="error_next_box">이메일형식을 확인해주세요.</span>
 				</div>
+				<br>
 				<!-- MOBILE -->
 				<div>
-					<p id="ari">
+					<p class="ari">
 						<label for="mobile">휴대전화</label>
 					</p>
 					<span class="box int_mobile">
-					<input type="tel" id="mobile" name="tel" class="int" maxlength="16" placeholder="하이폰(-)제외 번호만입력"></span>
+					<input type="tel" id="mobile" name="tel" class="int" value="${infovo.tel}" maxlength="16"></span>
 					<span class="error_next_box"></span>
 				</div>
+				
+				<br>
 				<!-- JOIN BTN-->
-				<div class="btn_area">
-					<input type="button" id="btnJoin" onclick="checkNull(this.form)" value="수정하기" />
-				</div>
-			</form>
-		</div>
+				<input type="button" class="btn_mybu" style="background-color:#A67F78; border:none;" id="pwdChangeBtn" value="비밀번호 변경">
+				<input type="submit" class="btn_mybu" style="background-color:#A67F78; border:none;" id="userUpdateBtn" onclick="checkNull(this.form)" value="회원정보 변경"/>
+				<button type="button" class="btn_mybu" style="background-color:#A67F78; border:none;" id="submit">회원탈퇴</button>
+</div>
 		<!-- content-->
 	</div>
 	
@@ -246,14 +242,9 @@ input {
 	<script>
         // 전송 버튼 클릭시
         function checkNull(f){
-            // 입력값 중에 비어있으면 안되는 것들이 있음.
-            // id칸이 비어 있는가?
-            if(f.id.value.length < 1){
-                alert("아이디를 입력하세요.");
-                f.id.value.focus
-                //커서(포커스)를 아이디 인풋요소로 이동
-            } // 닉네임이 비어 있는가?
-            else if(f.nick.value.length < 1){
+            //커서(포커스)를 아이디 인풋요소로 이동
+            // 닉네임이 비어 있는가?
+            if(f.nick.value.length < 1){
                 alert("닉네임을 입력하세요.");
             }
             // 비밀번호 비어 있는가?
@@ -293,6 +284,66 @@ input {
             	 f.submit();
              }
          }
+        </script>
+     <!-- 탄생월 가져오기 -->
+   <!--   <script>
+    $(function() {
+    	document.getElementById("mm").value="<?=$infovo.birth_mm?>";
+    });
+     </script> -->
+	<!--  패스워트 변경 버튼 팝업 확성화 스크립트 -->
+	<script>
+		document.getElementById("pwdChangeBtn").onclick=function(){
+			window.open("userPwdChange.do","_blank","width=400px, height=400px");
+		};
+	</script>
+	
+        <script>
+      //정보 변경 확인 팝업
+	$('#userUpdateBtn').click(function(){
+		var result = window.confirm("정말로 변경하시겠습니까?");
+		
+			if(result)
+			{
+				return true;
+			}else
+			{
+				return false;
+			}
+	});
+</script>
+
+<script>
+	$('#mainMoveBtn').click(function(){
+		location.replace("/");
+		return false; //버튼 태그가 submit 처리 되지 않도록!
+	});
+	</script>
+	
+        <script>
+        $(document).ready(function(){
+        	$(".cencle").on("click", function(){
+        		location.href="/";
+        	})
+        
+        $.ajax({
+        	url : "/member/passChk",
+        	type : "POST",
+        	dataType : "json",
+        	data : $("#delForm").serializeArray(),
+        	success : function(data){
+        		
+        		if(data ==0) {
+        			alert("패스워드가 틀렸습니다.");
+        			return;
+        		} else {
+        			if(confirm("회원 탈퇴 하시겠습니까?")){
+        				$("#delForm").submit();
+        			}
+        		}
+        	}
+        })
+        });
     </script>
 </body>
 </html>

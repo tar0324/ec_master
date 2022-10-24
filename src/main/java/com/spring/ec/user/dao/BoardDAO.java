@@ -52,4 +52,10 @@ public interface BoardDAO {
 	public int badUp(int list_num) throws DataAccessException;
 	
 	public int badDown(int list_num) throws DataAccessException;
+	
+	public int deleteBoard(int list_num) throws DataAccessException;
+	
+	public int updateBoard(Map boardMap) throws Exception;
+	
+	public void updateImage(Map boardMap) throws DataAccessException;
 }

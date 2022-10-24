@@ -16,49 +16,60 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous"></script>
 <style type="text/css">
-#container {
-	height: 1500px;
-}
-#cc {/* header */
-	height: 100px;
-}
-#neo { /* side */
-	float: left;
-	width: 230px;
+#container110 { /* all */
+	width: 100%;
 	height: auto;
-	margin-top: 200px;
+	margin: 0 auto;
 }
-
-#bb { /* body */
-	width: 800px;
-	height: 800px;
-	margin: 100px auto;
+#myheader { /* header */
+	height: 170px;
+	width: 100%;
+	margin: auto;
+	margin-left: 140px;
 }
-#aa { /* footer */
-    width: 100%;
+#myside { /* side */
+	width: 300px;
+	height: auto;
+	margin-left: 150px;
 }
-
-
-/* html, body {
-	height: 100%;
-} */
+#mybody { /* body */
+	width: 700px;
+	height: auto;
+	margin-top: 20px;
+	margin-right: 10%;
+	margin-left: 480px;
+}
+#myfooter { /* footer */
+	clear: both;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	min-width:1000px;
+	font-size:13px;
+	font-weight:normal;
+	color: #A67F78;
+	margin-top: 20px;
+}
+a {
+	text-decoration: none;
+	color: #A67F78;
+}
 </style>
 <title><tiles:insertAttribute name="title" /></title>
 </head>
 <body>
-	<div id="container">
-		<div id="cc">
+	<div id="container110">
+		<div id="myheader">
 			<tiles:insertAttribute name="header" />
 		</div>
-		<div id="neo">
-			<tiles:insertAttribute name="side" />		
-		</div>
-		<div id="bb">
+		<div id="myside">
+			<tiles:insertAttribute name="side" />
+			</div>
+		<div id="mybody">
 			<tiles:insertAttribute name="body" />
 		</div>
-	
-		<div id="aa">
-				<tiles:insertAttribute name="footer" />
+		<div id="myfooter" >
+			<tiles:insertAttribute name="footer" />
 		</div>
 	</div>
 

@@ -1,6 +1,7 @@
 package com.spring.ec.user.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.ec.user.dao.MypageDAO;
 import com.spring.ec.user.vo.AskVO;
 import com.spring.ec.user.vo.BoardVO;
+import com.spring.ec.user.vo.MemberVO;
 import com.spring.ec.user.vo.ReservVO;
 import com.spring.ec.user.vo.ReviewVO;
 import com.spring.ec.user.vo.WishVO;
@@ -51,6 +53,56 @@ public class MypageServiceImpl implements MypageService {
 		List<AskVO> AskList = mypageDAO.selectAsk(user_id);
 		return AskList;
 	}
-
-
+	
+	 //패스워드 체크
+    public int passChk(Map<String, String> listMap) throws Exception {
+        int result = mypageDAO.passChk(listMap);
+        return result;
+    }
+    
+  //정보 수정(Changing Information)
+    @Override
+    public MemberVO userSelect(String user_id) throws Exception {
+        MemberVO infovo = mypageDAO.userSelect(user_id);
+        return infovo;
+    }
+    
+  //회원정보 업데이트(update user Information)
+  /*
+   * public void userUpdate(MemberVO vo) throws Exception {
+   * mypageDAO.userUpdate(vo);
+   * }
+   */
+  /*
+   * //비밀번호 변경(pwd change)
+   * public void userPwdChange(MemberVO vo) throws Exception {
+   * mypageDAO.userUpdate(vo);
+   * }
+   * 
+   * //회원탈퇴
+   * public void userDelete(String user_id) throws Exception {
+   * return;
+   * }
+   */
+    /*
+     * //정보 수정(Changing Information)
+     * 
+     * @Override
+     * public MemberVO userUpdate(Map<String, String> userMap) throws Exception {
+     * MemberVO infovo = mypageDAO.userSelect(userMap);
+     * return infovo;
+     * }
+     */
+     /*
+     
+     */
+    
+   
+/*
+ * @Override
+ * public List updatePwdUser(String user_id) throws Exception {
+ * return mypageDAO.updatePwdUser(user_id);
+ * }
+ */
+    
 }

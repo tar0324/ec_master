@@ -79,6 +79,7 @@
 		<result column="user_id" property="user_id" />
 		<result column="seller_id" property="seller_id" />
 		<result column="wish_sum" property="wish_sum" />
+		<result column="reg_date" property="reg_date" />
 	</resultMap>
 	
 	<resultMap type="reservVO" id="reservResult">
@@ -96,6 +97,24 @@
 		<result property="reserv_pay" column="reserv_pay" />
 	</resultMap>
 	
+	<!-- 리뷰 답변 포함 -->
+	<resultMap id="reAnsResult" type="reAnsVO">
+		<result column="re_ans_num" property="re_ans_num" />
+		<result column="review_num" property="review_num" />
+		<result column="seller_id" property="seller_id" />
+		<result column="user_id" property="user_id" />
+		<result column="content" property="content" />
+		<result column="rating" property="rating" />
+		<result column="liked" property="liked" />
+		<result column="user_nick" property="user_nick" />
+		<result column="re_ans_content" property="re_ans_content" />
+		<result column="reg_date" property="reg_date" />
+		<result column="mod_date" property="mod_date" />
+		<result column="ans_reg_date" property="ans_reg_date" />
+		<result column="ans_mod_date" property="mod_date" />
+		<result column="rating_percent" property="rating_percent" />
+	</resultMap>
+	
 	<!--카테고리-가게select  -->
 	<select id="selectAllStores" resultMap="sellResult">
 		<![CDATA[ SELECT a.*, b.storeInfo_num, b.image_fileName, b.store_introduce, b.openTime, b.closeDay, b.store_nic,b.store_benefit FROM seller_tbl a, storeinfo_tbl b WHERE a.seller_id = b.seller_id ]]>
@@ -109,9 +128,19 @@
 	
 	
 	<!--카테고리-가게리뷰 select  -->
-	<select id="selectReview" resultMap="revResult">
-		<![CDATA[ SELECT *, (rating / 5.0) * 100 as rating_percent FROM review_tbl order by reg_date desc ]]>
+	<select id="selectReview" resultMap="reAnsResult" parameterType="java.util.Map">
+		<![CDATA[ 
+		SELECT r.review_num,r.seller_id,r.user_id,r.content,r.liked,r.user_nick,r.reg_date, r.mod_date, 
+		a.re_ans_content ,a.reg_date AS ans_reg_date , a.mod_date AS ans_mod_date, a.re_ans_num,
+		(r.rating / 5.0) * 100 as rating_percent
+		FROM review_tbl AS r LEFT OUTER JOIN review_ans_tbl AS a
+		ON r.review_num = a.review_num ORDER BY r.reg_date desc	
+		 ]]>
 	</select>
+	
+<!-- 	<select id="selectReview" resultMap="revResult">
+		<![CDATA[ SELECT *, (rating / 5.0) * 100 as rating_percent FROM review_tbl order by reg_date desc ]]>
+	</select> -->
 	
 	
 	<!--카테고리-리뷰 좋아요 update  -->
@@ -185,8 +214,8 @@
 	<!--찜  insert  -->
 	<insert id="addwish" parameterType="java.util.HashMap" >
 		<![CDATA[
-		insert into wish_tbl(wish_num,category_code,user_id,seller_id)
-			values((SELECT IFNULL(MAX(wish_num)+1,1) FROM wish_tbl b), 10, #{user_id}, #{seller_id})
+		insert into wish_tbl(wish_num,category_code,user_id,seller_id,reg_date)
+			values((SELECT IFNULL(MAX(wish_num)+1,1) FROM wish_tbl b), 10, #{user_id}, #{seller_id},now())
 		]]>
 	</insert>
 	

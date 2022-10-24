@@ -2521,6 +2521,53 @@ textarea {
 }
 
 
+/* 리뷰 답글 */
+
+.eCPGL ._B08D {
+    position: relative;
+    margin-top: 20px;
+    padding: 16px 18px 14px;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    background: #f4f7f8;
+}
+
+.eCPGL ._B08D .PtIou {
+    fill: #f4f7f8;
+    position: absolute;
+    top: -14px;
+    left: 0;
+}
+
+.eCPGL ._B08D .dMMR7 {
+    font-size: 1.4rem;
+    word-wrap: break-word;
+}
+
+.eCPGL ._B08D .dMMR7 .P1zUJ.xX4tE {
+    font-weight: bold;
+    color: #333;
+}
+
+.eCPGL ._B08D .dMMR7 .P1zUJ {
+    display: inline-block;
+    vertical-align: top;
+    color: #8f8f8f;
+}
+
+.eCPGL ._B08D .dMMR7 .P1zUJ {
+    display: inline-block;
+    vertical-align: top;
+    color: #8f8f8f;
+}
+
+.eCPGL ._B08D .h1CDl {
+    margin-top: 4px;
+    font-size: 1.5rem;
+    color: #666;
+    line-height: 2.2rem;
+    word-wrap: break-word;
+}
 
 </style>
 
@@ -4021,7 +4068,22 @@ geocoder.addressSearch(addr,function(result, status){
 																	방문일</span>
 															<time aria-hidden="true">${review.reg_date}</time></span>
 														</div>
-														</li>
+														
+														<!-- 리뷰 답변 -->
+														<c:if test="${review.re_ans_num ne 0 }">
+														<div class="_B08D">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="14"
+																			height="14" class="PtIou">
+																			<path d="M0 0c2.46 9.33 7.13 14 14 14H0V0z"></path></svg>
+																		<div class="dMMR7">
+																			<span class="P1zUJ xX4tE">${review.seller_id } / </span>
+																			<span
+																				class="P1zUJ">${review.ans_reg_date }</span>
+																		</div>
+																		<div class="h1CDl">${review.re_ans_content}</div>
+															</div>
+															</c:if>
+															</li>
 														</div>
 														</c:if>
 														</c:forEach>

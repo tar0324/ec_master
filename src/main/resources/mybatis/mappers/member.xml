@@ -75,4 +75,11 @@
 		insert into kakao_tbl(k_number,k_name, k_email) VALUES((SELECT
 		IFNULL(MAX(k_number)+1,1) FROM kakao_tbl k),#{nickname},#{email})
 	</select>
+	
+	   <!-- 이메일 개수 세기 -->
+   <select id="emailCheck" parameterType="String" resultType="Int" >
+      <![CDATA[
+      select count(*) from user_tbl where user_email = #{user_email}
+      ]]>
+   </select>
 </mapper>
