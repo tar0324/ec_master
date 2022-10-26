@@ -77,7 +77,7 @@ String viewName = (String)request.getAttribute("viewName");
 		} else {
 			$('#writeBoard').attr("disabled", true);
 			alert("로그인 후 글쓰기가 가능합니다.(임시 작업중)")
-			location.href = boardForm;
+			location.href = loginForm;
 		}
 	}
 </script>

@@ -38,8 +38,8 @@
 		</resultMap>
  	<insert id="insertSellerMember" parameterType="sellerVO">
 		<![CDATA[
-		insert into seller_tbl(seller_num,seller_id,seller_pw,seller_tel,seller_name, birth_yy, birth_mm, birth_dd, gender,seller_bizReg,bizReg_image_name,area,category_code,keyword,seller_addr,reg_date)
-			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_name}, #{birth_yy},#{birth_mm},#{birth_dd}, #{gender},#{seller_bizReg},"testimg",#{area},#{category_code},#{keyword},"test",now())		
+		insert into seller_tbl(seller_num,seller_id,seller_pw,seller_tel,seller_name,seller_bizReg,bizReg_image_name,area,category_code,keyword,seller_addr,reg_date)
+			values((SELECT IFNULL(MAX(seller_num)+1,1) FROM seller_tbl b), #{seller_id}, #{seller_pw},#{seller_tel}, #{seller_name},#{seller_bizReg},"testimg",#{area},#{category_code},#{keyword},"test",now())		
 		]]>
 	</insert> 	
 	<!-- 로그인 -->
