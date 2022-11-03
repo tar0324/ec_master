@@ -30,7 +30,7 @@
  - back-end : java 15 , spring Tool 3 , maven
  - DB : mysql , mariaDB , Mybatis
 
-📌 주요 기능 - 상세보기
+📌 주요 기능 - [상세보기](https://github.com/tar0324/ec_master.wiki.git)
 
 
 📌 문제 해결! - 상세보기
