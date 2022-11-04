@@ -15,6 +15,7 @@
 		<result property="seller_name" column="seller_name" />
 		<result property="seller_email" column="seller_email" />
 		<result property="seller_addr" column="seller_addr" />
+		<result property="seller_detailaddr" column="seller_detailaddr" />
 		<result property="bizReg_image_name" column="bizReg_image_name" />
 		<result property="area" column="area" />
 		<result property="keyword" column="keyword" />
@@ -86,7 +87,8 @@
 	
 	<update id="modseller" parameterType="SellerVO">
 		<![CDATA[ 
-		update seller_tbl set seller_tel = #{seller_tel}, seller_name = #{seller_name}, seller_email = #{seller_email}, area = #{area}, keyword=#{keyword}, mod_date=now() where seller_id = #{seller_id}
+		update seller_tbl set seller_tel = #{seller_tel}, seller_name = #{seller_name}, seller_email = #{seller_email}, area = #{area}, seller_addr= #{seller_addr}, addr_num = #{addr_num}, seller_detailaddr = #{seller_detailaddr},addr_num = #{addr_num}, keyword=#{keyword}, mod_date=now() where seller_id = #{seller_id}
+		
 		 ]]>
 	</update>
 	

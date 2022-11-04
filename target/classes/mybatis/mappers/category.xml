@@ -88,6 +88,7 @@
 		<result property="seller_tel" column="seller_tel" />
 		<result property="seller_name" column="seller_name" />
 		<result property="seller_addr" column="seller_addr" />
+		<result property="seller_detailaddr" column="seller_detailaddr" />
 		<result property="seller_bizReg" column="seller_bizReg" />
 		<result property="open_time" column="open_time" />
 		<result property="close_time" column="close_time" />
@@ -263,7 +264,7 @@
 	<select id="selectStoreInfo" resultMap="reservResult" parameterType="String">
 		<![CDATA[ 
 		select sel.seller_id,sto.store_nic ,sel.seller_tel, sel.seller_name, 
-		sel.seller_addr,sel.seller_bizReg, sto.open_time, sto.close_time,
+		sel.seller_addr, sel.seller_detailaddr, sel.seller_bizReg, sto.open_time, sto.close_time,
 		sto.min_People, sto.max_People, sto.store_introduce,sto.reserv_pay
 		from seller_tbl as sel , storeInfo_tbl as sto
 		where sel.seller_id = sto.seller_id and sel.seller_id = #{seller_id} 

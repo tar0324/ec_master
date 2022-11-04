@@ -36,5 +36,6 @@
 		<typeAlias type="com.spring.ec.seller.vo.StoreinfosumVO" alias="storeinfosumVO" />
 		<typeAlias type="com.spring.ec.seller.vo.GraphVO" alias="graphVO" />
 		<typeAlias type="com.spring.ec.seller.vo.ReviewAnsVO" alias="reAnsVO" />
+		<typeAlias type="com.spring.ec.admin.vo.MemberVO" alias="adminmemberVO" />
 	</typeAliases>
 </configuration>

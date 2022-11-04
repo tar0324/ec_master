@@ -269,7 +269,7 @@ public class BoardControllerImpl implements BoardController {
 		String image_fileName = null;
 		Map boardMap = new HashMap();
 		
-		
+		//폼에서 전송한 input 타입의 name들을 file속성을 제외하고 enu에 저장
 		Enumeration enu = multipartRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
@@ -349,20 +349,20 @@ public class BoardControllerImpl implements BoardController {
 	private String upload(MultipartHttpServletRequest multipartRequest) throws Exception {
 		String image_fileName = null;
 		
-		
+		//iterator 형태로 추출된 파일들의 이름을 저장
 		Iterator<String> fileNames = multipartRequest.getFileNames();
 		while (fileNames.hasNext()) {
 			String fileName = fileNames.next();
 			
-			
+			//mfile에 해당 이름을 인자로 파일들의 정보를 저장
 			MultipartFile mFile = multipartRequest.getFile(fileName);
 			
-			
+			//파일들의 확장자를 포함한 이미지파일 명을 저장
 			image_fileName = mFile.getOriginalFilename();
-			File file = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);  
+			File file = new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + fileName);  //해당 경로에 대한 파일 객체 생성
 			if (mFile.getSize() != 0) {
-				if (!file.exists()) {   
-					file.getParentFile().mkdirs(); 
+				if (!file.exists()) {  //경로상에 파일이 존재하지 않다면 
+					file.getParentFile().mkdirs();  //디렉토리를 생성
 					mFile.transferTo(new File(U_IMAGE_REPO + "\\" + "temp" + "\\" + image_fileName));  //transferTo 메소드를 사용하여 해당위치에 저장
 				}
 			}
