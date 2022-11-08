@@ -32,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.ec.seller.service.InfoService;
 import com.spring.ec.seller.vo.ProductVO;
+import com.spring.ec.seller.vo.SellerVO;
 import com.spring.ec.seller.vo.StoreinfosumVO;
 
 
@@ -60,12 +61,10 @@ public class InfoControllerImpl implements InfoController  {
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
-		
 		//session에 남아있는 sellerid를 가져와야함
-		//MemberVO mm = (MemberVO) session.getAttribute("member");
-		//String seller_id = mm.getSeller_id());
-		
-		String seller_id = "stest001";
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
 		
 		//해당 가게의 찜,리뷰,예약 조회
 		StoreinfosumVO infosum = infoService.selectinfosum(seller_id);
@@ -91,10 +90,11 @@ public class InfoControllerImpl implements InfoController  {
 		ModelAndView mav = new ModelAndView();
 		Map<String, String> listMap = new HashMap<String, String>();
 		//session에 남아있는 sellerid를 가져와야함
-		//MemberVO mm = (MemberVO) session.getAttribute("member");
-		//String seller_id = mm.getSeller_id());
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
+				
 		
-		String seller_id = "stest001";
 		listMap.put("seller_id", seller_id);
 		listMap.put("search", search);
 		
@@ -113,11 +113,12 @@ public class InfoControllerImpl implements InfoController  {
 		Map<String, Object> listMap = new HashMap<String, Object>();
 		ModelAndView mav = new ModelAndView();
 		//session에 남아있는 sellerid를 가져와야함
-		//MemberVO mm = (MemberVO) session.getAttribute("member");
-		//String seller_id = mm.getSeller_id());
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
+				
 		String[] memuList = params.split(",");
 		
-		String seller_id = "stest001";
 		listMap.put("seller_id", seller_id);
 		listMap.put("params", memuList);
 		
@@ -167,10 +168,11 @@ public class InfoControllerImpl implements InfoController  {
 		Map<String, String> listMap = new HashMap<String, String>();
 		ModelAndView mav = new ModelAndView();
 		//session에 남아있는 sellerid를 가져와야함
-		//MemberVO mm = (MemberVO) session.getAttribute("member");
-		//String seller_id = mm.getSeller_id());
+		HttpSession session = request.getSession();
+		SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+		String seller_id = sellerVO.getSeller_id();
+				
 		
-		String seller_id = "stest001";
 		listMap.put("seller_id", seller_id);
 		listMap.put("pro_num", pro_num);
 		
@@ -259,18 +261,18 @@ public class InfoControllerImpl implements InfoController  {
 				menuMap.put(name, value);
 			}
 			
-			//session에 남아있는 sellerid,category_code를 가져와야함
-			//MemberVO mm = (MemberVO) session.getAttribute("member");
-			//String seller_id = mm.getSeller_id());
+			//session에 남아있는 sellerid를 가져와야함
+			HttpSession session = multipartRequest.getSession();
+			SellerVO sellerVO = (SellerVO) session.getAttribute("sellerMember");
+			String seller_id = sellerVO.getSeller_id();
 			
-			String seller_id = "stest001";
+			
 			String category_code = "10";
 			menuMap.put("seller_id", seller_id);
 			menuMap.put("category_code", category_code);
 
 			String imageFileName = upload(multipartRequest);
 			menuMap.put("pro_img", imageFileName);
-			HttpSession session = multipartRequest.getSession();
 			
 
 			String message;

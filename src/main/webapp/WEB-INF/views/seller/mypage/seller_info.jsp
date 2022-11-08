@@ -59,6 +59,14 @@ function readURL(input) {
 	    }
 
 
+//업체 소개 추가
+function addinfo(frm){
+   	    frm.method="post";
+   	    frm.action="${contextPath}/addinfo.do";
+   	    frm.submit();
+
+}
+
 
 //업체 소개 수정
 function modinfo(frm){
@@ -419,7 +427,7 @@ function modinfo(frm){
                 <!-- /.card-body -->
 				</div>
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">등록</button>
+                  <button type="submit" class="btn btn-primary">수정</button>
                 </div>
                 
               </form>

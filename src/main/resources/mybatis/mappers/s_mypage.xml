@@ -98,7 +98,17 @@
 		 ]]>
 	</update>
 	
+	<insert id="addinfo" parameterType="java.util.HashMap">
+		<![CDATA[ 
+		insert into storeinfo_tbl(storeInfo_num,seller_id,image_fileName,store_introduce,openTime,closeDay,store_nic,store_benefit,reg_date,open_time,close_time,min_people,max_people,reserv_pay) values((select IFNULL(max(storeInfo_num)+1,1) from storeinfo_tbl a),#{seller_id},#{image_fileName}, #{store_introduce}, #{openTime}, #{closeDay},(select seller_name from seller_tbl b where seller_id=#{seller_id}) , #{store_benefit}, now(), #{open_time}, #{close_time}, #{min_People}, #{max_People}, #{reserv_pay} )
+		 ]]>
+	</insert>
 	
+	<update id="modstorenic" parameterType="SellerVO">
+		<![CDATA[ 
+		UPDATE storeinfo_tbl SET store_nic=#{seller_name} where seller_id = #{seller_id}
+		 ]]>
+	</update>
 	
 
 
