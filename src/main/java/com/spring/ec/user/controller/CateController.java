@@ -29,5 +29,9 @@ public interface CateController {
 	
 	public ModelAndView unreservCheck(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public ModelAndView reservCheck(@RequestParam(value = "seller_id") String seller_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	/*
+	 * public ModelAndView reservCheck(@RequestParam(value = "seller_id") String
+	 * seller_id, HttpServletRequest request, HttpServletResponse response) throws
+	 * Exception;
+	 */
 }
