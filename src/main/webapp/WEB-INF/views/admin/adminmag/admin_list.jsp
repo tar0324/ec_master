@@ -128,7 +128,7 @@ $(function () {
 
 			
               <div class="card-tools">
-              <form action="/ec/searchmenu.do">
+              <form action="#">
                 <div class="input-group input-group-sm">
                   <input type="text" class="form-control" placeholder="이름 검색" name="search" value="">
                   <div class="input-group-append">

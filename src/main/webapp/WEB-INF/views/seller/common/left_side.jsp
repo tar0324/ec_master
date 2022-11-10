@@ -133,15 +133,15 @@ request.setCharacterEncoding("utf-8");
                   <p>리뷰 관리</p>
                 </a>
               </li>
-              <li class="nav-item">
+<!--               <li class="nav-item">
                 <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                   <i class="far fa-question-circle nav-icon"></i>
                   <p>문의 관리</p>
                 </a>
-              </li>
+              </li> -->
             </ul>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-address-book"></i>
               <p>
@@ -169,15 +169,15 @@ request.setCharacterEncoding("utf-8");
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
+          </li> -->
+<!--           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-columns"></i>
               <p>
                 커뮤니티
               </p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="${contextPath}/seller/notice" class="nav-link">
               <i class="nav-icon fas fa-exclamation"></i>

@@ -75,6 +75,8 @@ public class AdminmagControllerImpl implements MainController {
 		}
 		
 		
+		//e:페이징
+		
 		
 		
 		paging.put("adminCount", adminCount);
